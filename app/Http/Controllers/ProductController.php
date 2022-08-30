@@ -9,7 +9,7 @@ class ProductController extends Controller
 {
     //
     public function index(){
-        $get_product = DB::table('product')->get();
-        return view('product.index')->with('g_product',$get_product);
+        // $get_product = DB::table('product')->get();
+        // return view('product.index')->with('g_product',$get_product);
     }
 }

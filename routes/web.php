@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,5 +14,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', [ProductController::class, 'index']);
+//Admin
+Route::get('/admin', [AdminController::class, 'dashboard']);
+Route::get('/', [AdminController::class, 'dashboard']);
