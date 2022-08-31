@@ -16,4 +16,10 @@ use Illuminate\Support\Facades\Route;
 */
 //Admin
 Route::get('/admin', [AdminController::class, 'dashboard']);
-Route::get('/', [AdminController::class, 'dashboard']);
+//Product
+Route::get('/list-product', [ProductController::class, 'productList']);
+Route::get('/insert-form-product', [ProductController::class, 'formInsertProduct']);
+Route::get('/delete-product/{id_product}', [ProductController::class, 'deleteProduct']);
+Route::get('/edit-form-product/{id_product}', [ProductController::class, 'editFormProduct']);
+Route::post('/insert-product', [ProductController::class, 'insertProduct']);
+Route::post('/edit-product/{id_product}', [ProductController::class, 'editProduct']);
