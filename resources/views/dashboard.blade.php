@@ -20,7 +20,7 @@
     <!-- Custom styles for this template-->
     <link href="{{asset('backend/css/sb-admin-2.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
-    
+
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 
@@ -47,7 +47,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="{{URL::to('/admin')}}">
+                <a class="nav-link" href="{{URL::to('/admin')}}">{{--sử dụng route() --}}
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -84,8 +84,8 @@
                 <div id="collapseTwo1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Choose:</h6>
-                        <a class="collapse-item" href="{{URL::to('/list-product')}}">Product Lists</a>
-                        <a class="collapse-item" href="{{URL::to('/insert-form-product')}}">Insert Product</a>
+                        <a class="collapse-item" href="{{URL::to('/list-product')}}">Product Lists</a>{{--sử dụng route() --}}
+                        <a class="collapse-item" href="{{URL::to('/insert-form-product')}}">Insert Product</a>{{--sử dụng route() --}}
                     </div>
                 </div>
             </li>
@@ -450,7 +450,7 @@
     $(document).ready( function () {
         $('#table_id').DataTable();
     } );
-</script> 
+</script>
 </body>
 
 </html>

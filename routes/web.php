@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 //Admin
 Route::get('/admin', [AdminController::class, 'dashboard']);
 //Product
+// đặt tên cho tất cả các route
 Route::get('/list-product', [ProductController::class, 'productList']);
 Route::get('/insert-form-product', [ProductController::class, 'formInsertProduct']);
 Route::get('/delete-product/{id_product}', [ProductController::class, 'deleteProduct']);

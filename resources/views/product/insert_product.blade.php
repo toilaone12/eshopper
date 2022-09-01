@@ -1,17 +1,12 @@
 @extends('dashboard')
 @section('content')
-<form action="{{URL::to('/insert-product')}}" method="POST" enctype="multipart/form-data"> 
-    <!-- <div class="form-group">
-        <label for="exampleFormControlSelect1">Tên danh mục</label>
-        <select class="form-control" id="exampleFormControlSelect1">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-        </select>
-    </div> -->
-    @csrf 
+<form action="{{URL::to('/insert-product')}}" method="POST" enctype="multipart/form-data"> {{--sử dụng route() --}}
+
+
+{{--<form action="{{ route('tên route') }}" method="POST" enctype="multipart/form-data"> --}}{{--sử dụng route() --}}
+
+
+    @csrf
     <!-- Tránh cuộc tấn công giả mạo từ nhiều web độc hại -->
     <div class="form-group">
         <p class="text-danger">
