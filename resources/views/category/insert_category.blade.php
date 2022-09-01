@@ -22,14 +22,6 @@
         <input type="file" class="form-control-file" name="image_product" id="exampleFormControlFile1">
     </div>
     <div class="form-group">
-        <label for="exampleFormControlFile1">Tên danh mục</label>
-        <select name="name_category" class="form-control" id="exampleFormControlFile1">
-            @foreach($selectCategory as $key => $c)
-            <option value="{{$c->id_category}}">{{$c->name_category}}</option>
-            @endforeach
-        </select>
-    </div>
-    <div class="form-group">
         <label for="exampleFormControlInput1">Tên sản phẩm</label>
         <input type="text" class="form-control" name="name_product" id="exampleFormControlInput1" placeholder="Nhập tên">
     </div>

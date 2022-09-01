@@ -16,11 +16,15 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UserSeeder::class);
         DB::table('product')->insert([
-            'name_product' => Str::random(10),
+            'name_product' => Str::random(10), //tao ra chuoi ky tu ngau nhien
+            'id_category' => '1', //tao ra chuoi ky tu ngau nhien
             'image_product' => Str::random(10).'.png',
             'quantity_product' => '1',
             'price_product' => '100000',
-            'description_product' => Hash::make('password'),
+            'description_product' => 'Thông tin chất lượng',
+        ]);
+        DB::table('category')->insert([
+            'name_category' => Str::random(10), //tao ra chuoi ky tu ngau nhien
         ]);
     }
 }

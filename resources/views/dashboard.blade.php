@@ -47,7 +47,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="{{URL::to('/admin')}}">{{--sử dụng route() --}}
+                <a class="nav-link" href="{{route('admin')}}">{{--sử dụng route() --}}
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -68,9 +68,9 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
+                        <h6 class="collapse-header">Choose:</h6>
+                        <a class="collapse-item" href="{{route('category.listCategory')}}">Category List</a>
+                        <a class="collapse-item" href="{{route('category.insertFormCategory')}}">Insert Category</a>
                     </div>
                 </div>
             </li>
@@ -84,8 +84,8 @@
                 <div id="collapseTwo1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Choose:</h6>
-                        <a class="collapse-item" href="{{URL::to('/list-product')}}">Product Lists</a>{{--sử dụng route() --}}
-                        <a class="collapse-item" href="{{URL::to('/insert-form-product')}}">Insert Product</a>{{--sử dụng route() --}}
+                        <a class="collapse-item" href="{{route('product.listFormProduct')}}">Product Lists</a>{{--sử dụng route() --}}
+                        <a class="collapse-item" href="{{route('product.insertFormProduct')}}">Insert Product</a>{{--sử dụng route() --}}
                     </div>
                 </div>
             </li>

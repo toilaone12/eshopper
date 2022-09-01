@@ -18,6 +18,7 @@
 <thead>
     <tr align="center">
         <th scope="col">Mã sản phẩm</th>
+        <th scope="col">Tên danh mục</th>
         <th scope="col">Hình ảnh</th>
         <th scope="col">Tên sản phẩm</th>
         <th scope="col">Giá sản phẩm</th>
@@ -26,20 +27,21 @@
         <th rowspan="2" scope="col">Chức năng</th>
     </tr>
 </thead>
-@foreach($g_product as $key => $p)
+@foreach($getProduct as $key => $p)
 <tbody>
     <tr align="center">
         <th scope="row">{{$p->id}}</th>
-        <th scope="row">{{$p->image_product}}</th>
+        <th scope="row">{{$p->name_category}}</th>
+        <th scope="row"><img src="{{URL::to('images/product/'.$p->image_product)}}" alt=""></th>
         <td>{{$p->name_product}}</td>
         <td>{{$p->price_product}}</td>
         <td>{{$p->quantity_product}}</td>
         <td>{{$p->description_product}}</td>
         <td>
-            <a href="{{URL::to('/edit-form-product',$p->id)}}" class="btn btn-success" style="margin-right:30px">
+            <a href="{{route('product.editFormProduct',['id_product'=>$p->id])}}" class="btn btn-success" style="margin-right:30px">
                 <i class="fa-solid fa-pen-to-square"></i>
             </a>
-            <a href="{{URL::to('/delete-product',$p->id)}}" class="btn btn-danger">
+            <a href="{{route('product.deleteProduct',['id_product'=>$p->id])}}" class="btn btn-danger">
                 <i class="fa-solid fa-xmark"></i>
             </a>
         </td>

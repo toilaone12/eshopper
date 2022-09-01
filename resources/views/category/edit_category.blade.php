@@ -3,7 +3,7 @@
 ?>
 @extends('dashboard')
 @section('content')
-@foreach($selectProductId as $key => $product)
+@foreach($select_product_id as $key => $product)
 <form action="{{URL::to('/edit-product',$product->id)}}" method="POST" enctype="multipart/form-data"> 
     @csrf 
     <!-- Tránh cuộc tấn công giả mạo từ nhiều web độc hại -->
@@ -17,14 +17,6 @@
                 }
             ?>
         </p>
-    </div>
-    <div class="form-group">
-        <label for="exampleFormControlFile1">Tên danh mục</label>
-        <select name="name_category" class="form-control" id="exampleFormControlFile1">
-            @foreach($selectCategory as $key => $c)
-            <option @if($product->id_category == $c->id_category) selected @endif value="{{$c->id_category}}">{{$c->name_category}}</option>
-            @endforeach
-        </select>
     </div>
     <div class="form-group">
         <label for="exampleFormControlFile1">Ảnh sản phẩm</label>
