@@ -97,6 +97,9 @@ return [
     'present' => 'The :attribute field must be present.',
     'regex' => 'The :attribute format is invalid.',
     'required' => 'The :attribute field is required.',
+    'name_category' => [
+        'unique' => "Danh mục không được trùng nhau!",
+    ],
     'required_if' => 'The :attribute field is required when :other is :value.',
     'required_unless' => 'The :attribute field is required unless :other is in :values.',
     'required_with' => 'The :attribute field is required when :values is present.',
@@ -133,7 +136,19 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'username' => [
+            'required' => 'Đây là yêu cầu bắt buộc',
+            'max' => 'Không vượt quá ký tự',
+        ],
+        'pass' => [
+            'max' => 'Không vượt quá 32 ký tự',
+            'min' => 'Yêu cầu mật khẩu phải có 6 ký tự trở lên',
+        ],
+        'name_category' => [
+            'unique' => "Danh mục không được trùng nhau!",
+        ]
     ],
+
 
     /*
     |--------------------------------------------------------------------------

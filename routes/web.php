@@ -15,17 +15,31 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// Route: giup dinh tuyen cac URL path tuong ung MVC
 //Admin
-Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin');
-//Category
-Route::get('/list-category',[CategoryController::class, 'categoryList'])->name('category.listCategory');
-Route::get('/insert-form-category', [CategoryController::class, 'formInsertCategory'])->name('category.insertFormCategory');
-Route::post('/insert-category', [CategoryController::class, 'insertCategory'])->name('category.insertCategory');
-//Product
-// đặt tên cho tất cả các route
-Route::get('/list-product', [ProductController::class, 'productList'])->name('product.listFormProduct');
-Route::get('/insert-form-product', [ProductController::class, 'formInsertProduct'])->name('product.insertFormProduct');
-Route::get('/delete-product/{id_product}', [ProductController::class, 'deleteProduct'])->name('product.deleteProduct');
-Route::get('/edit-form-product/{id_product}', [ProductController::class, 'editFormProduct'])->name('product.editFormProduct');
-Route::post('/insert-product', [ProductController::class, 'insertProduct'])->name('product.insertProduct');
-Route::post('/edit-product/{id_product}', [ProductController::class, 'editProduct'])->name('product.editProduct');
+Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong $callback
+    Route::get('/login',[AdminController::class,'login'])->name('admin.login');
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin');
+    Route::get('/logout', [AdminController::class, 'logout'])->name('admin.logout');
+    Route::post('/save-login',[AdminController::class,'saveLogin'])->name('admin.saveLogin');
+    //Category
+    Route::prefix('category')->group(function(){
+        Route::get('/list-category',[CategoryController::class, 'categoryList'])->name('category.listCategory');
+        Route::get('/insert-form-category', [CategoryController::class, 'formInsertCategory'])->name('category.insertFormCategory');
+        Route::get('/edit-form-category/{idCategory}', [CategoryController::class, 'editFormCategory'])->name('category.editFormCategory');
+        Route::get('/delete-category/{idCategory}', [CategoryController::class, 'deleteCategory'])->name('category.deleteCategory');
+        Route::post('/insert-category', [CategoryController::class, 'insertCategory'])->name('category.insertCategory');
+        Route::post('/edit-category/{idCategory}', [CategoryController::class, 'editCategory'])->name('category.editCategory');
+    });
+    //Product
+    // đặt tên cho tất cả các route
+    Route::prefix('product')->group(function(){
+        Route::get('/list-product', [ProductController::class, 'productList'])->name('product.listFormProduct');
+        Route::get('/insert-form-product', [ProductController::class, 'formInsertProduct'])->name('product.insertFormProduct');
+        Route::get('/delete-product/{idProduct}', [ProductController::class, 'deleteProduct'])->name('product.deleteProduct');
+        Route::get('/edit-form-product/{idProduct}', [ProductController::class, 'editFormProduct'])->name('product.editFormProduct');
+        Route::post('/insert-product', [ProductController::class, 'insertProduct'])->name('product.insertProduct');
+        Route::post('/edit-product/{idProduct}', [ProductController::class, 'editProduct'])->name('product.editProduct');
+    });
+});
+

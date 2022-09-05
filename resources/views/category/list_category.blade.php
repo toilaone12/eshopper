@@ -28,7 +28,12 @@
         <th scope="row">{{$c->id_category}}</th>
         <td>{{$c->name_category}}</td>
         <td>
-            
+            <a href="{{route('category.editFormCategory',['idCategory'=>$c->id_category])}}" class="btn btn-success" style="margin-right:30px">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </a>
+            <a href="{{route('category.deleteCategory',['idCategory'=>$c->id_category])}}" class="btn btn-danger">
+                <i class="fa-solid fa-xmark"></i>
+            </a>
         </td>
     </tr>
 </tbody>

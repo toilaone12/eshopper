@@ -32,16 +32,16 @@
     <tr align="center">
         <th scope="row">{{$p->id}}</th>
         <th scope="row">{{$p->name_category}}</th>
-        <th scope="row"><img src="{{URL::to('images/product/'.$p->image_product)}}" alt=""></th>
+        <th scope="row"><img width="150" src="{{URL::to('images/product/'.$p->image_product)}}" alt=""></th>
         <td>{{$p->name_product}}</td>
         <td>{{$p->price_product}}</td>
         <td>{{$p->quantity_product}}</td>
         <td>{{$p->description_product}}</td>
         <td>
-            <a href="{{route('product.editFormProduct',['id_product'=>$p->id])}}" class="btn btn-success" style="margin-right:30px">
+            <a href="{{route('product.editFormProduct',['idProduct'=>$p->id])}}" class="btn btn-success" style="margin-right:30px">
                 <i class="fa-solid fa-pen-to-square"></i>
             </a>
-            <a href="{{route('product.deleteProduct',['id_product'=>$p->id])}}" class="btn btn-danger">
+            <a href="{{route('product.deleteProduct',['idProduct'=>$p->id])}}" class="btn btn-danger">
                 <i class="fa-solid fa-xmark"></i>
             </a>
         </td>
