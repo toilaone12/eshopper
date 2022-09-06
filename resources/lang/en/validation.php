@@ -96,9 +96,12 @@ return [
     'password' => 'The password is incorrect.',
     'present' => 'The :attribute field must be present.',
     'regex' => 'The :attribute format is invalid.',
-    'required' => 'The :attribute field is required.',
+    'required' => 'Dữ liệu :attribute cần phải có.',
     'name_category' => [
-        'unique' => "Danh mục không được trùng nhau!",
+        'unique' => "Danh mục không được trùng nhau.",
+    ],
+    'name_brand' => [
+        'unique' => "Thương hiệu không được trùng nhau.",
     ],
     'required_if' => 'The :attribute field is required when :other is :value.',
     'required_unless' => 'The :attribute field is required unless :other is in :values.',
@@ -116,7 +119,7 @@ return [
     'starts_with' => 'The :attribute must start with one of the following: :values.',
     'string' => 'The :attribute must be a string.',
     'timezone' => 'The :attribute must be a valid zone.',
-    'unique' => 'The :attribute has already been taken.',
+    'unique' => 'Thương hiệu không được trùng nhau.',
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'The :attribute format is invalid.',
     'uuid' => 'The :attribute must be a valid UUID.',

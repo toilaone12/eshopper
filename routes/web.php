@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,15 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
         Route::get('/edit-form-product/{idProduct}', [ProductController::class, 'editFormProduct'])->name('product.editFormProduct');
         Route::post('/insert-product', [ProductController::class, 'insertProduct'])->name('product.insertProduct');
         Route::post('/edit-product/{idProduct}', [ProductController::class, 'editProduct'])->name('product.editProduct');
+    });
+    //Brand
+    Route::prefix('brand')->group(function(){
+        Route::get('/list-brand', [BrandController::class, 'brandList'])->name('brand.listBrand');
+        Route::get('/insert-form-brand', [BrandController::class, 'formInsertBrand'])->name('brand.insertFormBrand');
+        Route::get('/edit-form-brand/{idBrand}', [BrandController::class, 'formEditBrand'])->name('brand.editFormBrand');
+        Route::get('/delete-brand/{idBrand}', [BrandController::class, 'deleteBrand'])->name('brand.deleteBrand');
+        Route::post('/insert-brand', [BrandController::class, 'insertBrand'])->name('brand.insertBrand');
+        Route::post('/edit-brand/{idBrand}', [BrandController::class, 'editBrand'])->name('brand.editBrand');
     });
 });
 

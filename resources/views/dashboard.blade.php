@@ -93,6 +93,20 @@
                     </div>
                 </div>
             </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo2"
+                    aria-expanded="true" aria-controls="collapseTwo2">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Brand</span>
+                </a>
+                <div id="collapseTwo2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Choose:</h6>
+                        <a class="collapse-item" href="{{route('brand.listBrand')}}">Brand Lists</a>{{--sử dụng route() --}}
+                        <a class="collapse-item" href="{{route('brand.insertFormBrand')}}">Insert Brand</a>{{--sử dụng route() --}}
+                    </div>
+                </div>
+            </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
