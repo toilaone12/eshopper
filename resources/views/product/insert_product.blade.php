@@ -30,6 +30,14 @@
         </select>
     </div>
     <div class="form-group">
+        <label for="exampleFormControlFile1">Tên thương hiệu</label>
+        <select name="name_brand" class="form-control" id="exampleFormControlFile1">
+            @foreach($selectBrand as $key => $b)
+            <option value="{{$b->id_brand}}">{{$b->name_brand}}</option>
+            @endforeach
+        </select>
+    </div>
+    <div class="form-group">
         <label for="exampleFormControlInput1">Tên sản phẩm</label>
         <input type="text" class="form-control" name="name_product" id="exampleFormControlInput1" placeholder="Nhập tên">
     </div>

@@ -19,7 +19,7 @@
         <script src="https://kit.fontawesome.com/8c040fba7a.js" crossorigin="anonymous"></script>
     <!-- Custom styles for this template-->
     <link href="{{asset('backend/css/sb-admin-2.min.css')}}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
@@ -80,20 +80,6 @@
             </li>
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo1"
-                    aria-expanded="true" aria-controls="collapseTwo1">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Product</span>
-                </a>
-                <div id="collapseTwo1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Choose:</h6>
-                        <a class="collapse-item" href="{{route('product.listFormProduct')}}">Product Lists</a>{{--sử dụng route() --}}
-                        <a class="collapse-item" href="{{route('product.insertFormProduct')}}">Insert Product</a>{{--sử dụng route() --}}
-                    </div>
-                </div>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo2"
                     aria-expanded="true" aria-controls="collapseTwo2">
                     <i class="fas fa-fw fa-cog"></i>
@@ -107,6 +93,21 @@
                     </div>
                 </div>
             </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo1"
+                    aria-expanded="true" aria-controls="collapseTwo1">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Product</span>
+                </a>
+                <div id="collapseTwo1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Choose:</h6>
+                        <a class="collapse-item" href="{{route('product.listFormProduct')}}">Product Lists</a>{{--sử dụng route() --}}
+                        <a class="collapse-item" href="{{route('product.insertFormProduct')}}">Insert Product</a>{{--sử dụng route() --}}
+                    </div>
+                </div>
+            </li>
+            
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
@@ -445,12 +446,11 @@
         </div>
     </div>
     <script
-    src="https://code.jquery.com/jquery-3.6.1.min.js"
-    integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+    src="https://code.jquery.com/jquery-3.6.1.js"
+    integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
     crossorigin="anonymous"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <!-- Bootstrap core JavaScript-->
-    <script src="{{asset('backend/vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('backend/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
     <!-- Core plugin JavaScript-->
@@ -469,7 +469,7 @@
     $(document).ready( function () {
         $('#table_id').DataTable();
     } );
-</script>
+    </script>
 </body>
 
 </html>

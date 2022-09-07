@@ -14,9 +14,9 @@ class CategoryController extends Controller
 {
     //
     public function categoryList(){
-        $selectList = Category::all();
+        $getCategory = Category::all();
         //compact: nhan 1 tham so, moi tham so chua 1 bien hoac 1 mang
-        return view('category.list_category',compact('selectList'));
+        return view('category.list_category',compact('getCategory'));
     }
     public function formInsertCategory(){
         return view('category.insert_category');

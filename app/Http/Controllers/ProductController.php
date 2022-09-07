@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Model\Category;
+use App\Model\Product;
+use App\Model\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Model\Product;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
@@ -15,12 +16,14 @@ class ProductController extends Controller
     // đổi các biến underscore thành camelCase
 
     public function productList(){
-        $getProduct = Product::join('category as c','c.id_category','product.id_category')->get(); // sử dụng camelCase https://topdev.vn/blog/quy-chuan-dat-ten-trong-lap-trinh-camelcase-underscore-hay-pascalcase/
+        $getProduct = Product::join('category as c','c.id_category','product.id_category')
+        ->join('brand as b','b.id_brand','product.id_brand')->get(); // sử dụng camelCase https://topdev.vn/blog/quy-chuan-dat-ten-trong-lap-trinh-camelcase-underscore-hay-pascalcase/
         return view('product.list_product',compact('getProduct'));
     }
     public function formInsertProduct(){
         $selectCategory = Category::all();
-        return view('product.insert_product',compact('selectCategory'));//nhan 1 tham so, tham so do co the la bien co the la mang
+        $selectBrand = Brand::all();
+        return view('product.insert_product',compact('selectCategory','selectBrand'));//nhan 1 tham so, tham so do co the la bien co the la mang
     }
     public function insertProduct(Request $request){
         $data = $request->all();
@@ -34,6 +37,7 @@ class ProductController extends Controller
                 $extensionImage = $imageProduct->extension(); // lay duoi ten file
                 $newImage = $currentImage.'.'.$extensionImage;
                 $imageProduct->move('images/product',$newImage);
+                $db['id_brand'] = $data['name_brand'];
                 $db['id_category'] = $data['name_category'];
                 $db['name_product'] = $data['name_product'];
                 $db['image_product'] = $newImage;
@@ -72,9 +76,10 @@ class ProductController extends Controller
     public function editFormProduct($idProduct){
         $selectProductId = Product::where('id',$idProduct)->first();
         $selectCategory = Category::all();
+        $selectBrand = Brand::all();
         // dd($selectProductId);
         // compact() nhan mot tham so, moi tham so chua chuoi cua 1 bien hoac 1 mang cua bien
-        return view('product.edit_product',compact('selectProductId','selectCategory')); // k dùng ->with mà hãy sử dụng compact()
+        return view('product.edit_product',compact('selectProductId','selectCategory','selectBrand')); // k dùng ->with mà hãy sử dụng compact()
     }
     public function editProduct(Request $request, $idProduct){
         $data = $request->all();
@@ -89,6 +94,7 @@ class ProductController extends Controller
                 $extensionImage = $imageProduct->extension(); // lay duoi ten file
                 $newImage = $currentImage.'.'.$extensionImage;
                 $imageProduct->move('images/product',$newImage); // trường hợp move fail thì sao?
+                $product->id_brand = $data['name_brand'];
                 $product->id_category = $data['id_category'];
                 $product->name_product = $data['name_product'];
                 $product->imageProduct = $newImage;
@@ -108,6 +114,7 @@ class ProductController extends Controller
                 // return redirect()->route('product.editFormProduct',['id_product'=>$id_product]);// k sử dụng redirect::to. chuyển thành redirect()->route('')
             }
         }else{
+            $product->id_brand = $data['name_brand'];
             $product->id_category = $data['id_category'];
             $product->name_product = $data['name_product'];
             $product->quantity_product = $data['quantity_product'];

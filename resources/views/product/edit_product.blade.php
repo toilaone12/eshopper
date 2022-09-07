@@ -18,6 +18,10 @@
         </p>
     </div>
     <div class="form-group">
+        <label for="exampleFormControlFile1">Ảnh sản phẩm</label>
+        <input type="file" class="form-control-file" value="{{$selectProductId->image_product}}" name="image_product" id="exampleFormControlFile1">
+    </div>
+    <div class="form-group">
         <label for="exampleFormControlFile1">Tên danh mục</label>
         <select name="id_category" class="form-control" id="exampleFormControlFile1">
             @foreach($selectCategory as $key => $c)
@@ -26,9 +30,14 @@
         </select>
     </div>
     <div class="form-group">
-        <label for="exampleFormControlFile1">Ảnh sản phẩm</label>
-        <input type="file" class="form-control-file" value="{{$selectProductId->image_product}}" name="image_product" id="exampleFormControlFile1">
+        <label for="exampleFormControlFile1">Tên thương hiệu</label>
+        <select name="name_brand" class="form-control" id="exampleFormControlFile1">
+            @foreach($selectBrand as $key => $b)
+            <option @if($selectProductId->id_brand == $b->id_brand) selected @endif value="{{$b->id_brand}}">{{$b->name_brand}}</option>
+            @endforeach
+        </select>
     </div>
+    
     <div class="form-group">
         <label for="exampleFormControlInput1">Tên sản phẩm</label>
         <input type="text" class="form-control" value="{{$selectProductId->name_product}}" name="name_product" id="exampleFormControlInput1" placeholder="Nhập tên">

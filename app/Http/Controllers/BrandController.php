@@ -11,8 +11,8 @@ class BrandController extends Controller
 {
     //
     public function brandList(){
-        $selectBrand = Brand::all();
-        return view('brand.list_brand',compact('selectBrand'));
+        $getBrand = Brand::all();
+        return view('brand.list_brand',compact('getBrand'));
     }
     public function formInsertBrand(){
         return view('brand.insert_brand');
