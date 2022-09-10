@@ -26,6 +26,7 @@
     <thead>
         <tr align="center">
             <th>Mã ID</th>
+            <th>Logo thương hiệu</th>
             <th>Tên thương hiệu</th>
             <th>Mô tả về thương hiệu</th>
             <th>Ngày khởi tạo</th>
@@ -37,6 +38,7 @@
         @foreach($getBrand as $key => $b)
         <tr>
             <td width="150">{{$b->id_brand}}</td>
+            <td width="150"><img src="{{url('images/brand/'.$b->logo_brand)}}" alt="" srcset=""></td>
             <td width="300">{{$b->name_brand}}</td>
             <td width="300">{{$b->desc_brand}}</td>
             <td>{{$b->created_at}}</td>

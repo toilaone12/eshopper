@@ -3,7 +3,7 @@
 ?>
 @extends('dashboard')
 @section('content')
-<form action="{{route('brand.editBrand',['idBrand' => $findBrand->id_brand])}}" method="POST"> 
+<form action="{{route('brand.editBrand',['idBrand' => $findBrand->id_brand])}}" enctype="multipart/form-data" method="POST"> 
     @csrf 
     <!-- Tránh cuộc tấn công giả mạo từ nhiều web độc hại -->
     <div class="form-group">
@@ -12,6 +12,10 @@
                 {{$error}}
             @endforeach
         </p>
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlInput1">Logo thương hiệu</label>
+        <input type="file" class="form-control" value="{{$findBrand->logo_brand}}" name="logo_brand" id="exampleFormControlInput1">
     </div>
     <div class="form-group">
         <label for="exampleFormControlInput1">Tên thương hiệu</label>

@@ -1,6 +1,6 @@
 @extends('dashboard')
 @section('content')
-<form action="{{route('brand.insertBrand')}}" method="POST"> {{--sử dụng route() --}}
+<form action="{{route('brand.insertBrand')}}" enctype="multipart/form-data" method="POST"> {{--sử dụng route() --}}
     @csrf
     <!-- Tránh cuộc tấn công giả mạo từ nhiều web độc hại -->
     <div class="form-group">
@@ -9,6 +9,10 @@
                 {{$error}}
             @endforeach
         </p>
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlInput1">Logo thương hiệu</label>
+        <input type="file" class="form-control" name="logo_brand" id="exampleFormControlInput1">
     </div>
     <div class="form-group">
         <label for="exampleFormControlInput1">Tên thương hiệu</label>
