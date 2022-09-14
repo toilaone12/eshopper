@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\Product;
 use App\Model\Category;
 use App\Model\Brand;
+use App\Model\Slide;
 
 class HomeController extends Controller
 {
@@ -14,12 +15,17 @@ class HomeController extends Controller
         $selectCategory = Category::all();
         $selectBrand = Brand::all();
         $selectOutstanding = Product::take(6)->orderBy('updated_at','asc')->get();
+        $selectSlide = Slide::take(6)->where('updated_at','<',Slide::max('updated_at'))->get();
+        $selectFirstSlide = Slide::where('updated_at','=',Slide::max('updated_at'))->get();
         $selectProduct = Product::join('brand as b','b.id_brand','product.id_brand')->get();
         return view('home.page',compact(
             'selectCategory',
             'selectBrand',
             'selectProduct',
-            'selectOutstanding'
+            'selectOutstanding',
+            'selectSlide',
+            'selectFirstSlide',
         ));
+        // dd($selectFirstSlide);
     }
 }

@@ -37,7 +37,7 @@
         @foreach($selectSlide as $key => $s)
         <tr>
             <td width="150">{{$s->id_slide}}</td>
-            <td width="150"><img src="{{url('images/slide/'.$s->image_slide)}}" alt="" srcset=""></td>
+            <td width="150"><img width="150" height="100" src="{{url('images/slide/'.$s->image_slide)}}" alt="" srcset=""></td>
             <td width="300">{{$s->name_slide}}</td>
             <td>{{$s->created_at}}</td>
             <td>{{$s->updated_at}}</td>

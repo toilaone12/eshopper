@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -15,8 +15,12 @@ class User extends Authenticatable
      *
      * @var array
      */
+    protected $table = 'admin';
+
+    public $timestamps = true;
+    protected $primaryKey = 'id_admin';
     protected $fillable = [
-        'name', 'email', 'password',
+        'name_admin', 'password_admin',
     ];
 
     /**
@@ -25,7 +29,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password_admin', 'remember_token',
     ];
 
     /**
@@ -36,4 +40,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getAuthPassword()
+    {
+        return $this->password_admin;
+    }
 }

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use App\Model\Admin;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Validator;
 
@@ -48,12 +49,24 @@ class AdminController extends Controller
                 Cookie::forget('remember');
             }
         }
-        $checkLogin = Admin::where('name_admin',$userName)->where('password_admin',$passMd5)->first();
-        if($checkLogin){
+        // $checkLogin = Admin::where('name_admin',$userName)->where('password_admin',$passMd5)->first();
+        // if($checkLogin){
+        //     Session::put('username',$userName); 
+        //     return redirect()->route('admin');
+        // }else{
+        //     return redirect()->route('admin.login');
+        // }
+        $dataAuth = [
+            'name_admin' => $userName,
+            'password_admin' => $pass,
+        ];
+        if(Auth::attempt($dataAuth)){
             Session::put('username',$userName); 
             return redirect()->route('admin');
+            // echo Auth::attempt($dataAuth);
         }else{
             return redirect()->route('admin.login');
+            // echo Auth::attempt($dataAuth);
         }
     }
     public function logout(){
