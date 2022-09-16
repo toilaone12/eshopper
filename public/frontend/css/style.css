@@ -55,7 +55,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 
 body {
   margin: 0;
-  font-family: "Poppins", sans-serif;
+  font-family: sans-serif;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -1237,8 +1237,8 @@ pre code {
     max-width: 8.33333%;
   }
   .col-lg-2 {
-    flex: 0 0 16.66667%;
-    max-width: 16.66667%;
+    flex: 0 0 20%;
+    max-width: 20%;
   }
   .col-lg-3 {
     flex: 0 0 25%;
@@ -2364,13 +2364,13 @@ fieldset:disabled a.btn {
 }
 
 .btn-primary {
-  color: #212529;
+  color: #fff;
   background-color: #4285f4;
   border-color: #4285f4;
 }
 
 .btn-primary:hover {
-  color: #fff;
+  color: #000;
   background-color: #c5837c;
   border-color: #c17a74;
 }
@@ -9552,7 +9552,7 @@ a.text-dark:hover, a.text-dark:focus {
 
 .cat-item:hover .cat-img img,
 .product-item:hover .product-img img {
-  transform: scale(1.2);
+  /* transform: scale(1.2); */
 }
 
 .product-item .btn:hover {
@@ -9573,7 +9573,12 @@ a.text-dark:hover, a.text-dark:focus {
   z-index: 11;
   animation: action 1s infinite alternate;
 }
-
+.image-center{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50% !important;
+}
 @keyframes action {
   0% {
     transform: translateY(0);

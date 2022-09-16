@@ -38,7 +38,7 @@
         @foreach($getBrand as $key => $b)
         <tr>
             <td width="150">{{$b->id_brand}}</td>
-            <td width="150"><img src="{{url('images/brand/'.$b->logo_brand)}}" alt="" srcset=""></td>
+            <td width="150"><img width="100" height="100" src="{{url('images/brand/'.$b->logo_brand)}}" alt="" srcset=""></td>
             <td width="300">{{$b->name_brand}}</td>
             <td width="300">{{$b->desc_brand}}</td>
             <td>{{$b->created_at}}</td>

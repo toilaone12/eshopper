@@ -5,9 +5,11 @@
     <!-- Tránh cuộc tấn công giả mạo từ nhiều web độc hại -->
     <div class="form-group">
         <p class="text-danger">
-            @foreach($errors->get('name_brand') as $error)
-                {{$error}}
-            @endforeach
+            @if($errors->get('name_brand'))
+                {{!$errors->get('name_brand')}}
+            @elseif($errors->get('desc_brand'))
+                {{!$errors->get('desc_brand')}}
+            @endif
         </p>
     </div>
     <div class="form-group">

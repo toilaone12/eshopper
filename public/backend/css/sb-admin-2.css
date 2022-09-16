@@ -10975,6 +10975,12 @@ form.user .btn-user {
   line-height: 1;
   width: 12.5rem;
 }
+.text-line{
+  white-space: nowrap; 
+  width: 50px; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
 
 @-webkit-keyframes noise-anim {
   0% {

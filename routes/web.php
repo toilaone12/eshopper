@@ -65,5 +65,6 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
 });
 Route::prefix('page')->group(function(){
     Route::get('/home-page',[HomeController::class,'homePage'])->name('home.page');
+    Route::get('/detail-product/{idProduct}',[HomeController::class,'detailProduct'])->name('home.detailProduct');
 });
 

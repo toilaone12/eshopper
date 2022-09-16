@@ -479,7 +479,22 @@
     <!-- Page level custom scripts -->
     <script src="{{asset('backend/js/demo/chart-area-demo.js')}}"></script>
     <script src="{{asset('backend/js/demo/chart-pie-demo.js')}}"></script>
+    <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
+    
+    
+    <!-- @Html.TextAreaFor(model=>model.CourseDescription, new { @id = "editor"}) -->
     <script>
+    CKEDITOR.replace('ckeditor');
+    CKEDITOR.replace('ckeditor1');
+    CKEDITOR.config.pasteFormWordPromptCleanup = true;
+    CKEDITOR.config.pasteFormWordRemoveFontStyles = false;
+    CKEDITOR.config.pasteFormWordRemoveStyles = false;
+    CKEDITOR.config.language = 'vi';
+    CKEDITOR.config.htmlEncodeOutput = false;
+    CKEDITOR.config.ProcessHTMLEntities = false;
+    CKEDITOR.config.entities = false;
+    CKEDITOR.config.entities_latin = false;
+    CKEDITOR.config.ForceSimpleAmpersand = true;
     $(document).ready( function () {
         $('#table_id').DataTable();
     } );

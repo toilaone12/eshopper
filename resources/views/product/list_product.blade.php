@@ -25,8 +25,6 @@
             <th>Số lượng</th>
             <th>Giá sản phẩm</th>
             <th>Thông tin sản phẩm</th>
-            <th>Ngày khởi tạo</th>
-            <th>Ngày cập nhật</th>
             <th>Chức năng</th>
         </tr>
     </thead>
@@ -36,13 +34,11 @@
             <td width="50">{{$p->id}}</td>
             <td>{{$p->name_category}}</td>
             <td>{{$p->name_brand}}</td>
-            <td><img width="100" height="50" src="{{url('images/product/'.$p->image_product)}}" alt="" srcset=""></td>
+            <td><img width="150" height="150" src="{{url('images/product/'.$p->image_product)}}" alt="" srcset=""></td>
             <td>{{$p->name_product}}</td>
             <td>{{$p->quantity_product}} chiếc</td>
             <td>{{number_format($p->price_product,0,',','.')}} đ</td>
-            <td>{{$p->description_product}}</td>
-            <td>{{$p->created_at}}</td>
-            <td>{{$p->updated_at}}</td>
+            <td ><span class="overflow-hidden text-nowrap d-inline-block" style="width: 150px; text-overflow:ellipsis;">{{$p->description_product}}</span></td>
             <td>
                 <a href="{{route('product.editFormProduct',['idProduct'=>$p->id])}}" class="btn btn-success" style="margin-right:15px">
                     <i class="fa-solid fa-pen-to-square"></i>

@@ -29,7 +29,7 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                        <a href="index.html" class="nav-item nav-link active">Trang chủ</a>
+                        <a href="#" class="nav-item nav-link active">Trang chủ</a>
                         <a href="shop.html" class="nav-item nav-link">Shop</a>
                         <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
                         <div class="nav-item dropdown">
@@ -125,60 +125,18 @@
 
 <!-- Categories Start -->
 <div class="container-fluid pt-5">
-    <div class="row px-xl-5 pb-3">
-        <div class="col-lg-4 col-md-6 pb-1">
-            <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                <p class="text-right">15 Products</p>
-                <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                    <img class="img-fluid" src="img/cat-1.jpg" alt="">
-                </a>
-                <h5 class="font-weight-semi-bold m-0">Men's dresses</h5>
+    <div class="col">
+        <div class="owl-carousel vendor-carousel">
+            @foreach($selectBrand as $key => $b)
+            <div class="col">
+                <div class="cat-item d-flex flex-column border mb-4" style="width: 160px; height: 150px; padding: 30px;">
+                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
+                        <img class="img-fluid image-center" src="{{url('images/brand/'.$b->logo_brand)}}" alt="">
+                    </a>
+                    <h5 class="font-weight-semi-bold m-0 text-center">{{$b->name_brand}}</h5>
+                </div>
             </div>
-        </div>
-        <div class="col-lg-4 col-md-6 pb-1">
-            <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                <p class="text-right">15 Products</p>
-                <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                    <img class="img-fluid" src="img/cat-2.jpg" alt="">
-                </a>
-                <h5 class="font-weight-semi-bold m-0">Women's dresses</h5>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-6 pb-1">
-            <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                <p class="text-right">15 Products</p>
-                <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                    <img class="img-fluid" src="img/cat-3.jpg" alt="">
-                </a>
-                <h5 class="font-weight-semi-bold m-0">Baby's dresses</h5>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-6 pb-1">
-            <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                <p class="text-right">15 Products</p>
-                <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                    <img class="img-fluid" src="img/cat-4.jpg" alt="">
-                </a>
-                <h5 class="font-weight-semi-bold m-0">Accerssories</h5>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-6 pb-1">
-            <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                <p class="text-right">15 Products</p>
-                <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                    <img class="img-fluid" src="img/cat-5.jpg" alt="">
-                </a>
-                <h5 class="font-weight-semi-bold m-0">Bags</h5>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-6 pb-1">
-            <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                <p class="text-right">15 Products</p>
-                <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                    <img class="img-fluid" src="img/cat-6.jpg" alt="">
-                </a>
-                <h5 class="font-weight-semi-bold m-0">Shoes</h5>
-            </div>
+            @endforeach
         </div>
     </div>
 </div>
@@ -186,7 +144,7 @@
 
 
 <!-- Offer Start -->
-<div class="container-fluid offer pt-5">
+<!-- <div class="container-fluid offer pt-5">
     <div class="row px-xl-5">
         <div class="col-md-6 pb-4">
             <div class="position-relative bg-secondary text-center text-md-right text-white mb-2 py-5 px-5">
@@ -209,7 +167,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- Offer End -->
 
 
@@ -220,7 +178,7 @@
     </div>
     <div class="row px-xl-5 pb-3">
         @foreach($selectOutstanding as $key => $outStanding)
-        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+        <div class="col-lg-2 col-md-3 col-sm-12 pb-1">
             <div class="card product-item border-0 mb-4">
                 <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                     <img class="img-fluid w-100" src="{{url('images/product/'.$outStanding->image_product)}}" alt="">
@@ -232,7 +190,7 @@
                     </div>
                 </div>
                 <div class="card-footer d-flex justify-content-between bg-light border">
-                    <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
+                    <a href="{{route('home.detailProduct',['idProduct'=>$outStanding->id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
                     <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</a>
                 </div>
             </div>
@@ -274,7 +232,7 @@
     <div class="row px-xl-5 pb-3">
         @foreach($selectProduct as $key => $p)
         @if($p->id_category == $c->id_category)
-        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+        <div class="col-lg-2 col-md-6 col-sm-12 pb-1">
             <div class="card product-item border-0 mb-4">
                 <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                     <img class="img-fluid w-100" src="{{url('images/product/'.$p->image_product)}}" alt="">
@@ -286,7 +244,7 @@
                     </div>
                 </div>
                 <div class="card-footer d-flex justify-content-between bg-light border">
-                    <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
+                    <a href="{{route('home.detailProduct',['idProduct'=>$p->id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
                     <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</a>
                 </div>
             </div>

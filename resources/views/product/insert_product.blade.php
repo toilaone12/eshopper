@@ -51,8 +51,9 @@
     </div>
     <div class="form-group">
         <label for="exampleFormControlTextarea1">Mô tả sản phẩm</label>
-        <textarea class="form-control" name="description_product" id="exampleFormControlTextarea1" rows="3" placeholder="Nhập mô tả"></textarea>
+        <textarea class="form-control" id="ckeditor1" name="description_product" id="exampleFormControlTextarea1" rows="3" placeholder="Nhập mô tả"></textarea>
     </div>
     <input type="submit" class="btn btn-success" value="Thêm sản phẩm" style="display: block; margin:auto; padding:auto;">
+    <div style="width: 100px;"></div>
 </form>
 @endsection
