@@ -22,6 +22,7 @@ class CreateProduct extends Migration
             $table->integer('quantity_product');
             $table->integer('price_product');
             $table->text('description_product');
+            $table->text('content_product');
             $table->timestamps();
         });
     }

@@ -44,6 +44,7 @@ class ProductController extends Controller
                 $db['quantity_product'] = $data['quantity_product'];
                 $db['price_product'] = $data['price_product'];
                 $db['description_product'] = $data['description_product'];
+                $db['content_product'] = $data['content_product'];
                 // created_at, updated_at có kiểu giá trị là timestamp r nên k cần set giá trị $date vào
                 $check_product = Product::create($db);
                 if($check_product){
@@ -93,24 +94,30 @@ class ProductController extends Controller
                 $currentImage = current(explode('.',$nameImage));
                 $extensionImage = $imageProduct->extension(); // lay duoi ten file
                 $newImage = $currentImage.'.'.$extensionImage;
-                $imageProduct->move('images/product',$newImage); // trường hợp move fail thì sao?
-                $product->id_brand = $data['name_brand'];
-                $product->id_category = $data['id_category'];
-                $product->name_product = $data['name_product'];
-                $product->imageProduct = $newImage;
-                $product->quantity_product = $data['quantity_product'];
-                $product->price_product = $data['price_product'];
-                $product->description_product = $data['description_product'];
-                $checkProduct = $product->save();
-                if($checkProduct){
-                    Session::put('message',"Sửa sản phẩm ".$data['name_product']." thành công!");
-                    return redirect()->route('product.listFormProduct');// k sử dụng redirect::to. chuyển thành redirect()->route('')
+                if($imageProduct->move('images/product',$newImage)){
+                    $product->id_brand = $data['name_brand'];
+                    $product->id_category = $data['id_category'];
+                    $product->name_product = $data['name_product'];
+                    $product->imageProduct = $newImage;
+                    $product->quantity_product = $data['quantity_product'];
+                    $product->price_product = $data['price_product'];
+                    $product->description_product = $data['description_product'];
+                    $product->content_product = $data['content_product'];
+                    $checkProduct = $product->save();
+                    if($checkProduct){
+                        Session::put('message',"Sửa sản phẩm ".$data['name_product']." thành công!");
+                        return redirect()->route('product.listFormProduct');// k sử dụng redirect::to. chuyển thành redirect()->route('')
+                    }else{
+                        Session::put('message',"Sửa sản phẩm ".$data['name_product']." thất bại!");
+                        return redirect()->route('product.editFormProduct',['id_product'=>$idProduct]);// k sử dụng redirect::to. chuyển thành redirect()->route('')
+                    }
                 }else{
-                    Session::put('message',"Sửa sản phẩm ".$data['name_product']." thất bại!");
-                    return redirect()->route('product.editFormProduct',['id_product'=>$idProduct]);// k sử dụng redirect::to. chuyển thành redirect()->route('')
-                }
+                    Session::put('message','Không thêm được ảnh vào folder!');
+                    return redirect()->route('product.listFormProduct');// k sử dụng redirect::to. chuyển thành redirect()->route('')
+                } // trường hợp move fail thì sao?
             }else{
                 Session::put('message','Kích thước ảnh quá lớn, yêu cầu giảm kích thước ảnh!');
+                return redirect()->route('product.listFormProduct');// k sử dụng redirect::to. chuyển thành redirect()->route('')
                 // return redirect()->route('product.editFormProduct',['id_product'=>$id_product]);// k sử dụng redirect::to. chuyển thành redirect()->route('')
             }
         }else{
@@ -120,6 +127,7 @@ class ProductController extends Controller
             $product->quantity_product = $data['quantity_product'];
             $product->price_product = $data['price_product'];
             $product->description_product = $data['description_product'];
+            $product->content_product = $data['content_product'];
             $checkProduct = $product->save();
             if($checkProduct){
                 Session::put('message',"Sửa sản phẩm ".$data['name_product']." thành công!");

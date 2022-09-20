@@ -2,19 +2,28 @@
 @section('content')
 <!-- Navbar Start -->
 <div class="container-fluid">
-    <div class="row border-top px-xl-5">
+    <div class="row border-top px-xl-5 pt-4 pb-4 bg-white-smoke">
         <div class="col-lg-3 d-none d-lg-block">
             <a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; margin-top: -1px; padding: 0 30px;">
-            <h6 class="m-0">Danh mục sản phẩm</h6>
-                <i class="fa fa-angle-down text-dark"></i>
+                <h6 class="m-0 text-white">Danh mục sản phẩm</h6>
+                <i class="fa fa-angle-down text-white"></i>
             </a>
             <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1;">
-                <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
+                <div class="navbar-nav w-100 bg-white" style="height: 410px">
                     @foreach($selectCategory as $key => $c)
-                    <a class="btn nav-item nav-link shadow-none d-flex align-items-center justify-content-between text-white w-100" style="height: 65px; margin-top: -1px; padding: 0 30px;">
-                        <h6 class="m-0 ">{{$c->name_category}}</h6>
-                        <i class="fa fa-angle-right text-dark"></i>
-                    </a>
+                    <div class="nav-item dropleft">
+                        <a href="#" class="nav-link">{{$c->name_category}} <i class="fa fa-angle-right float-right mt-1"></i></a>
+                        <div class="brand-hover dropdown-menu position-absolute bg-light border-0 rounded-5 w-100 m-0">
+                            <h6 class="text-center">Hãng sản xuất</h4> 
+                            <ul class="d-flex flex-wrap list-style-none pl-0" >
+                                @foreach($selectBrand as $key => $b)
+                                <li class="col-4">
+                                    <a href="" class="dropdown-item text-muted text-12 text-center">{{$b->name_brand}}</a>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
                     @endforeach
                 </div>
             </nav>
@@ -27,23 +36,23 @@
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                <div class="collapse navbar-collapse justify-content-between bg-white-smoke" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                        <a href="index.html" class="nav-item nav-link">Home</a>
-                        <a href="shop.html" class="nav-item nav-link">Shop</a>
-                        <a href="detail.html" class="nav-item nav-link active">Shop Detail</a>
+                        <a href="#" class="nav-item nav-link text-gray active">Trang chủ</a>
+                        <a href="shop.html" class="nav-item nav-link text-gray">Shop</a>
+                        <a href="detail.html" class="nav-item nav-link text-gray">Shop Detail</a>
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
+                            <a href="#" class="nav-link text-gray dropdown-toggle" data-toggle="dropdown">Pages</a>
                             <div class="dropdown-menu rounded-0 m-0">
                                 <a href="cart.html" class="dropdown-item">Shopping Cart</a>
                                 <a href="checkout.html" class="dropdown-item">Checkout</a>
                             </div>
                         </div>
-                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                        <a href="contact.html" class="nav-item nav-link text-gray">Liên hệ</a>
                     </div>
                     <div class="navbar-nav ml-auto py-0">
-                        <a href="" class="nav-item nav-link">Login</a>
-                        <a href="" class="nav-item nav-link">Register</a>
+                        <a href="{{route('home.loginForm')}}" class="nav-item nav-link text-gray">Đăng nhập</a>
+                        <a href="{{route('home.loginForm')}}" class="nav-item nav-link text-gray">Đăng ký</a>
                     </div>
                 </div>
             </nav>
@@ -85,7 +94,6 @@
                 </a>
             </div>
         </div>
-
         <div class="col-lg-7 pb-5">
             <h3 class="font-weight-semi-bold">{{$selectProductId->name_product}}</h3>
             <div class="d-flex mb-3">
@@ -102,45 +110,47 @@
             <p class="mb-4">{!!html_entity_decode($selectProductId->description_product,ENT_HTML5)!!}</p>
             <div class="d-flex mb-4">
                 <p class="text-dark font-weight-medium mb-0 mr-3">Colors:</p>
-                <form>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" class="custom-control-input" id="color-1" name="color">
-                        <label class="custom-control-label" for="color-1">Black</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" class="custom-control-input" id="color-2" name="color">
-                        <label class="custom-control-label" for="color-2">White</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" class="custom-control-input" id="color-3" name="color">
-                        <label class="custom-control-label" for="color-3">Red</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" class="custom-control-input" id="color-4" name="color">
-                        <label class="custom-control-label" for="color-4">Blue</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" class="custom-control-input" id="color-5" name="color">
-                        <label class="custom-control-label" for="color-5">Green</label>
-                    </div>
-                </form>
-            </div>
-            <div class="d-flex align-items-center mb-4 pt-2">
-                <div class="input-group quantity mr-3" style="width: 130px;">
-                    <!-- <div class="input-group-btn">
-                        <button class="btn btn-primary btn-minus" >
-                        <i class="fa fa-minus"></i>
-                        </button>
-                    </div> -->
-                    <input type="number" min="0" max="{{$selectProductId->quantity_product}}" class="form-control bg-secondary text-center" value="1">
-                    <!-- <div class="input-group-btn">
-                        <button class="btn btn-primary btn-plus" max>
-                            <i class="fa fa-plus"></i>
-                        </button>
-                    </div> -->
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" class="custom-control-input" id="color-1" name="color">
+                    <label class="custom-control-label" for="color-1">Black</label>
                 </div>
-                <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Thêm sản phẩm</button>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" class="custom-control-input" id="color-2" name="color">
+                    <label class="custom-control-label" for="color-2">White</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" class="custom-control-input" id="color-3" name="color">
+                    <label class="custom-control-label" for="color-3">Red</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" class="custom-control-input" id="color-4" name="color">
+                    <label class="custom-control-label" for="color-4">Blue</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" class="custom-control-input" id="color-5" name="color">
+                    <label class="custom-control-label" for="color-5">Green</label>
+                </div>
             </div>
+            <form action="{{route('cart.saveCart')}}" method="POST">
+                @csrf
+                <div class="d-flex align-items-center mb-4 pt-2">       
+                    <div class="input-group quantity mr-3" style="width: 130px;">
+                        <!-- <div class="input-group-btn">
+                            <button class="btn btn-primary btn-minus" >
+                            <i class="fa fa-minus"></i>
+                            </button>
+                        </div> -->
+                        <input type="hidden" name="id_product" value="{{$selectProductId->id}}">
+                        <input type="number" min="0" max="{{$selectProductId->quantity_product}}" name="quantity_product" class="form-control bg-secondary text-center" value="1">
+                        <!-- <div class="input-group-btn">
+                            <button class="btn btn-primary btn-plus" max>
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div> -->
+                    </div>
+                    <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ hàng</button>
+                </div>
+            </form>
             <div class="d-flex pt-2">
                 <p class="text-dark font-weight-medium mb-0 mr-2">Chia sẻ:</p>
                 <div class="d-inline-flex">
@@ -173,42 +183,8 @@
                     {!!html_entity_decode($selectProductId->description_product,ENT_HTML5)!!}
                 </div>
                 <div class="tab-pane fade" id="tab-pane-2">
-                    <h4 class="mb-3">Additional Information</h4>
-                    <p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam sea. Consetetur vero aliquyam invidunt duo dolores et duo sit. Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur invidunt sed sed et, lorem duo et eos elitr, sadipscing kasd ipsum rebum diam. Dolore diam stet rebum sed tempor kasd eirmod. Takimata kasd ipsum accusam sadipscing, eos dolores sit no ut diam consetetur duo justo est, sit sanctus diam tempor aliquyam eirmod nonumy rebum dolor accusam, ipsum kasd eos consetetur at sit rebum, diam kasd invidunt tempor lorem, ipsum lorem elitr sanctus eirmod takimata dolor ea invidunt.</p>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item px-0">
-                                    Sit erat duo lorem duo ea consetetur, et eirmod takimata.
-                                </li>
-                                <li class="list-group-item px-0">
-                                    Amet kasd gubergren sit sanctus et lorem eos sadipscing at.
-                                </li>
-                                <li class="list-group-item px-0">
-                                    Duo amet accusam eirmod nonumy stet et et stet eirmod.
-                                </li>
-                                <li class="list-group-item px-0">
-                                    Takimata ea clita labore amet ipsum erat justo voluptua. Nonumy.
-                                </li>
-                                </ul> 
-                        </div>
-                        <div class="col-md-6">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item px-0">
-                                    Sit erat duo lorem duo ea consetetur, et eirmod takimata.
-                                </li>
-                                <li class="list-group-item px-0">
-                                    Amet kasd gubergren sit sanctus et lorem eos sadipscing at.
-                                </li>
-                                <li class="list-group-item px-0">
-                                    Duo amet accusam eirmod nonumy stet et et stet eirmod.
-                                </li>
-                                <li class="list-group-item px-0">
-                                    Takimata ea clita labore amet ipsum erat justo voluptua. Nonumy.
-                                </li>
-                                </ul> 
-                        </div>
-                    </div>
+                    <h4 class="mb-3">Thông tin sản phẩm {{$selectProductId->name_product}}</h4>
+                    {!!$selectProductId->content_product!!}
                 </div>
                 <div class="tab-pane fade" id="tab-pane-3">
                     <div class="row">
@@ -289,7 +265,7 @@
                         </div>
                     </div>
                     <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
+                        <a href="{{route('home.detailProduct',['idProduct' => $productByCategory->id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
                         <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</a>
                     </div>
                 </div>

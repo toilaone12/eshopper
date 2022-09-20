@@ -486,6 +486,7 @@
     <script>
     CKEDITOR.replace('ckeditor');
     CKEDITOR.replace('ckeditor1');
+    CKEDITOR.replace('ckeditor2');
     CKEDITOR.config.pasteFormWordPromptCleanup = true;
     CKEDITOR.config.pasteFormWordRemoveFontStyles = false;
     CKEDITOR.config.pasteFormWordRemoveStyles = false;

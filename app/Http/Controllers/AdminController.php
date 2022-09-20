@@ -60,7 +60,8 @@ class AdminController extends Controller
             'name_admin' => $userName,
             'password_admin' => $pass,
         ];
-        if(Auth::attempt($dataAuth)){
+        $remember = $request->has('remember-me') ? true : false;
+        if(Auth::attempt($dataAuth,$remember)){
             Session::put('username',$userName); 
             return redirect()->route('admin');
             // echo Auth::attempt($dataAuth);

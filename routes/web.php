@@ -1,8 +1,11 @@
 <?php
 
+use App\Cart;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SlideController;
@@ -66,5 +69,14 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
 Route::prefix('page')->group(function(){
     Route::get('/home-page',[HomeController::class,'homePage'])->name('home.page');
     Route::get('/detail-product/{idProduct}',[HomeController::class,'detailProduct'])->name('home.detailProduct');
+    Route::get('/login',[HomeController::class, 'loginForm'])->name('home.loginForm');
+    Route::post('/register',[HomeController::class,'register'])->name('home.register');
+    Route::post('/login',[HomeController::class,'login'])->name('home.login');
+    Route::prefix('cart')->group(function(){
+        Route::post('/save-cart',[CartController::class,'saveCart'])->name('cart.saveCart');
+    });
+    Route::prefix('category')->group(function(){
+        Route::get('/{nameCategory}',[CategoryController::class,'productByCategory'])->name('category.productByCategory');
+    });
 });
 

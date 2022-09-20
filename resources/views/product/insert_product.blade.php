@@ -53,6 +53,10 @@
         <label for="exampleFormControlTextarea1">Mô tả sản phẩm</label>
         <textarea class="form-control" id="ckeditor1" name="description_product" id="exampleFormControlTextarea1" rows="3" placeholder="Nhập mô tả"></textarea>
     </div>
+    <div class="form-group">
+        <label for="exampleFormControlTextarea1">Thông tin sản phẩm</label>
+        <textarea class="form-control" id="ckeditor2" name="content_product" id="exampleFormControlTextarea1" rows="3" placeholder="Nhập thông tin"></textarea>
+    </div>
     <input type="submit" class="btn btn-success" value="Thêm sản phẩm" style="display: block; margin:auto; padding:auto;">
     <div style="width: 100px;"></div>
 </form>

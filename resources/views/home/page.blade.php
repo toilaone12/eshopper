@@ -2,19 +2,28 @@
 @section('content')
 <!-- Navbar Start -->
 <div class="container-fluid mb-5">
-    <div class="row border-top px-xl-5">
+    <div class="row border-top px-xl-5 pt-4 pb-4 bg-white-smoke">
         <div class="col-lg-3 d-none d-lg-block">
             <a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; margin-top: -1px; padding: 0 30px;">
-                <h6 class="m-0">Danh mục sản phẩm</h6>
-                <i class="fa fa-angle-down text-dark"></i>
+                <h6 class="m-0 text-white">Danh mục sản phẩm</h6>
+                <i class="fa fa-angle-down text-white"></i>
             </a>
             <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
-                <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
+                <div class="navbar-nav w-100 bg-white" style="height: 410px">
                     @foreach($selectCategory as $key => $c)
-                    <a class="btn nav-item nav-link shadow-none d-flex align-items-center justify-content-between text-white w-100" style="height: 65px; margin-top: -1px; padding: 0 30px;">
-                        <h6 class="m-0 ">{{$c->name_category}}</h6>
-                        <i class="fa fa-angle-right text-dark"></i>
-                    </a>
+                    <div class="nav-item dropleft">
+                        <a href="{{route('category.productByCategory',['nameCategory' => $c->name_category])}}" class="nav-link hover-brand text-gray">{{$c->name_category}} <i class="fa fa-angle-right float-right mt-1" style="color: #343a40;"></i></a>
+                        <div class="brand-hover dropdown-menu position-absolute bg-light border-0 rounded-5 w-100 m-0">
+                            <h6 class="text-center">Hãng sản xuất</h4> 
+                            <ul class="d-flex flex-wrap list-style-none pl-0" >
+                                @foreach($selectBrand as $key => $b)
+                                <li class="col-4">
+                                    <a href="{{route('category.productByCategory',['nameCategory' => $c->name_category])}}" class="dropdown-item text-muted text-12 text-center">{{$b->name_brand}}</a>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
                     @endforeach
                 </div>
             </nav>
@@ -27,23 +36,23 @@
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                <div class="collapse navbar-collapse justify-content-between bg-white-smoke" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                        <a href="#" class="nav-item nav-link active">Trang chủ</a>
-                        <a href="shop.html" class="nav-item nav-link">Shop</a>
-                        <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
+                        <a href="#" class="nav-item nav-link text-gray active">Trang chủ</a>
+                        <a href="shop.html" class="nav-item nav-link text-gray">Shop</a>
+                        <a href="detail.html" class="nav-item nav-link text-gray">Shop Detail</a>
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
+                            <a href="#" class="nav-link text-gray dropdown-toggle" data-toggle="dropdown">Pages</a>
                             <div class="dropdown-menu rounded-0 m-0">
                                 <a href="cart.html" class="dropdown-item">Shopping Cart</a>
                                 <a href="checkout.html" class="dropdown-item">Checkout</a>
                             </div>
                         </div>
-                        <a href="contact.html" class="nav-item nav-link">Liên hệ</a>
+                        <a href="contact.html" class="nav-item nav-link text-gray">Liên hệ</a>
                     </div>
                     <div class="navbar-nav ml-auto py-0">
-                        <a href="" class="nav-item nav-link">Đăng nhập</a>
-                        <a href="" class="nav-item nav-link">Đăng ký</a>
+                        <a href="{{route('home.loginForm')}}" class="nav-item nav-link text-gray">Đăng nhập</a>
+                        <a href="{{route('home.loginForm')}}" class="nav-item nav-link text-gray">Đăng ký</a>
                     </div>
                 </div>
             </nav>
@@ -92,30 +101,32 @@
 
 
 <!-- Featured Start -->
-<div class="container-fluid pt-5">
-    <div class="row px-xl-5 pb-3">
-        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-            <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
-                <h1 class="fa fa-check text-primary m-0 mr-3"></h1>
-                <h5 class="font-weight-semi-bold m-0">Đảm bảo chất lượng</h5>
+<div class="grid">
+    <div class="container-fluid pt-5">
+        <div class="row px-xl-5 pb-3">
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                    <h1 class="fa fa-check text-primary m-0 mr-3"></h1>
+                    <h5 class="font-weight-semi-bold m-0">Đảm bảo chất lượng</h5>
+                </div>
             </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-            <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
-                <h1 class="fa fa-shipping-fast text-primary m-0 mr-2"></h1>
-                <h5 class="font-weight-semi-bold m-0">Miễn phí vận chuyển</h5>
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                    <h1 class="fa fa-shipping-fast text-primary m-0 mr-2"></h1>
+                    <h5 class="font-weight-semi-bold m-0">Miễn phí vận chuyển</h5>
+                </div>
             </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-            <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
-                <h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
-                <h5 class="font-weight-semi-bold m-0">Hoàn trả trong vòng 14 ngày</h5>
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                    <h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
+                    <h5 class="font-weight-semi-bold m-0">Hoàn trả trong vòng 14 ngày</h5>
+                </div>
             </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-            <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
-                <h1 class="fa fa-phone-volume text-primary m-0 mr-3"></h1>
-                <h5 class="font-weight-semi-bold m-0">Hỗ trợ 24/7</h5>
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                    <h1 class="fa fa-phone-volume text-primary m-0 mr-3"></h1>
+                    <h5 class="font-weight-semi-bold m-0">Hỗ trợ 24/7</h5>
+                </div>
             </div>
         </div>
     </div>
@@ -124,19 +135,21 @@
 
 
 <!-- Categories Start -->
-<div class="container-fluid pt-5">
-    <div class="col">
-        <div class="owl-carousel vendor-carousel">
-            @foreach($selectBrand as $key => $b)
-            <div class="col">
-                <div class="cat-item d-flex flex-column border mb-4" style="width: 160px; height: 150px; padding: 30px;">
-                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid image-center" src="{{url('images/brand/'.$b->logo_brand)}}" alt="">
-                    </a>
-                    <h5 class="font-weight-semi-bold m-0 text-center">{{$b->name_brand}}</h5>
+<div class="grid">
+    <div class="container-fluid pt-5">
+        <div class="col">
+            <div class="owl-carousel vendor-carousel">
+                @foreach($selectBrand as $key => $b)
+                <div class="col">
+                    <div class="cat-item d-flex flex-column border mb-4" style="width: 160px; height: 150px; padding: 30px;">
+                        <a href="" class="cat-img position-relative overflow-hidden mb-3">
+                            <img class="img-fluid image-center" src="{{url('images/brand/'.$b->logo_brand)}}" alt="">
+                        </a>
+                        <h5 class="font-weight-semi-bold m-0 text-center">{{$b->name_brand}}</h5>
+                    </div>
                 </div>
+                @endforeach
             </div>
-            @endforeach
         </div>
     </div>
 </div>
@@ -172,30 +185,35 @@
 
 
 <!-- Products Start -->
-<div class="container-fluid pt-5">
-    <div class="text-center mb-4">
-        <h2 class="section-title px-5"><span class="px-2">Tất cả sản phẩm</span></h2>
-    </div>
-    <div class="row px-xl-5 pb-3">
-        @foreach($selectOutstanding as $key => $outStanding)
-        <div class="col-lg-2 col-md-3 col-sm-12 pb-1">
-            <div class="card product-item border-0 mb-4">
-                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                    <img class="img-fluid w-100" src="{{url('images/product/'.$outStanding->image_product)}}" alt="">
-                </div>
-                <div class="card-body border-left border-right text-center outStanding-0 pt-4 pb-3">
-                    <h6 class="text-truncate mb-3">{{$outStanding->name_product}}</h6>
-                    <div class="d-flex justify-content-center">
-                        <h6>{{number_format($outStanding->price_product,0,',','.')}} đ</h6><h6 class="text-muted ml-2"><del>{{number_format($outStanding->price_product,0,',','.')}} đ</del></h6>
+<div class="grid">
+    <div class="container-fluid pt-5">
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">Tất cả sản phẩm</span></h2>
+        </div>
+        <div class="row px-xl-5 pb-3">
+            @foreach($selectOutstanding as $key => $outStanding)
+            <div class="col-lg-2 col-md-3 col-sm-12 pb-2">
+                <div class="card product-item border-0 mb-4">
+                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                        <img class="img-fluid w-100" src="{{url('images/product/'.$outStanding->image_product)}}" alt="">
+                    </div>
+                    <div class="card-body border-left border-right text-center outStanding-0 pt-4 pb-3">
+                        <h6 class="text-truncate mb-3">{{$outStanding->name_product}}</h6>
+                        <div class="d-flex justify-content-center">
+                            <h6>{{number_format($outStanding->price_product,0,',','.')}} ₫</h6><h6 class="text-muted ml-2"><del class="f-14">{{number_format($outStanding->price_product,0,',','.')}} ₫</del></h6>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between bg-light border">
+                        <a href="{{route('home.detailProduct',['idProduct'=>$outStanding->id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
+                        <form action="{{route('cart.saveCart')}}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</button>
+                        </form>
                     </div>
                 </div>
-                <div class="card-footer d-flex justify-content-between bg-light border">
-                    <a href="{{route('home.detailProduct',['idProduct'=>$outStanding->id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
-                    <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</a>
-                </div>
             </div>
+            @endforeach
         </div>
-        @endforeach
     </div>
 </div>
 <!-- Products End -->
@@ -224,67 +242,72 @@
 
 
 <!-- Products Start -->
-@foreach($selectCategory as $key => $c)
-<div class="container-fluid pt-5">
-    <div class="text-center mb-4">
-        <h2 class="section-title px-5"><span class="px-2">{{$c->name_category}}</span></h2>
-    </div>
-    <div class="row px-xl-5 pb-3">
-        @foreach($selectProduct as $key => $p)
-        @if($p->id_category == $c->id_category)
-        <div class="col-lg-2 col-md-6 col-sm-12 pb-1">
-            <div class="card product-item border-0 mb-4">
-                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                    <img class="img-fluid w-100" src="{{url('images/product/'.$p->image_product)}}" alt="">
-                </div>
-                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                    <h6 class="text-truncate mb-3">{{$p->name_product}}</h6>
-                    <div class="d-flex justify-content-center">
-                        <h6>{{number_format($p->price_product,0,',','.')}} đ</h6><h6 class="text-muted ml-2"><del>{{number_format($p->price_product,0,',','.')}} đ</del></h6>
+<div class="grid">
+    @foreach($selectCategory as $key => $c)
+    <div class="container-fluid pt-5">
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">{{$c->name_category}}</span></h2>
+        </div>
+        <div class="row px-xl-5 pb-3">
+            @foreach($selectProduct as $key => $p)
+            @if($p->id_category == $c->id_category)
+            <div class="col-lg-2 col-md-6 col-sm-12 pb-1">
+                <div class="card product-item border-0 mb-4">
+                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                        <img class="img-fluid w-100" src="{{url('images/product/'.$p->image_product)}}" alt="">
+                    </div>
+                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                        <h6 class="text-truncate mb-3">{{$p->name_product}}</h6>
+                        <div class="d-flex justify-content-center">
+                            <h6>{{number_format($p->price_product,0,',','.')}} ₫</h6><h6 class="text-muted ml-2"><del>{{number_format($p->price_product,0,',','.')}} ₫</del></h6>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between bg-light border">
+                        <a href="{{route('home.detailProduct',['idProduct'=>$p->id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
+                        <form action="{{route('cart.saveCart')}}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</button>
+                        </form>
                     </div>
                 </div>
-                <div class="card-footer d-flex justify-content-between bg-light border">
-                    <a href="{{route('home.detailProduct',['idProduct'=>$p->id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
-                    <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</a>
-                </div>
             </div>
+            @endif
+            @endforeach
         </div>
-        @endif
-        @endforeach
     </div>
-</div>
-@endforeach
-<!-- Products End -->
-
-
-<!-- Vendor Start -->
-<div class="container-fluid py-5">
-    <div class="row px-xl-5">
-        <div class="col">
-            <div class="owl-carousel vendor-carousel">
-                <div class="vendor-item border p-4">
-                    <img src="{{asset('frontend/img/vendor-1.jpg')}}" alt="">
-                </div>
-                <div class="vendor-item border p-4">
-                    <img src="{{asset('frontend/img/vendor-2.jpg')}}" alt="">
-                </div>
-                <div class="vendor-item border p-4">
-                    <img src="{{asset('frontend/img/vendor-3.jpg')}}" alt="">
-                </div>
-                <div class="vendor-item border p-4">
-                    <img src="{{asset('frontend/img/vendor-4.jpg')}}" alt="">
-                </div>
-                <div class="vendor-item border p-4">
-                    <img src="{{asset('frontend/img/vendor-5.jpg')}}" alt="">
-                </div>
-                <div class="vendor-item border p-4">
-                    <img src="{{asset('frontend/img/vendor-6.jpg')}}" alt="">
-                </div>
-                <div class="vendor-item border p-4">
-                    <img src="{{asset('frontend/img/vendor-7.jpg')}}" alt="">
-                </div>
-                <div class="vendor-item border p-4">
-                    <img src="{{asset('frontend/img/vendor-8.jpg')}}" alt="">
+    @endforeach
+    <!-- Products End -->
+    
+    
+    <!-- Vendor Start -->
+    <div class="container-fluid py-5">
+        <div class="row px-xl-5">
+            <div class="col">
+                <div class="owl-carousel vendor-carousel">
+                    <div class="vendor-item border p-4">
+                        <img src="{{asset('frontend/img/vendor-1.jpg')}}" alt="">
+                    </div>
+                    <div class="vendor-item border p-4">
+                        <img src="{{asset('frontend/img/vendor-2.jpg')}}" alt="">
+                    </div>
+                    <div class="vendor-item border p-4">
+                        <img src="{{asset('frontend/img/vendor-3.jpg')}}" alt="">
+                    </div>
+                    <div class="vendor-item border p-4">
+                        <img src="{{asset('frontend/img/vendor-4.jpg')}}" alt="">
+                    </div>
+                    <div class="vendor-item border p-4">
+                        <img src="{{asset('frontend/img/vendor-5.jpg')}}" alt="">
+                    </div>
+                    <div class="vendor-item border p-4">
+                        <img src="{{asset('frontend/img/vendor-6.jpg')}}" alt="">
+                    </div>
+                    <div class="vendor-item border p-4">
+                        <img src="{{asset('frontend/img/vendor-7.jpg')}}" alt="">
+                    </div>
+                    <div class="vendor-item border p-4">
+                        <img src="{{asset('frontend/img/vendor-8.jpg')}}" alt="">
+                    </div>
                 </div>
             </div>
         </div>

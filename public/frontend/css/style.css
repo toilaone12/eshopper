@@ -658,6 +658,11 @@ pre code {
   padding-right: 15px;
   padding-left: 15px;
 }
+.grid{
+  width: 1500px;
+  max-width: 100%;
+  margin: 0 auto;
+}
 
 .col {
   flex-basis: 0;
@@ -3022,6 +3027,7 @@ input[type="button"].btn-block {
 }
 
 .dropdown-menu {
+
   position: absolute;
   top: 100%;
   left: 0;
@@ -3146,7 +3152,7 @@ input[type="button"].btn-block {
 .dropleft .dropdown-menu {
   top: 0;
   right: 100%;
-  left: auto;
+  left: 368px;
   margin-top: 0;
   margin-right: 0.125rem;
 }
@@ -6100,7 +6106,8 @@ a.close.disabled {
 a.bg-primary:hover, a.bg-primary:focus,
 button.bg-primary:hover,
 button.bg-primary:focus {
-  background-color: #c17a74 !important;
+  background-color: #4285f4 !important;
+  color: #fff !important;
 }
 
 .bg-secondary {
@@ -6297,8 +6304,8 @@ button.bg-dark:focus {
   border-radius: 50rem !important;
 }
 
-.rounded-0 {
-  border-radius: 0 !important;
+.rounded-5 {
+  border-radius: 5px !important;
 }
 
 .clearfix::after {
@@ -9484,6 +9491,19 @@ a.text-dark:hover, a.text-dark:focus {
     padding: 5px 0px;
   }
 }
+@media (max-width: 991.98px){
+  .bg-white-smoke{
+    background-color: #fff !important;
+  }
+}
+@media (min-width: 1200px){
+  .bg-white-smoke{
+    background-color: #F5F5F5 !important;
+  }
+}
+.text-gray{
+  color: #555 !important;
+}
 
 .navbar-vertical.navbar-light .navbar-nav .nav-link {
   padding: 8px 30px;
@@ -9578,6 +9598,34 @@ a.text-dark:hover, a.text-dark:focus {
   margin-left: auto;
   margin-right: auto;
   width: 50% !important;
+}
+.text-12{
+  font-size: 0.8125rem;
+  font-family: -apple-system,BlinkMacSystemFont,'Segoe UI';
+}
+.list-style-none{
+  list-style: none;
+}
+.f-14{
+  font-size: 14px;
+}
+.nav-item:hover .brand-hover{
+  display: block;
+}
+.bg-white-smoke{
+  background-color: #F5F5F5;
+}
+h2 strong{
+  font-size: 21px;
+}
+h3 strong{
+  font-size: 16px;
+}
+p strong{
+  font-size: 15px;
+}
+p {
+  font-size: 15px;
 }
 @keyframes action {
   0% {

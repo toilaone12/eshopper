@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Model\Category;
+use App\Model\Product;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
@@ -12,7 +14,7 @@ use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
-    //
+    //admin
     public function categoryList(){
         $getCategory = Category::all();
         //compact: nhan 1 tham so, moi tham so chua 1 bien hoac 1 mang
@@ -64,5 +66,25 @@ class CategoryController extends Controller
             Session::put('message','Xóa không thành công danh mục!');
             return redirect()->route('category.listCategory');
         }
+    }
+
+    //page
+    public function productByCategory($nameCategory){
+        $selectCategory = Category::all();
+        $selectBrand = Brand::all();
+        $selectByCategory = Category::where('name_category',$nameCategory)->first();
+        $selectProductByCategory = Product::join('category as c','c.id_category','product.id_category')
+        ->where('c.name_category',$nameCategory)->get();
+        // foreach($selectByCategory as $key => $c){
+        //     dd($c['quantity_product']);
+        // }
+        // // dd(count($selectProductByCategory->quantity_product));
+        // // $selectPriceProduct 
+        return view('category.page_category',compact(
+            'selectCategory',
+            'selectBrand',
+            'selectByCategory',
+            'selectProductByCategory'
+        ));
     }
 }
