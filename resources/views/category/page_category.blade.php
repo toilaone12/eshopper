@@ -203,13 +203,13 @@
                 <div class="row pb-3">
                     <div class="col-12 pb-1">
                         <div class="d-flex align-items-center justify-content-between mb-4">
-                            <form action="">
+                            <form action="{{route('category.productByCategory', $selectByCategory->name_category)}}" method="GET">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Tìm kiếm theo tên sản phẩm">
+                                    <input type="text" name="search" class="form-control" placeholder="Tìm kiếm tên sản phẩm">
                                     <div class="input-group-append">
-                                        <span class="input-group-text bg-transparent text-primary">
+                                        <button type="submit" style="outline:none;" class="input-group-text bg-transparent text-primary">
                                             <i class="fa fa-search"></i>
-                                        </span>
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -217,16 +217,22 @@
                                 <button class="btn border dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false">
                                             Sắp xếp theo
-                                        </button>
+                                </button>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
-                                    <a class="dropdown-item" href="#">Giá cao nhất</a>
-                                    <a class="dropdown-item" href="#">Giá thấp nhất</a>
-                                    <a class="dropdown-item" href="#">Phổ biến nhất</a>
-                                    <a class="dropdown-item" href="#">Đánh giá cao</a>
+                                    <a class="dropdown-item" href="{{route('category.productByCategory',['nameCategory' => $selectByCategory->name_category, 'filterPrice' => 'asc'])}}">Giá tăng dần</a>
+                                    <a class="dropdown-item" href="{{route('category.productByCategory',['nameCategory' => $selectByCategory->name_category, 'filterPrice' => 'desc'])}}">Giá thấp dần</a>
+                                    <a class="dropdown-item" href="{{route('category.productByCategory',['nameCategory' => $selectByCategory->name_category, 'filterPrice' => 'popular'])}}">Phổ biến nhất</a>
+                                    <a class="dropdown-item" href="{{route('category.productByCategory',['nameCategory' => $selectByCategory->name_category, 'filterPrice' => 'evaluate'])}}">Đánh giá cao</a>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    @if($searchProduct)
+                    <div class="col-12 pb-3">
+                        <span class="text-dark">{{$numberFindProduct}}</span> kết quả trả về cho từ khóa <span class="text-dark">"{{$searchProduct}}"</span>
+                    </div>
+                    @endif
+                    @if(isset($selectProductByCategory))
                     @foreach($selectProductByCategory as $key => $spbc)
                     <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
                         <div class="card product-item border-0 mb-4">
@@ -249,24 +255,24 @@
                         </div>
                     </div>
                     @endforeach
+                    @endif
                     <div class="col-12 pb-1">
                         <nav aria-label="Page navigation">
                           <ul class="pagination justify-content-center mb-3">
-                            <li class="page-item disabled">
+                            <!-- <li class="page-item disabled">
                               <a class="page-link" href="#" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                                 <span class="sr-only">Previous</span>
                               </a>
                             </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item active"><a class="page-link" href="#">{!!$selectProductByCategory->links()!!}</a></li>
                             <li class="page-item">
                               <a class="page-link" href="#" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                                 <span class="sr-only">Next</span>
                               </a>
-                            </li>
+                            </li> -->
+                            {!!$selectProductByCategory->links()!!}
                           </ul>
                         </nav>
                     </div>

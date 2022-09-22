@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class CategoryController extends Controller
 {
@@ -69,22 +70,32 @@ class CategoryController extends Controller
     }
 
     //page
-    public function productByCategory($nameCategory){
+    public function productByCategory($nameCategory, Request $request){
+        $filterPrice = $request->get('filterPrice');
+        $searchProduct = $request->get('search');
         $selectCategory = Category::all();
         $selectBrand = Brand::all();
         $selectByCategory = Category::where('name_category',$nameCategory)->first();
+        // DB::enableQueryLog();
         $selectProductByCategory = Product::join('category as c','c.id_category','product.id_category')
-        ->where('c.name_category',$nameCategory)->get();
-        // foreach($selectByCategory as $key => $c){
-        //     dd($c['quantity_product']);
-        // }
-        // // dd(count($selectProductByCategory->quantity_product));
-        // // $selectPriceProduct 
+        ->where('c.name_category',$nameCategory);
+        if($filterPrice == 'asc' || $filterPrice == 'desc'){
+            $selectProductByCategory = $selectProductByCategory->orderBy('product.price_product',$filterPrice);
+        }
+        if(isset($searchProduct)){
+            $selectProductByCategory = $selectProductByCategory->where('product.name_product','like','%'.$searchProduct.'%');
+        }
+        $selectProductByCategory = $selectProductByCategory->paginate(10);
+        // $query = DB::getQueryLog();
+        // dd($query);
+        $numberFindProduct = count($selectProductByCategory);
         return view('category.page_category',compact(
             'selectCategory',
             'selectBrand',
             'selectByCategory',
-            'selectProductByCategory'
-        ));
+            'selectProductByCategory',
+            'searchProduct',
+            'numberFindProduct',
+        )); //compact: truyen du lieu cho view
     }
 }
