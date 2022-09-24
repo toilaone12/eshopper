@@ -64,21 +64,21 @@
 											</div>
 											<div class="row mt-4">
 												<div class="form-group col-6">
-													<a href="{{URL::to('/login-gg')}}" class="btn btn-block btn-outline-info">Login with Google</a>
+													<a href="{{route('network.loginFacebook')}}" class="btn btn-block btn-outline-danger"><i class="fa-brands fa-google pr-2"></i>Google</a>
 													<!-- <a href="" class="btn btn-block btn-outline-primary"> <i class="fab fa-facebook-f"></i>   Login via facebook</a> -->
 												</div>
 												<div class="form-group col-6">
 													<!-- <a href="" class="btn btn-block btn-outline-info"> <i class="fab fa-twitter"></i>   Login via Twitter</a> -->
-													<a href="{{URL::to('/login-fb')}}" class="btn btn-block btn-outline-primary">Login with FB</a>
+													<a href="{{route('network.loginFacebook')}}" class="btn btn-block btn-outline-primary"><i class="fa-brands fa-facebook pr-2"></i>Facebook</a>
 												</div>
 											</div>
-											<div class="g-recaptcha mt-4" data-sitekey="{{env('CAPTCHA_KEY')}}"></div>
+											<!-- <div class="g-recaptcha mt-4" data-sitekey="{{env('CAPTCHA_KEY')}}"></div>
 											<br/>
 											@if($errors->has('g-recaptcha-response'))
 											<span class="invalid-feedback" style="display:block">
 												<strong>{{$errors->first('g-recaptcha-response')}}</strong>
 											</span>
-											@endif
+											@endif -->
 											<input class="btn-submit mt-2" type="submit" name="dangnhap" value="Đăng nhập">
 										</form>
 										<p class="mb-0 mt-4 text-center"><a href="{{URL::to('/check-email')}}" class="link">Quên mật khẩu?</a></p>

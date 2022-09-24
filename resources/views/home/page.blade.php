@@ -1,6 +1,10 @@
 @extends('home')
 @section('content')
 <!-- Navbar Start -->
+<?php
+use Illuminate\Support\Facades\Session;
+session_start();
+?>
 <div class="container-fluid mb-5">
     <div class="row border-top px-xl-5 pt-4 pb-4 bg-white-smoke">
         <div class="col-lg-3 d-none d-lg-block">
@@ -42,7 +46,7 @@
                         <a href="shop.html" class="nav-item nav-link text-gray">Shop</a>
                         <a href="detail.html" class="nav-item nav-link text-gray">Shop Detail</a>
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link text-gray dropdown-toggle" data-toggle="dropdown">Pages</a>
+                            <a href="#" class="nav-link text-gray dropdown-toggle">Pages</a>
                             <div class="dropdown-menu rounded-0 m-0">
                                 <a href="cart.html" class="dropdown-item">Shopping Cart</a>
                                 <a href="checkout.html" class="dropdown-item">Checkout</a>
@@ -50,10 +54,32 @@
                         </div>
                         <a href="contact.html" class="nav-item nav-link text-gray">Liên hệ</a>
                     </div>
+                    <?php
+                        $username = Session::get('username',null);
+                        $imageCustomer = Session::get('imageCustomer',null);
+                        $nameCustomer = Session::get('nameCustomer',null);
+                        if(isset($username)){
+                    ?>
+                    <div class="ml-auto py-0 profile profile-hover dropdown">
+                        <img class="w-37 h-25 img-profile profile-hover dropdown " src="{{url('images/customer/'.$imageCustomer)}}" alt="">
+                        <div class="nav-item">
+                            <div class="dropdown-menu d-none left-profile__63 top-profile__127 profile-info rounded-0 m-0">
+                                <a href="#" class="dropdown-item text-muted f-14"><i class="fas fa-signature pr-1"></i>{{$nameCustomer}}</a>
+                                <a href="cart.html" class="dropdown-item text-muted f-14"><i class="fas fa-envelope" style="padding-right: 7px !important;"></i>{{$username}}</a>
+                                <a href="{{route('home.logout')}}" class="dropdown-item text-muted f-14"><i class="fas fa-right-from-bracket " style="padding-right: 7px !important;"></i>Đăng xuất</a>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                        }else{
+                    ?>
                     <div class="navbar-nav ml-auto py-0">
                         <a href="{{route('home.loginForm')}}" class="nav-item nav-link text-gray">Đăng nhập</a>
                         <a href="{{route('home.loginForm')}}" class="nav-item nav-link text-gray">Đăng ký</a>
                     </div>
+                    <?php
+                        }
+                    ?>
                 </div>
             </nav>
             <div id="header-carousel" class="carousel slide" data-ride="carousel">

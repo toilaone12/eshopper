@@ -7,6 +7,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NetworkController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SlideController;
 use Illuminate\Support\Facades\Route;
@@ -72,6 +73,11 @@ Route::prefix('page')->group(function(){
     Route::get('/login',[HomeController::class, 'loginForm'])->name('home.loginForm');
     Route::post('/register',[HomeController::class,'register'])->name('home.register');
     Route::post('/login',[HomeController::class,'login'])->name('home.login');
+    Route::get('/log-out',[HomeController::class,'logout'])->name('home.logout');
+    Route::prefix('network')->group(function(){
+        Route::get('/login-fb',[NetworkController::class,'loginFacebook'])->name('network.loginFacebook');
+        Route::get('/callback',[NetworkController::class,'callBackFacebook'])->name('network.callBackFacebook');
+    });
     Route::prefix('cart')->group(function(){
         Route::post('/save-cart',[CartController::class,'saveCart'])->name('cart.saveCart');
     });

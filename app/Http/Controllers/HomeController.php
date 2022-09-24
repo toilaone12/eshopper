@@ -9,6 +9,7 @@ use App\Model\Brand;
 use App\Model\Customer;
 use App\Model\Slide;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
@@ -80,6 +81,7 @@ class HomeController extends Controller
         }
     }
     public function login(Request $request){
+        // DB::enableQueryLog();
         $data = $request->all();
         Validator::make($data,[
             'email_customer' => ['required','email'],
@@ -91,13 +93,25 @@ class HomeController extends Controller
             'email_customer' => $emailCustomer,
             'password_customer' => $passwordCustomer,
         ];
-        $checkLogin = Customer::where('email_customer',$emailCustomer)->where('password_customer',$passwordCustomer)->get();
+        $checkLogin = Customer::where('email_customer',$emailCustomer)->where('password_customer',md5($passwordCustomer))->first();
+        // $query = DB::getQueryLog();
+        // dd($checkLogin->name_customer);
+        $nameCustomer = $checkLogin['name_customer'];
+        $imageCustomer = $checkLogin['image_customer'];
         if($checkLogin){
             Session::put('username',$emailCustomer);
+            Session::put('nameCustomer',$nameCustomer);
+            Session::put('imageCustomer',$imageCustomer);
             return redirect()->route('home.page');
         }else{
-            return redirect()->back();
+            // return redirect()->back();
         }
         // if(Auth::attempt())
+    }
+    public function logout(){
+        Session::put('username',null);
+        Session::put('nameCustomer',null);
+        Session::put('imageCustomer',null);
+        return redirect()->route('home.page');
     }
 }
