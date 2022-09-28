@@ -71,7 +71,10 @@ class CategoryController extends Controller
 
     //page
     public function productByCategory($nameCategory, Request $request){
+        // $isChecked = $data['checked'];
         $filterPrice = $request->get('filterPrice');
+        $min = $request ->get('min');
+        $max = $request ->get('max');
         $searchProduct = $request->get('search');
         $selectCategory = Category::all();
         $selectBrand = Brand::all();
@@ -80,15 +83,35 @@ class CategoryController extends Controller
         $selectProductByCategory = Product::join('category as c','c.id_category','product.id_category')
         ->where('c.name_category',$nameCategory);
         if($filterPrice == 'asc' || $filterPrice == 'desc'){
-            $selectProductByCategory = $selectProductByCategory->orderBy('product.price_product',$filterPrice);
+            $selectProductByCategory = $selectProductByCategory
+            ->orderBy('product.price_product',$filterPrice);
         }
         if(isset($searchProduct)){
-            $selectProductByCategory = $selectProductByCategory->where('product.name_product','like','%'.$searchProduct.'%');
+            $selectProductByCategory = $selectProductByCategory
+            ->where('product.name_product','like','%'.$searchProduct.'%');
+        }
+        if($filterPrice == 'name'){
+            $selectProductByCategory = $selectProductByCategory
+            ->orderBy('product.name_product','asc'); 
+        }
+        if(isset($max)){
+            $selectProductByCategory = $selectProductByCategory
+            ->where('product.price_product','<=',$max);
+        }
+        if(isset($max) && isset($min)){
+            $selectProductByCategory = $selectProductByCategory
+            ->where('product.price_product','<=',$max)
+            ->where('product.price_product','>=',$min);
+        }
+        if(isset($min)){
+            $selectProductByCategory = $selectProductByCategory
+            ->where('product.price_product','>=',$min);
         }
         $selectProductByCategory = $selectProductByCategory->paginate(10);
         // $query = DB::getQueryLog();
         // dd($query);
         $numberFindProduct = count($selectProductByCategory);
+        // dd($selectProductByCategory);
         return view('category.page_category',compact(
             'selectCategory',
             'selectBrand',
@@ -96,6 +119,8 @@ class CategoryController extends Controller
             'selectProductByCategory',
             'searchProduct',
             'numberFindProduct',
+            'max',
+            'min'
         )); //compact: truyen du lieu cho view
     }
 }

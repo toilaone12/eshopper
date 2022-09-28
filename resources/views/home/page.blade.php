@@ -55,6 +55,7 @@ session_start();
                         <a href="contact.html" class="nav-item nav-link text-gray">Liên hệ</a>
                     </div>
                     <?php
+                        $idCustomer = Session::get('id',null);
                         $username = Session::get('username',null);
                         $imageCustomer = Session::get('imageCustomer',null);
                         $nameCustomer = Session::get('nameCustomer',null);
@@ -64,8 +65,9 @@ session_start();
                         <img class="w-37 h-25 img-profile profile-hover dropdown " src="{{url('images/customer/'.$imageCustomer)}}" alt="">
                         <div class="nav-item">
                             <div class="dropdown-menu d-none left-profile__63 top-profile__127 profile-info rounded-0 m-0">
-                                <a href="#" class="dropdown-item text-muted f-14"><i class="fas fa-signature pr-1"></i>{{$nameCustomer}}</a>
-                                <a href="cart.html" class="dropdown-item text-muted f-14"><i class="fas fa-envelope" style="padding-right: 7px !important;"></i>{{$username}}</a>
+                                <a href="{{route('customer.profile',['idCustomer' => $idCustomer])}}" class="dropdown-item text-muted f-14"><i class="fas fa-signature pr-1"></i>{{$nameCustomer}}</a>
+                                <a href="{{route('customer.profile',['idCustomer' => $idCustomer])}}" class="dropdown-item text-muted f-14"><i class="fas fa-envelope" style="padding-right: 7px !important;"></i>{{$username}}</a>
+                                <a href="{{route('home.changePass',['email' => $username])}}" class="dropdown-item text-muted f-14"><i class="fas fa-lock-open" style="padding-right: 5px !important;"></i>Đổi mật khẩu</a>
                                 <a href="{{route('home.logout')}}" class="dropdown-item text-muted f-14"><i class="fas fa-right-from-bracket " style="padding-right: 7px !important;"></i>Đăng xuất</a>
                             </div>
                         </div>
@@ -230,7 +232,7 @@ session_start();
                         </div>
                     </div>
                     <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="{{route('home.detailProduct',['idProduct'=>$outStanding->id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
+                        <a href="{{route('product.detailProduct',['idProduct'=>$outStanding->id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
                         <form action="{{route('cart.saveCart')}}" method="post">
                             @csrf
                             <button type="submit" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</button>
@@ -289,7 +291,7 @@ session_start();
                         </div>
                     </div>
                     <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="{{route('home.detailProduct',['idProduct'=>$p->id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
+                        <a href="{{route('product.detailProduct',['idProduct'=>$p->id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
                         <form action="{{route('cart.saveCart')}}" method="post">
                             @csrf
                             <button type="submit" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</button>

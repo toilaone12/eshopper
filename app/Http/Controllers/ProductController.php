@@ -98,7 +98,7 @@ class ProductController extends Controller
                     $product->id_brand = $data['name_brand'];
                     $product->id_category = $data['id_category'];
                     $product->name_product = $data['name_product'];
-                    $product->imageProduct = $newImage;
+                    $product->image_product = $newImage;
                     $product->quantity_product = $data['quantity_product'];
                     $product->price_product = $data['price_product'];
                     $product->description_product = $data['description_product'];
@@ -140,5 +140,21 @@ class ProductController extends Controller
         }
 
         // trường hợp k update ảnh thì sao?
+    }
+
+    //page
+    public function detailProduct($idProduct){
+        $selectBrand = Brand::all();
+        $selectCategory = Category::all();
+        $selectProductId = Product::join('category as c','c.id_category','product.id_category')->where('id',$idProduct)->first();
+        $categoryId = $selectProductId->id_category;
+        $selectProductByCategory = Product::where('id_category',$categoryId)->whereNotIn('id',[$idProduct])->get();
+        // dd($selectProductByCategory);
+        return view('product.detail_product',compact(
+            'selectCategory',
+            'selectProductId',
+            'selectProductByCategory',
+            'selectBrand'
+        ));
     }
 }

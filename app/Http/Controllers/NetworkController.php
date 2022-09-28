@@ -19,7 +19,7 @@ class NetworkController extends Controller
         $firstPhone = array('08','09','07','03','05');
         $sexRandom = $sex[rand(0,count($sex) - 1)];
         $phoneCustomer = $firstPhone[rand(0,count($sex) - 1)].''.substr(str_shuffle("012345678"),0,8);
-        $provider = Socialite::driver('facebook')->stateless()->user();
+        $provider = Socialite::driver('facebook')->user();
         $saveUser = Customer::firstOrCreate([
             'facebook_id' => $provider->getId()],
             [   

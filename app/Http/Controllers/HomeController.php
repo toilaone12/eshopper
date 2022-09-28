@@ -10,6 +10,7 @@ use App\Model\Customer;
 use App\Model\Slide;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
@@ -32,20 +33,6 @@ class HomeController extends Controller
             'selectFirstSlide',
         ));
         // dd($selectFirstSlide);
-    }
-    public function detailProduct($idProduct){
-        $selectBrand = Brand::all();
-        $selectCategory = Category::all();
-        $selectProductId = Product::join('category as c','c.id_category','product.id_category')->where('id',$idProduct)->first();
-        $categoryId = $selectProductId->id_category;
-        $selectProductByCategory = Product::where('id_category',$categoryId)->whereNotIn('id',[$idProduct])->get();
-        // dd($selectProductByCategory);
-        return view('home.detail_product',compact(
-            'selectCategory',
-            'selectProductId',
-            'selectProductByCategory',
-            'selectBrand'
-        ));
     }
     public function loginForm(){
         return view('home.login');
@@ -96,9 +83,11 @@ class HomeController extends Controller
         $checkLogin = Customer::where('email_customer',$emailCustomer)->where('password_customer',md5($passwordCustomer))->first();
         // $query = DB::getQueryLog();
         // dd($checkLogin->name_customer);
+        $idCustomer = $checkLogin['id_customer'];
         $nameCustomer = $checkLogin['name_customer'];
         $imageCustomer = $checkLogin['image_customer'];
         if($checkLogin){
+            Session::put('id',$idCustomer);
             Session::put('username',$emailCustomer);
             Session::put('nameCustomer',$nameCustomer);
             Session::put('imageCustomer',$imageCustomer);
@@ -113,5 +102,63 @@ class HomeController extends Controller
         Session::put('nameCustomer',null);
         Session::put('imageCustomer',null);
         return redirect()->route('home.page');
+    }
+    public function checkEmail(){
+        return view('home.check_email');
+    }
+    public function sendEmail(Request $request){
+        $data = $request->all();
+        Validator::make($data,[
+            'email_customer' => ['required','email'],
+        ])->validate();
+        $email = $data['email_customer'];
+        $checkEmail = Customer::where('email_customer',$email)->get();
+        $name = $email;
+        // dd($checkEmail->count());
+        if($checkEmail->count() > 0){
+            $data = array(
+                'name' => 'Mail từ EShopper',
+                'body' => 'yêu cầu thay đổi mật khẩu mới đến từ tài khoản '.$email,
+                'email' => $email
+            );
+            Mail::send('home.go_email',$data,function($message) use ($email,$name){
+                $message->to($email)->subject("Quên mật khẩu ở EShopper");
+                $message->from($email,$name);
+            });
+            return view('home.email_notification');
+        }else{
+            Session::put('message','Email không hợp lệ, vui lòng nhập lại!');
+            return redirect()->route('home.emailNotification');
+        }
+    }
+    public function emailNotification(){
+        return view('home.email_notification');
+    }
+    public function changePassword(Request $request){
+        $email = $request->get('email');
+        return view('home.change_pass',compact('email'));
+    }
+    public function savePassword(Request $request){
+        $email = $request->get('email');
+        $data = $request->all();
+        Validator::make($data,[
+            'password_customer' => ['required','min:6','max:32','confirmed'],
+            'password_customer_confirmation' => ['required','min:6','max:32'],
+        ])->validate();
+        // dd($email);
+        if(isset($email)){
+            // DB::enableQueryLog();
+            $customer = Customer::where('email_customer',$email)->first();
+            $customer->password_customer = md5($data['password_customer_confirmation']);
+            $savePassword = $customer->save();
+            if($savePassword){
+                return view('home.login');
+            }
+            // $query = DB::getQueryLog();
+            // dd($query);
+        }else{
+            Session::put('message','Không có email!');
+            return redirect()->route('home.checkEmail');
+        }
     }
 }

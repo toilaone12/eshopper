@@ -1,6 +1,10 @@
 @extends('home')
 @section('content')
     <!-- Navbar Start -->
+    <?php
+        use Illuminate\Support\Facades\Route;
+        use Illuminate\Support\Facades\Session;
+    ?>
     <div class="container-fluid">
     <div class="row border-top px-xl-5 pt-4 pb-4 bg-white-smoke">
         <div class="col-lg-3 d-none d-lg-block">
@@ -50,10 +54,33 @@
                         </div>
                         <a href="contact.html" class="nav-item nav-link text-gray">Liên hệ</a>
                     </div>
+                    <?php
+                        $idCustomer = Session::get('id',null);
+                        $username = Session::get('username',null);
+                        $imageCustomer = Session::get('imageCustomer',null);
+                        $nameCustomer = Session::get('nameCustomer',null);
+                        if(isset($username)){
+                    ?>
+                    <div class="ml-auto py-0 profile profile-hover dropdown">
+                        <img class="w-37 h-25 img-profile profile-hover dropdown " src="{{url('images/customer/'.$imageCustomer)}}" alt="">
+                        <div class="nav-item">
+                            <div class="dropdown-menu d-none left-profile__63 top-profile__127 profile-info rounded-0 m-0">
+                                <a href="#" class="dropdown-item text-muted f-14"><i class="fas fa-signature pr-1"></i>{{$nameCustomer}}</a>
+                                <a href="cart.html" class="dropdown-item text-muted f-14"><i class="fas fa-envelope" style="padding-right: 7px !important;"></i>{{$username}}</a>
+                                <a href="{{route('home.logout')}}" class="dropdown-item text-muted f-14"><i class="fas fa-right-from-bracket " style="padding-right: 7px !important;"></i>Đăng xuất</a>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                        }else{
+                    ?>
                     <div class="navbar-nav ml-auto py-0">
                         <a href="{{route('home.loginForm')}}" class="nav-item nav-link text-gray">Đăng nhập</a>
                         <a href="{{route('home.loginForm')}}" class="nav-item nav-link text-gray">Đăng ký</a>
                     </div>
+                    <?php
+                        }
+                    ?>
                 </div>
             </nav>
         </div>
@@ -85,46 +112,57 @@
                 <div class="border-bottom mb-4 pb-4">
                     <h5 class="font-weight-semi-bold mb-4">Lọc theo giá tiền</h5>
                     <form>
+                        <?php
+                            $nameCategory = $selectByCategory->name_category;
+                            $routeAll = route('category.productByCategory',[$nameCategory]);
+                            $routeUnder5 = route('category.productByCategory',[$nameCategory, 'max' => 5000000]);
+                            $route5To10 = route('category.productByCategory',[$nameCategory, 'min' => 5000000, 'max' => 10000000]);
+                            $route10To20 = route('category.productByCategory',[$nameCategory, 'min' => 10000000, 'max' => 20000000]);
+                            $route20To30 = route('category.productByCategory',[$nameCategory, 'min' => 20000000, 'max' => 30000000]);
+                            $routeUp30 = route('category.productByCategory',[$nameCategory, 'min' => 30000000]);
+                        ?>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" checked id="price-all">
-                            <label class="custom-control-label" for="price-all">Tất cả các giá</label>
-                            <span class="badge border font-weight-normal">1000</span>
+                            <input type="checkbox" class="custom-control-input" @if(!$max && !$min) checked @endif onclick="location.href='{{$routeAll}}'" id="price-all">
+                            <label class="custom-control-label f-14" for="price-all">Tất cả các giá</label>
+                            <span class="badge border font-weight-normal">{{$numberFindProduct}}</span>
+                        </div> 
+                         
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" @if($max == 5000000) checked @endif @if($max == 5000000) onclick="location.href='{{$routeAll}}'" @else onclick="location.href='{{$routeUnder5}}'" @endif id="price-1">
+                            <label class="custom-control-label f-14" for="price-1">Dưới 5 triệu</label>
+                            <span class="badge border font-weight-normal">{{$numberFindProduct}}</span>
+                        </div>
+                        
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" @if($max == 10000000) checked @endif @if($max == 10000000) onclick="location.href='{{$routeAll}}'" @else onclick="location.href='{{$route5To10}}'" @endif id="price-2">
+                            <label class="custom-control-label f-14" for="price-2">5 triệu - 10 triệu</label>
+                            <span class="badge border font-weight-normal">{{$numberFindProduct}}</span>
                         </div>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="price-1">
-                            <label class="custom-control-label" for="price-1">$0 - $100</label>
-                            <span class="badge border font-weight-normal">150</span>
+                            <input type="checkbox" class="custom-control-input" @if($max == 20000000) checked @endif @if($max == 20000000) onclick="location.href='{{$routeAll}}'" @else onclick="location.href='{{$route10To20}}'" @endif id="price-3">
+                            <label class="custom-control-label f-14" for="price-3">10 triệu - 20 triệu</label>
+                            <span class="badge border font-weight-normal">{{$numberFindProduct}}</span>
                         </div>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="price-2">
-                            <label class="custom-control-label" for="price-2">$100 - $200</label>
-                            <span class="badge border font-weight-normal">295</span>
+                            <input type="checkbox" class="custom-control-input" @if($max == 30000000) checked @endif @if($max == 30000000) onclick="location.href='{{$routeAll}}'" @else onclick="location.href='{{$route20To30}}'" @endif id="price-4">
+                            <label class="custom-control-label f-14" for="price-4">20 triệu - 30 triệu</label>
+                            <span class="badge border font-weight-normal">{{$numberFindProduct}}</span>
                         </div>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="price-3">
-                            <label class="custom-control-label" for="price-3">$200 - $300</label>
-                            <span class="badge border font-weight-normal">246</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="price-4">
-                            <label class="custom-control-label" for="price-4">$300 - $400</label>
-                            <span class="badge border font-weight-normal">145</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                            <input type="checkbox" class="custom-control-input" id="price-5">
-                            <label class="custom-control-label" for="price-5">$400 - $500</label>
-                            <span class="badge border font-weight-normal">168</span>
+                            <input type="checkbox" class="custom-control-input" @if($min == 30000000) checked @endif @if($min == 30000000) onclick="location.href='{{$routeAll}}'" @else onclick="location.href='{{$routeUp30}}'" @endif id="price-5">
+                            <label class="custom-control-label f-14" for="price-5">Trên 30 triệu</label>
+                            <span class="badge border font-weight-normal">{{$numberFindProduct}}</span>
                         </div>
                     </form>
                 </div>
                 <!-- Price End -->
                 
                 <!-- Color Start -->
-                <div class="border-bottom mb-4 pb-4">
+                <!-- <div class="border-bottom mb-4 pb-4">
                     <h5 class="font-weight-semi-bold mb-4">Filter by color</h5>
                     <form>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" checked id="color-all">
+                            <input type="checkbox" class="custom-control-input" id="color-all">
                             <label class="custom-control-label" for="price-all">All Color</label>
                             <span class="badge border font-weight-normal">1000</span>
                         </div>
@@ -154,15 +192,15 @@
                             <span class="badge border font-weight-normal">168</span>
                         </div>
                     </form>
-                </div>
+                </div> -->
                 <!-- Color End -->
 
                 <!-- Size Start -->
-                <div class="mb-5">
+                <!-- <div class="mb-5">
                     <h5 class="font-weight-semi-bold mb-4">Filter by size</h5>
                     <form>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" checked id="size-all">
+                            <input type="checkbox" class="custom-control-input" id="size-all">
                             <label class="custom-control-label" for="size-all">All Size</label>
                             <span class="badge border font-weight-normal">1000</span>
                         </div>
@@ -192,7 +230,7 @@
                             <span class="badge border font-weight-normal">168</span>
                         </div>
                     </form>
-                </div>
+                </div> -->
                 <!-- Size End -->
             </div>
             <!-- Shop Sidebar End -->
@@ -223,6 +261,7 @@
                                     <a class="dropdown-item" href="{{route('category.productByCategory',['nameCategory' => $selectByCategory->name_category, 'filterPrice' => 'desc'])}}">Giá thấp dần</a>
                                     <a class="dropdown-item" href="{{route('category.productByCategory',['nameCategory' => $selectByCategory->name_category, 'filterPrice' => 'popular'])}}">Phổ biến nhất</a>
                                     <a class="dropdown-item" href="{{route('category.productByCategory',['nameCategory' => $selectByCategory->name_category, 'filterPrice' => 'evaluate'])}}">Đánh giá cao</a>
+                                    <a class="dropdown-item" href="{{route('category.productByCategory',['nameCategory' => $selectByCategory->name_category, 'filterPrice' => 'name'])}}">Tên từ A->Z</a>
                                 </div>
                             </div>
                         </div>
@@ -234,7 +273,7 @@
                     @endif
                     @if(isset($selectProductByCategory))
                     @foreach($selectProductByCategory as $key => $spbc)
-                    <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
+                    <div class="col-lg-3 col-md-3 col-sm-12 pb-1">
                         <div class="card product-item border-0 mb-4">
                             <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                                 <img class="img-fluid w-100" src="{{url('images/product/'.$spbc->image_product)}}" alt="">

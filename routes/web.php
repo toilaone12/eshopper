@@ -69,11 +69,17 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
 });
 Route::prefix('page')->group(function(){
     Route::get('/home-page',[HomeController::class,'homePage'])->name('home.page');
-    Route::get('/detail-product/{idProduct}',[HomeController::class,'detailProduct'])->name('home.detailProduct');
+    
     Route::get('/login',[HomeController::class, 'loginForm'])->name('home.loginForm');
     Route::post('/register',[HomeController::class,'register'])->name('home.register');
     Route::post('/login',[HomeController::class,'login'])->name('home.login');
     Route::get('/log-out',[HomeController::class,'logout'])->name('home.logout');
+    Route::get('/check-mail',[HomeController::class,'checkEmail'])->name('home.checkEmail');
+    Route::post('/send-mail',[HomeController::class,'sendEmail'])->name('home.sendEmail');
+    Route::get('/mail-notification',[HomeController::class,'emailNotification'])->name('home.emailNotification');
+    Route::get('/change-pass',[HomeController::class,'changePassword'])->name('home.changePass');
+    Route::post('/save-password',[HomeController::class,'savePassword'])->name('home.savePass');
+    
     Route::prefix('network')->group(function(){
         Route::get('/login-fb',[NetworkController::class,'loginFacebook'])->name('network.loginFacebook');
         Route::get('/callback',[NetworkController::class,'callBackFacebook'])->name('network.callBackFacebook');
@@ -83,6 +89,14 @@ Route::prefix('page')->group(function(){
     });
     Route::prefix('category')->group(function(){
         Route::get('/{nameCategory}',[CategoryController::class,'productByCategory'])->name('category.productByCategory');
+    });
+    Route::prefix('product')->group(function(){
+        Route::get('/detail-product/{idProduct}',[ProductController::class,'detailProduct'])->name('product.detailProduct');
+    });
+    Route::prefix('customer')->group(function(){
+        Route::get('/profile',[CustomerController::class,'profile'])->name('customer.profile');
+        Route::get('/edit-profile',[CustomerController::class,'formEditProfile'])->name('customer.formEditProfile');
+        Route::post('/save-profile',[CustomerController::class,'editProfile'])->name('customer.editProfile');
     });
 });
 

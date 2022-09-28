@@ -81,7 +81,7 @@
 											@endif -->
 											<input class="btn-submit mt-2" type="submit" name="dangnhap" value="Đăng nhập">
 										</form>
-										<p class="mb-0 mt-4 text-center"><a href="{{URL::to('/check-email')}}" class="link">Quên mật khẩu?</a></p>
+										<p class="mb-0 mt-4 text-center"><a href="{{route('home.checkEmail')}}" class="link">Quên mật khẩu?</a></p>
 									</div>
 								</div>
 							</div>
