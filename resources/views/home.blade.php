@@ -180,7 +180,39 @@
     <!-- Contact Javascript File -->
     <script src="mail/jqBootstrapValidation.min.js"></script>
     <script src="mail/contact.js"></script>
-
+    <script>
+    $(document).on('mouseenter','.rating',function(){
+        var index = $(this).data('index');
+        var product_id = $(this).data('product_id');
+        for(var count = 1; count <= 5; count++){
+            $('#'+product_id+'-'+count).css('color','#ccc');
+        }
+        for(var count = 1; count <= index; count++){
+            $('#'+product_id+'-'+count).css('color','#ffcc00');
+        }
+    });     
+    $(document).on('click','.rating',function(){
+        var index = $(this).data('index');
+        var product_id = $(this).data('product_id');
+        var token = $('input[name="_token"]').val();
+        $(document).on('click','.send-comment',function(){
+            var nameComment = $('.comment-name').val();
+            var contentComment = $('.comment-content').val();
+            $.ajax({
+                url: "{{route('comment.insertComment')}}",
+                method: "POST",
+                data:{name_comment:nameComment,content_comment:contentComment,index:index, id_product:product_id, _token:token},
+                success:function(data){
+                    if(data == 'done'){
+                        alert("Bạn đã đánh giá "+index+" trên 5 sao");
+                    }else{
+                        alert("Lỗi đánh giá sao");
+                    }
+                }
+            })
+        });
+    });
+</script>
     <!-- Template Javascript -->
     <script src="{{asset('frontend/js/main.js')}}"></script>
 </body>

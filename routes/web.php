@@ -5,11 +5,13 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NetworkController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SlideController;
+use App\Model\Product;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -92,6 +94,9 @@ Route::prefix('page')->group(function(){
     });
     Route::prefix('product')->group(function(){
         Route::get('/detail-product/{idProduct}',[ProductController::class,'detailProduct'])->name('product.detailProduct');
+    });
+    Route::prefix('comment')->group(function(){
+        Route::post('/insert-comment',[CommentController::class,'comment'])->name('comment.insertComment');
     });
     Route::prefix('customer')->group(function(){
         Route::get('/profile',[CustomerController::class,'profile'])->name('customer.profile');

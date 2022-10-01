@@ -123,37 +123,38 @@
             <h3 class="font-weight-semi-bold">{{$selectProductId->name_product}}</h3>
             <div class="d-flex mb-3">
                 <div class="text-primary mr-2">
-                    <small class="fas fa-star"></small>
-                    <small class="fas fa-star"></small>
-                    <small class="fas fa-star"></small>
-                    <small class="fas fa-star-half-alt"></small>
-                    <small class="far fa-star"></small>
+                    @for($i = 1; $i <= round($selectAvgComment); $i++)
+                        <span style="color:#ffcc00;">&#9733</span>
+                    @endfor
+                    @for($i = round($selectAvgComment); $i < 5; $i++)
+                        <span style="color:#ccc;">&#9733</span>
+                    @endfor
                 </div>
-                <small class="pt-1">(50 Reviews)</small>
+                <small class="pt-1">({{$selectComment->count()}} reviews)</small>
             </div>
             <h3 class="font-weight-semi-bold mb-4">{{number_format($selectProductId->price_product,0,',','.')}} đ</h3>
             <p class="mb-4">{!!html_entity_decode($selectProductId->description_product,ENT_HTML5)!!}</p>
             <div class="d-flex mb-4">
-                <p class="text-dark font-weight-medium mb-0 mr-3">Colors:</p>
+                <p class="text-dark font-weight-medium mb-0 mr-3">Màu sắc:</p>
                 <div class="custom-control custom-radio custom-control-inline">
                     <input type="radio" class="custom-control-input" id="color-1" name="color">
-                    <label class="custom-control-label" for="color-1">Black</label>
+                    <label class="custom-control-label" for="color-1">Đen</label>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
                     <input type="radio" class="custom-control-input" id="color-2" name="color">
-                    <label class="custom-control-label" for="color-2">White</label>
+                    <label class="custom-control-label" for="color-2">Trắng</label>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
                     <input type="radio" class="custom-control-input" id="color-3" name="color">
-                    <label class="custom-control-label" for="color-3">Red</label>
+                    <label class="custom-control-label" for="color-3">Đỏ</label>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
                     <input type="radio" class="custom-control-input" id="color-4" name="color">
-                    <label class="custom-control-label" for="color-4">Blue</label>
+                    <label class="custom-control-label" for="color-4">Xanh</label>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
                     <input type="radio" class="custom-control-input" id="color-5" name="color">
-                    <label class="custom-control-label" for="color-5">Green</label>
+                    <label class="custom-control-label" for="color-5">Hồng</label>
                 </div>
             </div>
             <form action="{{route('cart.saveCart')}}" method="POST">
@@ -214,50 +215,56 @@
                 <div class="tab-pane fade" id="tab-pane-3">
                     <div class="row">
                         <div class="col-md-6">
-                            <h4 class="mb-4">1 review for "Colorful Stylish Shirt"</h4>
-                            <div class="media mb-4">
-                                <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                            <h4 class="mb-4 f-16">{{$selectComment->count()}} bình luận cho sản phẩm {{$selectProductId->name_product}}</h4>
+                            <div class="media d-inline-block">
+                                <img src="{{asset('frontend/img/user.jpg')}}" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                                @foreach($selectComment as $key => $comment)
                                 <div class="media-body">
-                                    <h6>John Doe<small> - <i>01 Jan 2045</i></small></h6>
+                                    <h6>{{$comment->name_comment}}<small> - <i>{{date('d F Y',strtotime($comment->created_at))}}</i></small></h6>
                                     <div class="text-primary mb-2">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <i class="far fa-star"></i>
+                                        @for($i = 1; $i <= $comment->rating; $i++)
+                                            <span style="color:#ffcc00;">&#9733</span>
+                                        @endfor
+                                        @for($i = $comment->rating; $i < 5; $i++)
+                                            <span style="color:#ccc;">&#9733</span>
+                                        @endfor
                                     </div>
-                                    <p>Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.</p>
+                                    <p>{{$comment->content_comment}}.</p>
                                 </div>
+                                @endforeach
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <h4 class="mb-4">Leave a review</h4>
-                            <small>Your email address will not be published. Required fields are marked *</small>
-                            <div class="d-flex my-3">
-                                <p class="mb-0 mr-2">Your Rating * :</p>
-                                <div class="text-primary">
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                            </div>
+                            <h4 class="mb-4">Để lại đánh giá</h4>
                             <form>
-                                <div class="form-group">
-                                    <label for="message">Your Review *</label>
-                                    <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
+                                @csrf
+                                <div class="d-flex my-3">
+                                    <p class="mb-0 mr-2">Đánh giá sao:</p>
+                                    <div class="text-primary">
+                                        @for($i = 1; $i <= 5; $i++)
+                                            <li style="cursor: pointer; color: #ccc;"
+                                                id="{{$selectProductId->id}}-{{$i}}" 
+                                                data-index="{{$i}}" 
+                                                data-product_id="{{$selectProductId->id}}" 
+                                                data-rating="0"
+                                                class="d-inline rating">&#9733
+                                            </li>
+                                        @endfor
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="name">Your Name *</label>
-                                    <input type="text" class="form-control" id="name">
+                                    <input type="hidden" class="form-control comment-id" id="name" value="{{$selectProductId->id}}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="email">Your Email *</label>
-                                    <input type="email" class="form-control" id="email">
+                                    <label for="name">Tên của bạn</label>
+                                    <input type="text" class="form-control comment-name" id="name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="message">Thông tin đánh giá</label>
+                                    <textarea id="message" cols="30" rows="5" class="form-control comment-content"></textarea>
                                 </div>
                                 <div class="form-group mb-0">
-                                    <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
+                                    <input type="submit" value="Gửi đánh giá" class="btn btn-primary px-3 send-comment">
                                 </div>
                             </form>
                         </div>
@@ -299,5 +306,6 @@
         </div>
     </div>
 </div>
+
 <!-- Products End -->
 @endsection

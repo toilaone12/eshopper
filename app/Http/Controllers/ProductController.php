@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Comment;
 use App\Model\Category;
 use App\Model\Product;
 use App\Model\Brand;
+use App\Model\Comment as ModelComment;
+use App\Model\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -149,12 +152,16 @@ class ProductController extends Controller
         $selectProductId = Product::join('category as c','c.id_category','product.id_category')->where('id',$idProduct)->first();
         $categoryId = $selectProductId->id_category;
         $selectProductByCategory = Product::where('id_category',$categoryId)->whereNotIn('id',[$idProduct])->get();
+        $selectComment = Comment::where('id_product',$idProduct)->get();
+        $selectAvgComment = Comment::where('id_product',$idProduct)->avg('rating');
         // dd($selectProductByCategory);
         return view('product.detail_product',compact(
             'selectCategory',
             'selectProductId',
             'selectProductByCategory',
-            'selectBrand'
+            'selectBrand',
+            'selectComment',
+            'selectAvgComment'
         ));
     }
 }
