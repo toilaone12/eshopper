@@ -48,6 +48,8 @@ class ProductController extends Controller
                 $db['price_product'] = $data['price_product'];
                 $db['description_product'] = $data['description_product'];
                 $db['content_product'] = $data['content_product'];
+                $db['number_comments'] = 0;
+                $db['number_views'] = 0;
                 // created_at, updated_at có kiểu giá trị là timestamp r nên k cần set giá trị $date vào
                 $check_product = Product::create($db);
                 if($check_product){
@@ -154,6 +156,11 @@ class ProductController extends Controller
         $selectProductByCategory = Product::where('id_category',$categoryId)->whereNotIn('id',[$idProduct])->get();
         $selectComment = Comment::where('id_product',$idProduct)->get();
         $selectAvgComment = Comment::where('id_product',$idProduct)->avg('rating');
+        if(isset($idProduct)){
+            $product = Product::find($idProduct);
+            $product->number_views += 1;
+            $product->save();
+        }
         // dd($selectProductByCategory);
         return view('product.detail_product',compact(
             'selectCategory',

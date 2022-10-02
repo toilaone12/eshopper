@@ -80,8 +80,8 @@ class CategoryController extends Controller
         $selectBrand = Brand::all();
         $selectByCategory = Category::where('name_category',$nameCategory)->first();
         // DB::enableQueryLog();
-        $selectProductByCategory = Product::join('category as c','c.id_category','product.id_category')
-        ->where('c.name_category',$nameCategory);
+        $selectProductByCategory = Product::join('category as ca','ca.id_category','product.id_category')
+        ->where('ca.name_category',$nameCategory);
         if($filterPrice == 'asc' || $filterPrice == 'desc'){
             $selectProductByCategory = $selectProductByCategory
             ->orderBy('product.price_product',$filterPrice);
@@ -93,6 +93,12 @@ class CategoryController extends Controller
         if($filterPrice == 'name'){
             $selectProductByCategory = $selectProductByCategory
             ->orderBy('product.name_product','asc'); 
+        }
+        if($filterPrice == 'evaluate'){
+            $selectProductByCategory = $selectProductByCategory->orderBy('product.number_comments','asc');
+        }
+        if($filterPrice == 'popular'){
+            $selectProductByCategory = $selectProductByCategory->orderBy('product.number_views','asc');
         }
         if(isset($max)){
             $selectProductByCategory = $selectProductByCategory

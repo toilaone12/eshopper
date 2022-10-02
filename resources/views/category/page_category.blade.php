@@ -252,16 +252,16 @@
                                 </div>
                             </form>
                             <div class="dropdown ml-4">
-                                <button class="btn border dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+                                <button class="btn border dropdown-toggle f-14" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false">
                                             Sắp xếp theo
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
-                                    <a class="dropdown-item" href="{{route('category.productByCategory',['nameCategory' => $selectByCategory->name_category, 'filterPrice' => 'asc'])}}">Giá tăng dần</a>
-                                    <a class="dropdown-item" href="{{route('category.productByCategory',['nameCategory' => $selectByCategory->name_category, 'filterPrice' => 'desc'])}}">Giá thấp dần</a>
-                                    <a class="dropdown-item" href="{{route('category.productByCategory',['nameCategory' => $selectByCategory->name_category, 'filterPrice' => 'popular'])}}">Phổ biến nhất</a>
-                                    <a class="dropdown-item" href="{{route('category.productByCategory',['nameCategory' => $selectByCategory->name_category, 'filterPrice' => 'evaluate'])}}">Đánh giá cao</a>
-                                    <a class="dropdown-item" href="{{route('category.productByCategory',['nameCategory' => $selectByCategory->name_category, 'filterPrice' => 'name'])}}">Tên từ A->Z</a>
+                                    <a class="dropdown-item f-14" href="{{route('category.productByCategory',['nameCategory' => $selectByCategory->name_category, 'filterPrice' => 'asc'])}}">Giá tăng dần</a>
+                                    <a class="dropdown-item f-14" href="{{route('category.productByCategory',['nameCategory' => $selectByCategory->name_category, 'filterPrice' => 'desc'])}}">Giá thấp dần</a>
+                                    <a class="dropdown-item f-14" href="{{route('category.productByCategory',['nameCategory' => $selectByCategory->name_category, 'filterPrice' => 'popular'])}}">Phổ biến nhất</a>
+                                    <a class="dropdown-item f-14" href="{{route('category.productByCategory',['nameCategory' => $selectByCategory->name_category, 'filterPrice' => 'evaluate'])}}">Đánh giá cao</a>
+                                    <a class="dropdown-item f-14" href="{{route('category.productByCategory',['nameCategory' => $selectByCategory->name_category, 'filterPrice' => 'name'])}}">Tên từ A->Z</a>
                                 </div>
                             </div>
                         </div>

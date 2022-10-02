@@ -212,24 +212,39 @@
                     <h4 class="mb-3">Thông tin sản phẩm {{$selectProductId->name_product}}</h4>
                     {!!$selectProductId->content_product!!}
                 </div>
+                <?php
+                    setlocale(LC_ALL,'Vietnamese.1250');
+                ?>
                 <div class="tab-pane fade" id="tab-pane-3">
                     <div class="row">
                         <div class="col-md-6">
                             <h4 class="mb-4 f-16">{{$selectComment->count()}} bình luận cho sản phẩm {{$selectProductId->name_product}}</h4>
-                            <div class="media d-inline-block">
-                                <img src="{{asset('frontend/img/user.jpg')}}" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                            <div class="media d-inline-block w-100 ">
                                 @foreach($selectComment as $key => $comment)
-                                <div class="media-body">
-                                    <h6>{{$comment->name_comment}}<small> - <i>{{date('d F Y',strtotime($comment->created_at))}}</i></small></h6>
-                                    <div class="text-primary mb-2">
-                                        @for($i = 1; $i <= $comment->rating; $i++)
-                                            <span style="color:#ffcc00;">&#9733</span>
-                                        @endfor
-                                        @for($i = $comment->rating; $i < 5; $i++)
-                                            <span style="color:#ccc;">&#9733</span>
-                                        @endfor
+                                <div class="media-body pb-3">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <span class="img-customer mr-2 d-flex justify-content-center">{{substr($comment->name_comment,0,1)}}</span>
+                                            <span class="f-14">{{$comment->name_comment}}</h6>
+                                        </div>
+                                        <small>
+                                            <i class="f-12">{{date('d/m/Y H:i',strtotime($comment->created_at))}}</i>
+                                        </small>
                                     </div>
-                                    <p>{{$comment->content_comment}}.</p>
+                                    <div class="comment-customer">
+                                        <div class="text-primary mb-2 d-flex align-items-center">
+                                            <p class="f-12 pr-1" style="margin: 0; margin-bottom: 3px;">Đánh giá:</p> 
+                                            <div>
+                                                @for($i = 1; $i <= $comment->rating; $i++)
+                                                    <span style="color:#ffcc00;">&#9733</span>
+                                                @endfor
+                                                @for($i = $comment->rating; $i < 5; $i++)
+                                                    <span style="color:#ccc;">&#9733</span>
+                                                @endfor
+                                            </div> 
+                                        </div>
+                                        <span class="f-12"><span class="pr-1">Nhận xét:</span>{{$comment->content_comment}}.</span>
+                                    </div>
                                 </div>
                                 @endforeach
                             </div>
