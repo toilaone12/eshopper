@@ -61,20 +61,20 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Shop Tech
+                EShopper
             </div>
 <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fa-solid fa-list"></i>
-                    <span>Category</span>
+                    <span>Danh mục</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Choose:</h6>
-                        <a class="collapse-item" href="{{route('category.listCategory')}}">Category List</a>
-                        <a class="collapse-item" href="{{route('category.insertFormCategory')}}">Insert Category</a>
+                        <h6 class="collapse-header">Chọn:</h6>
+                        <a class="collapse-item" href="{{route('category.listCategory')}}">Danh sách danh mục</a>
+                        <a class="collapse-item" href="{{route('category.insertFormCategory')}}">Thêm danh mục</a>
                     </div>
                 </div>
             </li>
@@ -83,13 +83,13 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo2"
                     aria-expanded="true" aria-controls="collapseTwo2">
                     <i class="fa-solid fa-copyright"></i>
-                    <span>Brand</span>
+                    <span>Thương hiệu</span>
                 </a>
                 <div id="collapseTwo2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Choose:</h6>
-                        <a class="collapse-item" href="{{route('brand.listBrand')}}">Brand Lists</a>{{--sử dụng route() --}}
-                        <a class="collapse-item" href="{{route('brand.insertFormBrand')}}">Insert Brand</a>{{--sử dụng route() --}}
+                        <h6 class="collapse-header">Chọn:</h6>
+                        <a class="collapse-item" href="{{route('brand.listBrand')}}">Danh sách thương hiệu</a>{{--sử dụng route() --}}
+                        <a class="collapse-item" href="{{route('brand.insertFormBrand')}}">Thêm thương hiệu</a>{{--sử dụng route() --}}
                     </div>
                 </div>
             </li>
@@ -97,13 +97,13 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo1"
                     aria-expanded="true" aria-controls="collapseTwo1">
                     <i class="fa-brands fa-product-hunt"></i>
-                    <span>Product</span>
+                    <span>Sản phẩm</span>
                 </a>
                 <div id="collapseTwo1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Choose:</h6>
-                        <a class="collapse-item" href="{{route('product.listFormProduct')}}">Product Lists</a>{{--sử dụng route() --}}
-                        <a class="collapse-item" href="{{route('product.insertFormProduct')}}">Insert Product</a>{{--sử dụng route() --}}
+                        <h6 class="collapse-header">Chọn:</h6>
+                        <a class="collapse-item" href="{{route('product.listFormProduct')}}">Danh sách sản phẩm</a>{{--sử dụng route() --}}
+                        <a class="collapse-item" href="{{route('product.insertFormProduct')}}">Thêm sản phẩm</a>{{--sử dụng route() --}}
                     </div>
                 </div>
             </li>
@@ -111,17 +111,29 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo3"
                     aria-expanded="true" aria-controls="collapseTwo3">
                     <i class="fa-brands fa-adversal"></i>
-                    <span>Slide</span>
+                    <span>Quảng cáo</span>
                 </a>
                 <div id="collapseTwo3" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Choose:</h6>
-                        <a class="collapse-item" href="{{route('slide.listSlide')}}">Slide Lists</a>{{--sử dụng route() --}}
-                        <a class="collapse-item" href="{{route('slide.insertFormSlide')}}">Insert Slide</a>{{--sử dụng route() --}}
+                        <h6 class="collapse-header">Chọn:</h6>
+                        <a class="collapse-item" href="{{route('slide.listSlide')}}">Danh sách quảng cáo</a>{{--sử dụng route() --}}
+                        <a class="collapse-item" href="{{route('slide.insertFormSlide')}}">Thêm quảng cáo</a>{{--sử dụng route() --}}
                     </div>
                 </div>
             </li>
-            
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo4"
+                    aria-expanded="true" aria-controls="collapseTwo4">
+                    <i class="fa-solid fa-comment"></i>
+                    <span>Bình luận</span>
+                </a>
+                <div id="collapseTwo4" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Chọn:</h6>
+                        <a class="collapse-item" href="{{route('comment.listComment')}}">Danh sách bình luận</a>{{--sử dụng route() --}}
+                    </div>
+                </div>
+            </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">

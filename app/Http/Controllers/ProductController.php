@@ -8,6 +8,7 @@ use App\Model\Product;
 use App\Model\Brand;
 use App\Model\Comment as ModelComment;
 use App\Model\Rating;
+use App\Model\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -154,21 +155,23 @@ class ProductController extends Controller
         $selectProductId = Product::join('category as c','c.id_category','product.id_category')->where('id',$idProduct)->first();
         $categoryId = $selectProductId->id_category;
         $selectProductByCategory = Product::where('id_category',$categoryId)->whereNotIn('id',[$idProduct])->get();
+        $selectReview = Review::where('id_product',$idProduct)->get();
         $selectComment = Comment::where('id_product',$idProduct)->get();
-        $selectAvgComment = Comment::where('id_product',$idProduct)->avg('rating');
-        if(isset($idProduct)){
-            $product = Product::find($idProduct);
-            $product->number_views += 1;
-            $product->save();
-        }
-        // dd($selectProductByCategory);
+        $selectAvgReview = Review::where('id_product',$idProduct)->avg('rating');
+        // if(isset($idProduct)){
+        //     $product = Product::find($idProduct);
+        //     $product->number_views += 1;
+        //     $product->save();
+        // }
+        // dd($selectReview);
         return view('product.detail_product',compact(
             'selectCategory',
             'selectProductId',
             'selectProductByCategory',
             'selectBrand',
+            'selectReview',
             'selectComment',
-            'selectAvgComment'
+            'selectAvgReview'
         ));
     }
 }

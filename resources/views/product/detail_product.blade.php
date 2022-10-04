@@ -123,14 +123,14 @@
             <h3 class="font-weight-semi-bold">{{$selectProductId->name_product}}</h3>
             <div class="d-flex mb-3">
                 <div class="text-primary mr-2">
-                    @for($i = 1; $i <= round($selectAvgComment); $i++)
+                    @for($i = 1; $i <= round($selectAvgReview); $i++)
                         <span style="color:#ffcc00;">&#9733</span>
                     @endfor
-                    @for($i = round($selectAvgComment); $i < 5; $i++)
+                    @for($i = round($selectAvgReview); $i < 5; $i++)
                         <span style="color:#ccc;">&#9733</span>
                     @endfor
                 </div>
-                <small class="pt-1">({{$selectComment->count()}} reviews)</small>
+                <small class="pt-1">({{$selectReview->count()}} reviews)</small>
             </div>
             <h3 class="font-weight-semi-bold mb-4">{{number_format($selectProductId->price_product,0,',','.')}} đ</h3>
             <p class="mb-4">{!!html_entity_decode($selectProductId->description_product,ENT_HTML5)!!}</p>
@@ -202,6 +202,7 @@
                 <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Mô tả</a>
                 <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Thông tin</a>
                 <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Đánh giá sản phẩm</a>
+                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-4">Hỏi và đáp</a>
             </div>
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="tab-pane-1">
@@ -212,38 +213,35 @@
                     <h4 class="mb-3">Thông tin sản phẩm {{$selectProductId->name_product}}</h4>
                     {!!$selectProductId->content_product!!}
                 </div>
-                <?php
-                    setlocale(LC_ALL,'Vietnamese.1250');
-                ?>
                 <div class="tab-pane fade" id="tab-pane-3">
                     <div class="row">
                         <div class="col-md-6">
-                            <h4 class="mb-4 f-16">{{$selectComment->count()}} bình luận cho sản phẩm {{$selectProductId->name_product}}</h4>
+                            <h4 class="mb-4 f-16">{{$selectReview->count()}} đánh giá cho sản phẩm {{$selectProductId->name_product}}</h4>
                             <div class="media d-inline-block w-100 ">
-                                @foreach($selectComment as $key => $comment)
+                                @foreach($selectReview as $key => $review)
                                 <div class="media-body pb-3">
                                     <div class="d-flex w-100 justify-content-between">
                                         <div class="d-flex align-items-center mb-2">
-                                            <span class="img-customer mr-2 d-flex justify-content-center">{{substr($comment->name_comment,0,1)}}</span>
-                                            <span class="f-14">{{$comment->name_comment}}</h6>
+                                            <span class="img-customer mr-2 d-flex justify-content-center">{{substr($review->name_review,0,1)}}</span>
+                                            <span class="f-14">{{$review->name_review}}</h6>
                                         </div>
                                         <small>
-                                            <i class="f-12">{{date('d/m/Y H:i',strtotime($comment->created_at))}}</i>
+                                            <i class="f-12">{{date('d/m/Y H:i',strtotime($review->created_at))}}</i>
                                         </small>
                                     </div>
                                     <div class="comment-customer">
                                         <div class="text-primary mb-2 d-flex align-items-center">
                                             <p class="f-12 pr-1" style="margin: 0; margin-bottom: 3px;">Đánh giá:</p> 
                                             <div>
-                                                @for($i = 1; $i <= $comment->rating; $i++)
+                                                @for($i = 1; $i <= $review->rating; $i++)
                                                     <span style="color:#ffcc00;">&#9733</span>
                                                 @endfor
-                                                @for($i = $comment->rating; $i < 5; $i++)
+                                                @for($i = $review->rating; $i < 5; $i++)
                                                     <span style="color:#ccc;">&#9733</span>
                                                 @endfor
                                             </div> 
                                         </div>
-                                        <span class="f-12"><span class="pr-1">Nhận xét:</span>{{$comment->content_comment}}.</span>
+                                        <span class="f-12"><span class="pr-1">Nhận xét:</span>{{$review->content_review}}.</span>
                                     </div>
                                 </div>
                                 @endforeach
@@ -268,18 +266,63 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="hidden" class="form-control comment-id" id="name" value="{{$selectProductId->id}}">
+                                    <input type="hidden" class="form-control review-id" id="name" value="{{$selectProductId->id}}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="name">Tên của bạn</label>
-                                    <input type="text" class="form-control comment-name" id="name">
+                                    <label for="name" class="f-14">Tên của bạn</label>
+                                    <input type="text" class="form-control review-name f-12" id="name">
                                 </div>
                                 <div class="form-group">
-                                    <label for="message">Thông tin đánh giá</label>
-                                    <textarea id="message" cols="30" rows="5" class="form-control comment-content"></textarea>
+                                    <label for="message" class="f-14">Thông tin đánh giá</label>
+                                    <textarea id="message" cols="30" rows="5" class="form-control review-content f-12"></textarea>
                                 </div>
                                 <div class="form-group mb-0">
-                                    <input type="submit" value="Gửi đánh giá" class="btn btn-primary px-3 send-comment">
+                                    <input type="submit" value="Gửi đánh giá" class="rounded btn btn-primary px-3 send-review">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="tab-pane-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="mb-4 f-16">{{$selectComment->count()}} câu hỏi cho sản phẩm {{$selectProductId->name_product}}</h4>
+                            <div class="media d-inline-block w-100 ">
+                                @foreach($selectComment as $key => $comment)
+                                <div class="media-body pb-3">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <span class="img-customer mr-2 d-flex justify-content-center">{{substr($comment->name_comment,0,1)}}</span>
+                                            <span class="f-14">{{$comment->name_comment}}</h6>
+                                        </div>
+                                        <small>
+                                            <i class="f-12">{{date('d/m/Y H:i',strtotime($comment->created_at))}}</i>
+                                        </small>
+                                    </div>
+                                    <div class="comment-customer">
+                                        <span class="f-12"><span class="pr-1">Câu hỏi:</span>{{$comment->answer_comment}}</span>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h4 class="mb-4">Hỏi và đáp</h4>
+                            <form>
+                                @csrf
+                                <div class="form-group">
+                                    <input type="hidden" class="form-control product-id" id="name" value="{{$selectProductId->id}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="f-14">Tên của bạn</label>
+                                    <input type="text" class="form-control comment-name f-12" id="name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="message" class="f-14">Câu hỏi của bạn</label>
+                                    <textarea id="message" cols="30" rows="5" placeholder="Xin mời để lại câu hỏi, chúng tôi sẽ trả lời bạn trong khung giờ 9h-22h" class="f-12 form-control comment-content"></textarea>
+                                </div>
+                                <div class="form-group mb-0">
+                                    <input type="submit" value="Gửi câu hỏi" class="rounded btn btn-primary px-3 send-comment">
                                 </div>
                             </form>
                         </div>

@@ -13,8 +13,8 @@ class CommentController extends Controller
         $db = array();
         $db['id_product'] = $data['id_product'];
         $db['name_comment'] = $data['name_comment'];
-        $db['content_comment'] = $data['content_comment'];
-        $db['rating'] = $data['index'];
+        $db['answer_comment'] = $data['answer_comment'];
+        // dd($data);
         $comment = Comment::create($db);
         if($comment){
             echo "done";

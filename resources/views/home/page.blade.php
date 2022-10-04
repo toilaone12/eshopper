@@ -22,7 +22,7 @@ session_start();
                             <ul class="d-flex flex-wrap list-style-none pl-0" >
                                 @foreach($selectBrand as $key => $b)
                                 <li class="col-4">
-                                    <a href="{{route('category.productByCategory', ['nameCategory' => $c->name_category])}}" class="dropdown-item text-muted text-12 text-center">{{$b->name_brand}}</a>
+                                    <a href="{{route('brand.productByBrand', ['nameBrand' => $b->name_brand])}}" class="dropdown-item text-muted text-12 text-center">{{$b->name_brand}}</a>
                                 </li>
                                 @endforeach
                             </ul>

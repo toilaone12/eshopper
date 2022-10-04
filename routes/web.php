@@ -10,6 +10,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NetworkController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SlideController;
 use App\Model\Product;
 use Illuminate\Support\Facades\Route;
@@ -68,6 +69,10 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
         Route::post('/insert-slide', [SlideController::class, 'insertSlide'])->name('slide.insertSlide');
         Route::post('/edit-slide/{idSlide}', [SlideController::class, 'editSlide'])->name('slide.editSlide');
     });
+    //Comment 
+    Route::prefix('comment')->group(function(){
+        Route::get('/list-comment', [CommentController::class, 'listComment'])->name('comment.listComment');
+    });
 });
 Route::prefix('page')->group(function(){
     Route::get('/home-page',[HomeController::class,'homePage'])->name('home.page');
@@ -82,18 +87,17 @@ Route::prefix('page')->group(function(){
     Route::get('/change-pass',[HomeController::class,'changePassword'])->name('home.changePass');
     Route::post('/save-password',[HomeController::class,'savePassword'])->name('home.savePass');
     
-    Route::prefix('network')->group(function(){
-        Route::get('/login-fb',[NetworkController::class,'loginFacebook'])->name('network.loginFacebook');
-        Route::get('/callback',[NetworkController::class,'callBackFacebook'])->name('network.callBackFacebook');
-    });
-    Route::prefix('cart')->group(function(){
-        Route::post('/save-cart',[CartController::class,'saveCart'])->name('cart.saveCart');
-    });
     Route::prefix('category')->group(function(){
         Route::get('/{nameCategory}',[CategoryController::class,'productByCategory'])->name('category.productByCategory');
     });
+    Route::prefix('brand')->group(function(){
+        Route::get('/{nameBrand}',[BrandController::class,'productByBrand'])->name('brand.productByBrand');
+    });
     Route::prefix('product')->group(function(){
         Route::get('/detail-product/{idProduct}',[ProductController::class,'detailProduct'])->name('product.detailProduct');
+    });
+    Route::prefix('review')->group(function(){
+        Route::post('/insert-review',[ReviewController::class,'review'])->name('review.insertReview');
     });
     Route::prefix('comment')->group(function(){
         Route::post('/insert-comment',[CommentController::class,'comment'])->name('comment.insertComment');
@@ -102,6 +106,13 @@ Route::prefix('page')->group(function(){
         Route::get('/profile',[CustomerController::class,'profile'])->name('customer.profile');
         Route::get('/edit-profile',[CustomerController::class,'formEditProfile'])->name('customer.formEditProfile');
         Route::post('/save-profile',[CustomerController::class,'editProfile'])->name('customer.editProfile');
+    });
+    Route::prefix('network')->group(function(){
+        Route::get('/login-fb',[NetworkController::class,'loginFacebook'])->name('network.loginFacebook');
+        Route::get('/callback',[NetworkController::class,'callBackFacebook'])->name('network.callBackFacebook');
+    });
+    Route::prefix('cart')->group(function(){
+        Route::post('/save-cart',[CartController::class,'saveCart'])->name('cart.saveCart');
     });
 });
 

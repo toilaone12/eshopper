@@ -188,28 +188,47 @@
             $('#'+product_id+'-'+count).css('color','#ccc');
         }
         for(var count = 1; count <= index; count++){
-            $('#'+product_id+'-'+count).css('color','#ffcc00');
+            if(index == 1){
+                $('#'+product_id+'-'+count).css('color','#ccc');
+            }else{
+                $('#'+product_id+'-'+count).css('color','#ffcc00');
+            }
         }
-    });     
+    });    
     $(document).on('click','.rating',function(){
         var index = $(this).data('index');
         var product_id = $(this).data('product_id');
         var token = $('input[name="_token"]').val();
-        $(document).on('click','.send-comment',function(){
-            var nameComment = $('.comment-name').val();
-            var contentComment = $('.comment-content').val();
+        $(document).on('click','.send-review',function(){
+            var nameReview = $('.review-name').val();
+            var contentReview = $('.review-content').val();
             $.ajax({
-                url: "{{route('comment.insertComment')}}",
+                url: "{{route('review.insertReview')}}",
                 method: "POST",
-                data:{name_comment:nameComment,content_comment:contentComment,index:index, id_product:product_id, _token:token},
+                data:{name_review:nameReview,content_review:contentReview,index:index, id_product:product_id, _token:token},
                 success:function(data){
                     if(data == 'done'){
-                        alert("Bạn đã đánh giá "+index+" trên 5 sao");
+                        // alert("Bạn đã đánh giá "+index+" trên 5 sao");
                     }else{
                         alert("Lỗi đánh giá sao");
                     }
                 }
             })
+        });
+    });
+    $(document).on('click','.send-comment',function(){
+        var idProduct = $('.product-id').val();
+        var nameComment = $('.comment-name').val();
+        var answerComment = $('.comment-content').val();
+        var token = $('input[name="_token"]').val();
+        // alert(idProduct+"-"+nameComment+"-"+answerComment);
+        $.ajax({
+            url: "{{route('comment.insertComment')}}",
+            method: "POST",
+            data:{id_product:idProduct,name_comment:nameComment,answer_comment:answerComment,_token:token},
+            success:function(data){
+                
+            },
         });
     });
 </script>

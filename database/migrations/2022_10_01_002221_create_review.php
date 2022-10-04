@@ -13,9 +13,11 @@ class CreateRating extends Migration
      */
     public function up()
     {
-        Schema::create('rating', function (Blueprint $table) {
-            $table->increments('id_rating');
+        Schema::create('review', function (Blueprint $table) {
+            $table->increments('id_review');
             $table->integer('id_product');
+            $table->string('name_review');
+            $table->text('content_review');
             $table->integer('rating');
             $table->timestamps();
         });
@@ -28,6 +30,6 @@ class CreateRating extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rating');
+        Schema::dropIfExists('review');
     }
 }
