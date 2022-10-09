@@ -5258,9 +5258,6 @@ a.badge-dark:focus, a.badge-dark.focus {
 .list-group-item {
   position: relative;
   display: block;
-  padding: 0.75rem 1.25rem;
-  background-color: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.125);
 }
 
 .list-group-item:first-child {
@@ -10980,6 +10977,14 @@ form.user .btn-user {
   width: 50px; 
   overflow: hidden;
   text-overflow: ellipsis; 
+}
+.f-12{
+  font-size: 12px !important;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.f-14{
+  font-size: 14px !important;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 @-webkit-keyframes noise-anim {

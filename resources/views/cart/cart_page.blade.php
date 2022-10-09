@@ -1,6 +1,9 @@
 @extends('home')
 @section('content')
 <!-- Navbar Start -->
+<?php
+    use Illuminate\Support\Facades\Session;
+?>
 <div class="container-fluid">
     <div class="row border-top px-xl-5">
         <div class="col-lg-3 d-none d-lg-block">
@@ -84,25 +87,34 @@
             <table class="table table-bordered text-center mb-0">
                 <thead class="bg-secondary text-dark">
                     <tr>
-                        <th>Tên sản phẩm</th>
                         <th>Hình ảnh</th>
+                        <th>Tên sản phẩm</th>
                         <th>Số lượng</th>
                         <th>Giá sản phẩm</th>
                         <th>Xóa sản phẩm</th>
                     </tr>
                 </thead>
                 <tbody class="align-middle">
+                    <?php
+                        $cart = Session::get('cart');
+                    ?>
+                    @foreach($cart as $key => $c)
+                    @php
+                        $total = $c['priceProduct']*$c['quantityProduct'];
+                        $allTotal = 0;
+                        $allTotal += $total;
+                    @endphp
                     <tr>
-                        <td class="align-middle"><img src="img/product-1.jpg" alt="" style="width: 50px;"> Colorful Stylish Shirt</td>
-                        <td class="align-middle">$150</td>
+                        <td class="align-middle"><img src="{{asset('images/product/'.$c['imageProduct'])}}" alt="" style="width: 50px;"></td>
+                        <td class="align-middle">{{$c['nameProduct']}}</td>
                         <td class="align-middle">
                             <div class="input-group quantity mx-auto" style="width: 100px;">
                                 <div class="input-group-btn">
                                     <button class="btn btn-sm btn-primary btn-minus" >
-                                    <i class="fa fa-minus"></i>
+                                        <i class="fa fa-minus"></i>
                                     </button>
                                 </div>
-                                <input type="text" class="form-control form-control-sm bg-secondary text-center" value="1">
+                                <input type="text" data-price="{{$c['priceProduct']}}" class="form-control form-control-sm bg-secondary text-center" value="{{$c['quantityProduct']}}">
                                 <div class="input-group-btn">
                                     <button class="btn btn-sm btn-primary btn-plus">
                                         <i class="fa fa-plus"></i>
@@ -110,41 +122,42 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="align-middle">$150</td>
-                        <td class="align-middle"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
+                        <td class="align-middle total">{{number_format($total,0,'.',',')}} ₫</td>
+                        <td class="align-middle"><button class="btn btn-sm btn-primary remove-product" data-url="{{route('cart.removeCart')}}" data-id="{{$key}}"><i class="fa fa-times"></i></button></td>
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
         <div class="col-lg-4">
             <form class="mb-5" action="">
                 <div class="input-group">
-                    <input type="text" class="form-control p-4" placeholder="Coupon Code">
+                    <input type="text" class="form-control p-4" placeholder="Nhập mã giảm giá">
                     <div class="input-group-append">
-                        <button class="btn btn-primary">Apply Coupon</button>
+                        <button class="btn btn-primary">Mã giảm giã</button>
                     </div>
                 </div>
             </form>
             <div class="card border-secondary mb-5">
                 <div class="card-header bg-secondary border-0">
-                    <h4 class="font-weight-semi-bold m-0">Cart Summary</h4>
+                    <h4 class="font-weight-semi-bold m-0">Tổng tiền giỏ hàng</h4>
                 </div>
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-3 pt-1">
-                        <h6 class="font-weight-medium">Subtotal</h6>
-                        <h6 class="font-weight-medium">$150</h6>
+                        <h6 class="font-weight-medium">Tổng tiền</h6>
+                        <h6 class="font-weight-medium">{{number_format($allTotal,0,'.',',')}} ₫</h6>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <h6 class="font-weight-medium">Shipping</h6>
-                        <h6 class="font-weight-medium">$10</h6>
+                        <h6 class="font-weight-medium">Giá vận chuyển</h6>
+                        <h6 class="font-weight-medium">0 ₫</h6>
                     </div>
                 </div>
                 <div class="card-footer border-secondary bg-transparent">
                     <div class="d-flex justify-content-between mt-2">
-                        <h5 class="font-weight-bold">Total</h5>
-                        <h5 class="font-weight-bold">$160</h5>
+                        <h5 class="font-weight-bold">Tổng cộng</h5>
+                        <h5 class="font-weight-bold">{{number_format($allTotal,0,'.',',')}} ₫</h5>
                     </div>
-                    <button class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
+                    <button class="btn btn-block btn-primary my-3 py-3">Mua hàng</button>
                 </div>
             </div>
         </div>

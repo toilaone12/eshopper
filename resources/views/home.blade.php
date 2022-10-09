@@ -25,7 +25,7 @@
     <link href="{{asset('frontend/css/style.css')}}" rel="stylesheet">
 </head>
 
-<body>
+<body class="body">
     <!-- Topbar Start -->
     <div class="container-fluid">
         <div class="row bg-secondary py-2 px-xl-5">
@@ -82,7 +82,7 @@
                         <i class="fas fa-heart text-primary"></i>
                         <span class="badge">0</span>
                     </a>
-                    <a href="" class="btn border">
+                    <a href="{{route('cart.checkCart')}}" class="btn border">
                         <i class="fas fa-shopping-cart text-primary"></i>
                         <span class="badge">0</span>
                     </a>
@@ -227,8 +227,46 @@
             method: "POST",
             data:{id_product:idProduct,name_comment:nameComment,answer_comment:answerComment,_token:token},
             success:function(data){
-                
+                if(data == 'done'){
+                    // alert("Cảm ơn bạn đã hỏi!");
+                }
             },
+        });
+    });
+    $(document).on('click','.add-cart',function(){
+        var _token = $('input[name="_token"]').val();
+        var idProduct = $(this).data('id-product');
+        // alert(idProduct);
+        $.ajax({
+            url: "{{route('cart.addCart')}}",
+            method: "POST",
+            data:
+            {
+                _token:_token,
+                id_product: idProduct,
+            },
+            success:function(data){
+                if(data == "done"){
+
+                }
+            },
+        });
+    });
+    $(document).on('click','.remove-product',function(){
+        var id = $(this).data('id');
+        var url = $(this).data('url');
+        $.ajax({
+            url: url,
+            method: "GET",
+            data: 
+            {
+                id_product: id,
+            },
+            success:function(data){
+                if(data == "done"){
+                    location.reload();
+                }
+            }
         });
     });
 </script>

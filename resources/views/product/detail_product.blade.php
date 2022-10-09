@@ -157,7 +157,7 @@
                     <label class="custom-control-label" for="color-5">Hồng</label>
                 </div>
             </div>
-            <form action="{{route('cart.saveCart')}}" method="POST">
+            <form action="{{route('cart.addCart')}}" method="POST">
                 @csrf
                 <div class="d-flex align-items-center mb-4 pt-2">       
                     <div class="input-group quantity mr-3" style="width: 130px;">
@@ -289,20 +289,41 @@
                             <h4 class="mb-4 f-16">{{$selectComment->count()}} câu hỏi cho sản phẩm {{$selectProductId->name_product}}</h4>
                             <div class="media d-inline-block w-100 ">
                                 @foreach($selectComment as $key => $comment)
+                                @if($comment->name_comment !== "Quản trị viên")
                                 <div class="media-body pb-3">
                                     <div class="d-flex w-100 justify-content-between">
                                         <div class="d-flex align-items-center mb-2">
                                             <span class="img-customer mr-2 d-flex justify-content-center">{{substr($comment->name_comment,0,1)}}</span>
-                                            <span class="f-14">{{$comment->name_comment}}</h6>
+                                            <span class="f-14">{{$comment->name_comment}}</span>
                                         </div>
                                         <small>
                                             <i class="f-12">{{date('d/m/Y H:i',strtotime($comment->created_at))}}</i>
                                         </small>
                                     </div>
                                     <div class="comment-customer">
-                                        <span class="f-12"><span class="pr-1">Câu hỏi:</span>{{$comment->answer_comment}}</span>
+                                        <span class="f-12"><span class="pr-1">Câu hỏi:</span>{{$comment->comment}}</span>
                                     </div>
                                 </div>
+                                @endif
+                                @foreach($selectComment as $key => $reply_comment)
+                                @if($comment->id_comment == $reply_comment->reply_comment)
+                                <div class="media-body pb-3 pl-4">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <img src="{{asset('frontend/img/eshopper.png')}}" class="img-customer mr-2 d-flex justify-content-center">
+                                            <span class="f-14">{{$reply_comment->name_comment}}</span>
+                                            <span class="logo-qtv">QTV</span>
+                                        </div>
+                                        <small>
+                                            <i class="f-12">{{date('d/m/Y H:i',strtotime($reply_comment->created_at))}}</i>
+                                        </small>
+                                    </div>
+                                    <div class="comment-customer">
+                                        <span class="f-12"><span class="pr-1">Câu hỏi:</span>{{$reply_comment->comment}}</span>
+                                    </div>
+                                </div>
+                                @endif
+                                @endforeach
                                 @endforeach
                             </div>
                         </div>

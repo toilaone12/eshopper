@@ -72,6 +72,7 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
     //Comment 
     Route::prefix('comment')->group(function(){
         Route::get('/list-comment', [CommentController::class, 'listComment'])->name('comment.listComment');
+        Route::post('/reply-comment', [CommentController::class, 'replyComment'])->name('comment.replyComment');
     });
 });
 Route::prefix('page')->group(function(){
@@ -112,7 +113,9 @@ Route::prefix('page')->group(function(){
         Route::get('/callback',[NetworkController::class,'callBackFacebook'])->name('network.callBackFacebook');
     });
     Route::prefix('cart')->group(function(){
-        Route::post('/save-cart',[CartController::class,'saveCart'])->name('cart.saveCart');
+        Route::post('/add-cart',[CartController::class,'addCart'])->name('cart.addCart');
+        Route::get('/check-cart',[CartController::class,'checkCart'])->name('cart.checkCart');
+        Route::get('/remove-cart',[CartController::class,'removeCart'])->name('cart.removeCart');
     });
 });
 

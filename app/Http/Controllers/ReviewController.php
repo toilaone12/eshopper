@@ -8,11 +8,6 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
-    //admin
-    // public function listReview(){
-    //     $listComment = Review::join('product as p','p.id','comment.id_product')->get();
-    //     return view('comment.list_comment',compact('listComment'));
-    // }
     //page
     public function review(Request $request){
         $data = $request->all();

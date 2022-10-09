@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Shop Tech</title>
 
@@ -19,6 +20,7 @@
         <script src="https://kit.fontawesome.com/8c040fba7a.js" crossorigin="anonymous"></script>
     <!-- Custom styles for this template-->
     <link href="{{asset('backend/css/sb-admin-2.min.css')}}" rel="stylesheet">
+    <link href="{{asset('backend/css/sb-admin-2.css')}}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 
     <!-- CSS only -->
@@ -124,13 +126,13 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo4"
                     aria-expanded="true" aria-controls="collapseTwo4">
-                    <i class="fa-solid fa-comment"></i>
-                    <span>Bình luận</span>
+                    <i class="fa-solid fa-question"></i>
+                    <span>Câu hỏi của khách hàng</span>
                 </a>
                 <div id="collapseTwo4" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Chọn:</h6>
-                        <a class="collapse-item" href="{{route('comment.listComment')}}">Danh sách bình luận</a>{{--sử dụng route() --}}
+                        <a class="collapse-item" href="{{route('comment.listComment')}}">Danh sách câu hỏi</a>{{--sử dụng route() --}}
                     </div>
                 </div>
             </li>
@@ -471,6 +473,7 @@
             </div>
         </div>
     </div>
+    
     <script
     src="https://code.jquery.com/jquery-3.6.1.js"
     integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
@@ -511,6 +514,26 @@
     $(document).ready( function () {
         $('#table_id').DataTable();
     } );
+    </script>
+    <script>
+        $(document).on('click','.button-answer',function(){
+            var commentId = $(this).data('comment-id');
+            var productId = $(this).data('product-id');
+            var answer = $('.answer-question-'+commentId).val();
+            var token = $('input[name="_token"]').val();
+            // alert(answer+"-"+commentId+"-"+productId+"-"+token);
+            $.ajax({
+                url: "{{route('comment.replyComment')}}",
+                method: "POST",
+                data:{reply_comment:answer,id_comment:commentId,id_product:productId,_token:token},
+                success: function(data){
+                    if(data == "done"){
+                        location.reload();
+                        alert('Bạn đã trả lời thành công!');
+                    }
+                },
+            });
+        });
     </script>
 </body>
 

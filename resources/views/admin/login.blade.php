@@ -36,7 +36,7 @@
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url({{asset('backend/img/hanoi.jpg')}});">
 			<div class="wrap-login100">
-				<form class="login100-form validate-form" action="{{route('admin.saveLogin')}}" method="POST">
+				<form class="login100-form validate-form" action="{{route('admin.saveLogin')}}" method="POST" autocomplete="TRUE">
                     @csrf
 					<span class="login100-form-logo">
 						<i class="zmdi zmdi-landscape"></i>
