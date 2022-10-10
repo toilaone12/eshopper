@@ -46,6 +46,7 @@ class CartController extends Controller
                 "priceProduct" => $priceProduct,
             ];
         }
+        echo "done";
         Session::put('cart',$cart);
         return redirect()->route('cart.checkCart');
         // // $check = Session::get('cart');
@@ -57,11 +58,32 @@ class CartController extends Controller
         //     'cart'
         // ));
     }
+    public function updateCart(Request $request){
+        $id = $request->get('id_product');
+        $product = Product::find($id);
+        $quantityProduct = $request->get('quantity_product');
+        $cart = Session::get('cart');
+        if(isset($cart[$id])){
+            if($quantityProduct <= $product->quantity_product){
+                $cart[$id]['quantityProduct'] = $quantityProduct;
+            }else{
+                $cart[$id]['quantityProduct'] = $cart[$id]['quantityProduct'];
+            }
+        }else{
+            $cart[$id]['quantityProduct'] = $cart[$id]['quantityProduct'];
+        }
+        Session::put('cart',$cart);
+        // return print_r($cart);
+        echo "done";
+    }
     public function removeCart(Request $request){
         $id = $request->get('id_product');
         $carts = Session::get('cart');
         unset($carts[$id]);
         Session::put('cart',$carts);
+        if(count($carts) == 0){
+            Session::flush();
+        }
         echo "done";
         // return print_r($data);
     }

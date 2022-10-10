@@ -286,7 +286,7 @@
                             </div>
                             <div class="card-footer d-flex justify-content-between bg-light border">
                                 <a href="{{route('product.detailProduct',['idProduct'=>$spbc->id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
-                                <form action="{{route('cart.saveCart')}}" method="post">
+                                <form action="{{route('cart.addCart')}}" method="post">
                                     @csrf
                                     <button type="submit" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</button>
                                 </form>

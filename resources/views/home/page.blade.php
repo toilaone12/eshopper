@@ -295,7 +295,10 @@ session_start();
                         <a href="{{route('product.detailProduct',['idProduct'=>$p->id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
                         <form action="{{route('cart.addCart')}}" method="post">
                             @csrf
-                            <button type="submit" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</button>
+                            <button type="submit" data-id-product="{{$outStanding->id}}"
+                            class="btn btn-sm text-dark p-0 add-cart">
+                                <i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng
+                            </button>
                         </form>
                     </div>
                 </div>

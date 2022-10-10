@@ -24,7 +24,6 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{asset('frontend/css/style.css')}}" rel="stylesheet">
 </head>
-
 <body class="body">
     <!-- Topbar Start -->
     <div class="container-fluid">
@@ -84,7 +83,17 @@
                     </a>
                     <a href="{{route('cart.checkCart')}}" class="btn border">
                         <i class="fas fa-shopping-cart text-primary"></i>
-                        <span class="badge">0</span>
+                        @php
+                            use Illuminate\Support\Facades\Session;
+                            $cart = Session::get('cart');
+                        @endphp
+                        <span class="badge">
+                            @if(isset($cart))
+                                {{count($cart)}}
+                            @else
+                                0
+                            @endif
+                        </span>
                     </a>
                 </div>
             </div>
@@ -236,7 +245,6 @@
     $(document).on('click','.add-cart',function(){
         var _token = $('input[name="_token"]').val();
         var idProduct = $(this).data('id-product');
-        // alert(idProduct);
         $.ajax({
             url: "{{route('cart.addCart')}}",
             method: "POST",
@@ -247,7 +255,7 @@
             },
             success:function(data){
                 if(data == "done"){
-
+                    location.reload();
                 }
             },
         });
@@ -268,6 +276,40 @@
                 }
             }
         });
+    });
+    $('.quantity button').on('click', function () {
+        var button = $(this);
+        var id = button.parent().parent().find('input').data('id');
+        var oldValue = button.parent().parent().find('input').val();
+        var price = button.parent().parent().find('input').data('price');
+        if (button.hasClass('btn-plus')) {
+            var newVal = parseFloat(oldValue) + 1;
+            var newPrice = Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(newVal * price);
+        } else {
+            if (oldValue > 0) {
+                var newVal = parseFloat(oldValue) - 1;
+                var newPrice = Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(newVal * price);
+            } else {
+                newVal = 0;
+            }
+        }
+        button.parent().parent().find('input').val(newVal);
+        button.parent().parent().parent().parent().find('.total').text(newPrice);
+        alert(id+"-"+a);
+        // $.ajax({
+        //     url: "{{route('cart.updateCart')}}",
+        //     method: "GET",
+        //     data: {
+        //         id_product: id,
+        //         quantity_product: newVal,
+        //     },
+        //     success:function(data){
+        //         if(data == "done"){
+        //             location.href = "{{route('cart.checkCart')}}";
+        //         }
+        //         // console.log(data);
+        //     }
+        // });
     });
 </script>
     <!-- Template Javascript -->

@@ -5,7 +5,7 @@
         use Illuminate\Support\Facades\Route;
         use Illuminate\Support\Facades\Session;
     ?>
-    <div class="container-fluid">
+<div class="container-fluid">
     <div class="row border-top px-xl-5 pt-4 pb-4 bg-white-smoke">
         <div class="col-lg-3 d-none d-lg-block">
             <a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; margin-top: -1px; padding: 0 30px;">
@@ -286,7 +286,7 @@
                             </div>
                             <div class="card-footer d-flex justify-content-between bg-light border">
                                 <a href="{{route('product.detailProduct',['idProduct'=>$spbb->id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
-                                <form action="{{route('cart.saveCart')}}" method="post">
+                                <form action="{{route('cart.addCart')}}" method="post">
                                     @csrf
                                     <button type="submit" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</button>
                                 </form>

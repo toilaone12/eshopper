@@ -116,6 +116,7 @@ Route::prefix('page')->group(function(){
         Route::post('/add-cart',[CartController::class,'addCart'])->name('cart.addCart');
         Route::get('/check-cart',[CartController::class,'checkCart'])->name('cart.checkCart');
         Route::get('/remove-cart',[CartController::class,'removeCart'])->name('cart.removeCart');
+        Route::get('/update-cart',[CartController::class,'updateCart'])->name('cart.updateCart');
     });
 });
 

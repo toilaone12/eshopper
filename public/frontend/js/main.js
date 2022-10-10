@@ -85,24 +85,24 @@
 
 
     // Product Quantity
-    $('.quantity button').on('click', function () {
-        var button = $(this);
-        var oldValue = button.parent().parent().find('input').val();
-        var price = button.parent().parent().find('input').data('price');
-        if (button.hasClass('btn-plus')) {
-            var newVal = parseFloat(oldValue) + 1;
-            var newPrice = Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(newVal * price);
-        } else {
-            if (oldValue > 0) {
-                var newVal = parseFloat(oldValue) - 1;
-                var newPrice = Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(newVal * price);
-            } else {
-                newVal = 0;
-            }
-        }
-        button.parent().parent().find('input').val(newVal);
-        button.parent().parent().parent().parent().find('.total').text(newPrice);
-    });
+    // $('.quantity button').on('click', function () {
+    //     var button = $(this);
+    //     var oldValue = button.parent().parent().find('input').val();
+    //     var price = button.parent().parent().find('input').data('price');
+    //     if (button.hasClass('btn-plus')) {
+    //         var newVal = parseFloat(oldValue) + 1;
+    //         var newPrice = Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(newVal * price);
+    //     } else {
+    //         if (oldValue > 0) {
+    //             var newVal = parseFloat(oldValue) - 1;
+    //             var newPrice = Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(newVal * price);
+    //         } else {
+    //             newVal = 0;
+    //         }
+    //     }
+    //     button.parent().parent().find('input').val(newVal);
+    //     button.parent().parent().parent().parent().find('.total').text(newPrice);
+    // });
 
 })(jQuery);
 
