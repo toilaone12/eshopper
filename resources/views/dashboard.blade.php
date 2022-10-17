@@ -22,7 +22,7 @@
     <link href="{{asset('backend/css/sb-admin-2.min.css')}}" rel="stylesheet">
     <link href="{{asset('backend/css/sb-admin-2.css')}}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css" integrity="sha512-bYPO5jmStZ9WI2602V2zaivdAnbAhtfzmxnEGh9RwtlI00I9s8ulGe4oBa5XxiC6tCITJH/QG70jswBhbLkxPw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 
@@ -133,6 +133,20 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Chọn:</h6>
                         <a class="collapse-item" href="{{route('comment.listComment')}}">Danh sách câu hỏi</a>{{--sử dụng route() --}}
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo5"
+                    aria-expanded="true" aria-controls="collapseTwo5">
+                    <i class="fa-solid fa-percent"></i>
+                    <span>Mã giảm giá</span>
+                </a>
+                <div id="collapseTwo5" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Chọn:</h6>
+                        <a class="collapse-item" href="{{route('coupon.listCoupon')}}">Danh sách mã giảm giá</a>{{--sử dụng route() --}}
+                        <a class="collapse-item" href="{{route('coupon.insertFromCoupon')}}">Thêm mã giảm giá</a>{{--sử dụng route() --}}
                     </div>
                 </div>
             </li>
@@ -495,8 +509,7 @@
     <script src="{{asset('backend/js/demo/chart-area-demo.js')}}"></script>
     <script src="{{asset('backend/js/demo/chart-pie-demo.js')}}"></script>
     <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
-    
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha512-AIOTidJAcHBH2G/oZv9viEGXRqDNmfdPVPYOYKGy3fti0xIplnlgMHUGfuNRzC6FkzIo0iIxgFnr9RikFxK+sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- @Html.TextAreaFor(model=>model.CourseDescription, new { @id = "editor"}) -->
     <script>
     CKEDITOR.replace('ckeditor');
@@ -533,6 +546,10 @@
                     }
                 },
             });
+        });
+        $('.datetime').datetimepicker({
+            step: 1,
+            
         });
     </script>
 </body>

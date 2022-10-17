@@ -4444,7 +4444,6 @@ input[type="button"].btn-block {
 .card-footer {
   padding: 0.75rem 1.25rem;
   background-color: rgba(0, 0, 0, 0.03);
-  border-top: 1px solid rgba(0, 0, 0, 0.125);
 }
 
 .card-header-tabs {
@@ -9184,6 +9183,12 @@ button.bg-dark:focus {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.text-product-order{
+  width: 92px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 .text-left {
   text-align: left !important;
@@ -9658,6 +9663,64 @@ a.text-dark:hover, a.text-dark:focus {
   background-color: #007bff;
   content: "";
 }
+.cart-menu{
+  position: absolute;
+  width: 100%;
+  top: 120%;
+  left: -15px;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 10rem;
+  padding: 0.5rem 0;
+  margin: 0.125rem 0 0;
+  font-size: 1rem;
+  color: #6F6F6F;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+}
+.cart-menu::after{
+  content: "";
+  position: absolute;
+  background-color: transparent;
+  width: 100%;
+  height: 50px;
+  top: -39px;
+}
+.image-cart{
+  width: 50px;
+  height: 50px;
+}
+.text-cart{
+  width: calc(100% - 122.44px - 10px);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.price-cart{
+  width: 180px;
+  padding-left: 30px;
+  text-align: end;
+}
+.btn-cart{
+  padding: 8px 12px;
+  background-color: #007bff;
+  border: 1px solid #ccc;
+  color: #fff;
+}
+.cart-hover:hover .cart-menu{
+  display: block !important;
+  transform-origin: 90% top;
+  animation: showCart ease-in 0.3s;
+}
+.btn-cart:hover{
+  color: #fff;
+  text-decoration: none;
+}
 h2 strong{
   font-size: 21px;
 }
@@ -9698,6 +9761,14 @@ p {
   background-color: #ddd;
   font-weight: 600;
   border-radius: 5px;
+}
+@keyframes showCart{
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 @keyframes action {
   0% {

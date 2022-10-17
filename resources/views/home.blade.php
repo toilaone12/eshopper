@@ -81,7 +81,7 @@
                         <i class="fas fa-heart text-primary"></i>
                         <span class="badge">0</span>
                     </a>
-                    <a href="{{route('cart.checkCart')}}" class="btn border">
+                    <div href="{{route('cart.checkCart')}}" class="btn border cart-hover">
                         <i class="fas fa-shopping-cart text-primary"></i>
                         @php
                             use Illuminate\Support\Facades\Session;
@@ -94,7 +94,25 @@
                                 0
                             @endif
                         </span>
-                    </a>
+                        <div class="cart-menu">
+                            <div class="f-12 pl-2 pb-3">Sản phẩm trong giỏ hàng</div>
+                            @if(isset($cart))
+                            @foreach($cart as $key => $c)
+                            <div class="d-flex justify-content-between align-items-start" style="max-width: 100%;">
+                                <img src="{{asset('images/product/'.$c['imageProduct'])}}" alt="" class="image-cart mt-2 ml-2 py-1 border border-secondary">
+                                <span class="text-cart text-dark f-14 pl-3 pt-1">{{$c['nameProduct']}}</span>
+                                <span class="price-cart text-info f-14 pr-2 pl-5 pt-1">{{number_format($c['priceProduct'],0,',','.')}} ₫</span>
+                            </div>
+                            @endforeach
+                            <div class="d-flex justify-content-between" style="max-width: 100%;">
+                                <div class="f-12 py-2 pl-2">Có {{count($cart)}} sản phẩm trong giỏ hàng</div>
+                                <a href="{{route('cart.checkCart')}}" class="f-12 btn-cart rounded mr-2">Xem giỏ hàng</a>
+                            </div>
+                            @else
+                            <div class="f-16 text-center">Không có sản phẩm nào trong giỏ hàng</div>
+                            @endif
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -295,21 +313,31 @@
         }
         button.parent().parent().find('input').val(newVal);
         button.parent().parent().parent().parent().find('.total').text(newPrice);
-        alert(id+"-"+a);
-        // $.ajax({
-        //     url: "{{route('cart.updateCart')}}",
-        //     method: "GET",
-        //     data: {
-        //         id_product: id,
-        //         quantity_product: newVal,
-        //     },
-        //     success:function(data){
-        //         if(data == "done"){
-        //             location.href = "{{route('cart.checkCart')}}";
-        //         }
-        //         // console.log(data);
-        //     }
-        // });
+        $.ajax({
+            url: "{{route('cart.updateCart')}}",
+            method: "GET",
+            data: {
+                id_product: id,
+                quantity_product: newVal,
+            },
+            success:function(data){
+                if(data == "done"){
+                    location.href = "{{route('cart.checkCart')}}";
+                }
+                // console.log(data);
+            }
+        });
+    });
+    $('.check-out').on('click',function(){
+        location.href = "{{route('order.checkOut')}}";
+    });
+    $('.go-store').on('click',function(){
+        $('.collapse-store').addClass('d-block');
+        $('.collapse-address').removeClass('d-block');
+    });
+    $('.shipping-address').on('click',function(){
+        $('.collapse-address').addClass('d-block');
+        $('.collapse-store').removeClass('d-block');
     });
 </script>
     <!-- Template Javascript -->

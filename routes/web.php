@@ -6,9 +6,11 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NetworkController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SlideController;
@@ -74,6 +76,15 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
         Route::get('/list-comment', [CommentController::class, 'listComment'])->name('comment.listComment');
         Route::post('/reply-comment', [CommentController::class, 'replyComment'])->name('comment.replyComment');
     });
+    //Coupon
+    Route::prefix('coupon')->group(function(){
+        Route::get('/list-coupon', [CouponController::class, 'listCoupon'])->name('coupon.listCoupon');
+        Route::get('/insert-form-coupon', [CouponController::class, 'insertFromCoupon'])->name('coupon.insertFromCoupon');
+        Route::get('/edit-form-coupon/{idCoupon}', [CouponController::class, 'editFromCoupon'])->name('coupon.editFormCoupon');
+        Route::get('/delete-coupon/{idCoupon}', [CouponController::class, 'deleteCoupon'])->name('coupon.deleteCoupon');
+        Route::post('/insert-coupon', [CouponController::class, 'insertCoupon'])->name('coupon.insertCoupon');
+        Route::post('/edit-coupon/{idCoupon}', [CouponController::class, 'editCoupon'])->name('coupon.editCoupon');
+    });
 });
 Route::prefix('page')->group(function(){
     Route::get('/home-page',[HomeController::class,'homePage'])->name('home.page');
@@ -117,6 +128,10 @@ Route::prefix('page')->group(function(){
         Route::get('/check-cart',[CartController::class,'checkCart'])->name('cart.checkCart');
         Route::get('/remove-cart',[CartController::class,'removeCart'])->name('cart.removeCart');
         Route::get('/update-cart',[CartController::class,'updateCart'])->name('cart.updateCart');
+        Route::post('/check-coupon',[CartController::class,'checkCoupon'])->name('cart.checkCoupon');
+    });
+    Route::prefix('order')->group(function(){
+        Route::get('/check-out',[OrderController::class,'checkOut'])->name('order.checkOut');
     });
 });
 

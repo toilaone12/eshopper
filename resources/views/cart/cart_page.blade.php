@@ -153,11 +153,23 @@
             </table>
         </div>
         <div class="col-lg-4">
-            <form class="mb-5" action="">
+            @php
+                $message = Session::get('message');
+                $coupon = Session::get('coupon');
+            @endphp
+            @if(isset($message))
+            <div class="text-danger f-14">{{$message}}</div>
+            @else
+            @endif
+            @error('name_coupon')
+            <div class="text-danger f-14">{{$message}}</div>
+            @enderror
+            <form class="mb-5" method="POST" action="{{route('cart.checkCoupon')}}">
+                @csrf
                 <div class="input-group">
-                    <input type="text" class="form-control p-4" placeholder="Nhập mã giảm giá">
+                    <input type="text" class="form-control p-4" name="name_coupon" placeholder="Nhập mã giảm giá">
                     <div class="input-group-append">
-                        <button class="btn btn-primary">Mã giảm giã</button>
+                        <button type="submit" class="btn btn-primary">Mã giảm giã</button>
                     </div>
                 </div>
             </form>
@@ -170,17 +182,41 @@
                         <h6 class="font-weight-medium">Tổng tiền</h6>
                         <h6 class="font-weight-medium">{{number_format($allTotal,0,'.',',')}} ₫</h6>
                     </div>
-                    <div class="d-flex justify-content-between">
-                        <h6 class="font-weight-medium">Giá vận chuyển</h6>
-                        <h6 class="font-weight-medium">0 ₫</h6>
+                    <div class="d-flex justify-content-between mb-3 pt-1">
+                        <h6 class="font-weight-medium">Áp dụng mã giảm giá</h6>
+                        <h6 class="font-weight-medium">
+                            @if(isset($coupon))
+                            @foreach($coupon as $key => $cou)
+                                @if($cou['feature_coupon'] == 0)
+                                {{$cou['discount_coupon']}} %
+                                @else
+                                {{number_format($cou['discount_coupon'],0,'.',',')}} ₫
+                                @endif
+                            @endforeach
+                            @else
+                                {{'0 ₫'}}
+                            @endif
+                        </h6>
                     </div>
                 </div>
                 <div class="card-footer border-secondary bg-transparent">
                     <div class="d-flex justify-content-between mt-2">
                         <h5 class="font-weight-bold">Tổng cộng</h5>
-                        <h5 class="font-weight-bold">{{number_format($allTotal,0,'.',',')}} ₫</h5>
+                        <h5 class="font-weight-bold">
+                            @if(isset($coupon))
+                            @foreach($coupon as $key => $cou)
+                                @if($cou['feature_coupon'] == 0)
+                                {{number_format($allTotal - (($cou['discount_coupon'] / 100) * $allTotal),0,'.',',')}} ₫
+                                @else
+                                {{number_format($allTotal - $cou['discount_coupon'],0,'.',',')}} ₫
+                                @endif
+                            @endforeach
+                            @else
+                                {{'0 ₫'}}
+                            @endif
+                        </h5>
                     </div>
-                    <button class="btn btn-block btn-primary my-3 py-3">Mua hàng</button>
+                    <button class="btn btn-block btn-primary my-3 py-3 check-out">Mua hàng</button>
                 </div>
             </div>
         </div>

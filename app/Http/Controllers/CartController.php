@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Model\Brand;
 use App\Model\Category;
+use App\Model\Coupon;
 use App\Model\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
+
 session_start();
 
 class CartController extends Controller
@@ -46,9 +49,12 @@ class CartController extends Controller
                 "priceProduct" => $priceProduct,
             ];
         }
-        echo "done";
         Session::put('cart',$cart);
-        return redirect()->route('cart.checkCart');
+        if($request->has('quantity_product')){
+            return redirect()->route('cart.checkCart');
+        }else{
+            echo "done";
+        }
         // // $check = Session::get('cart');
         // return print_r($cart);
         // echo "done";
@@ -86,5 +92,50 @@ class CartController extends Controller
         }
         echo "done";
         // return print_r($data);
+    }
+    public function checkCoupon(Request $request){
+        $data = $request->all();
+        Validator::make($data,[
+            'name_coupon' => ['required'],
+        ])->validate();
+        $checkCoupon = Coupon::where('code_coupon',$data['name_coupon'])->first();
+        // dd($checkCoupon);
+        if($checkCoupon){
+            $countCoupon = $checkCoupon->count();
+            $checkDate = strtotime($checkCoupon->time_coupon);
+            $date = strtotime(date("Y-m-d H:i:s"));
+            // print_r($checkDate.'-'.$date);
+            if($date < $checkDate){
+                if($countCoupon > 0){
+                    $couponSession = Session::get('coupon');
+                    if($couponSession){
+                        $available = 0;
+                        if($available == 0){
+                            $coupon[] = array(
+                                'name_coupon' => $checkCoupon->name_coupon,
+                                'discount_coupon' => $checkCoupon->discount_coupon,
+                                'quantity_coupon' => $checkCoupon->quantity_coupon,
+                                'feature_coupon' => $checkCoupon->feature_coupon,
+                            );
+                            Session::put('coupon',$coupon);
+                        }
+                    }else{
+                        $coupon[] = array(
+                            'name_coupon' => $checkCoupon->name_coupon,
+                            'discount_coupon' => $checkCoupon->discount_coupon,
+                            'quantity_coupon' => $checkCoupon->quantity_coupon,
+                            'feature_coupon' => $checkCoupon->feature_coupon,
+                        );
+                        Session::put('coupon',$coupon);
+                    }
+                    Session::save();
+                    return redirect()->back()->with('message',"Thêm mã giảm giá thành công");
+                }
+            }else{
+                return redirect()->back()->with('message',"Mã giảm giá đã hết hạn");
+            }
+        }else{
+            return redirect()->back()->with('message',"Mã giảm giá không tồn tại");
+        }
     }
 }
