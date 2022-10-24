@@ -7,6 +7,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <!-- Favicon -->
     <link href="{{asset('frontend/img/favicon.ico')}}" rel="icon">
@@ -338,6 +339,177 @@
     $('.shipping-address').on('click',function(){
         $('.collapse-address').addClass('d-block');
         $('.collapse-store').removeClass('d-block');
+    });
+    $(document).ready(function(){
+        $('.momo-card').on('click',function(e){
+            $(this).addClass('border-danger');
+            $(this).addClass('type-card');
+            $('.vnpay-card').removeClass('border-danger');
+            $('.vnpay-card').removeClass('type-card');
+        });
+        $('.vnpay-card').on('click',function(e){
+            $(this).addClass('border-danger');
+            $(this).addClass('type-card');
+            $('.momo-card').removeClass('border-danger');
+            $('.momo-card').removeClass('type-card');
+        });
+    });
+    $(document).ready(function(){
+        $('.choose').on('change',function(){
+            var action = $(this).attr('id');
+            var idDistrict = $(this).val();
+            var token = $('input[name="_token"]').val();
+            var result = '';
+            if(action == 'province'){
+                result = 'district';
+            }else if(action == 'district'){
+                result = 'commune';
+            }
+            // console.log(action+"-"+idDistrict+"-"+result);
+            $.ajax({
+                url: "{{route('delivery.selectDelivery')}}",
+                method: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    name:action,
+                    district:idDistrict,
+                    token:token,
+                },
+                success:function(data){
+                    $('#'+result).html(data);
+                    // console.log(data);
+                }
+            });
+        });
+    });
+    $(document).ready(function(){
+        $('.add-delivery').on('click',function(){
+            var province = $('.province').val();
+            var token = $('input[name="_token"]').val();
+            if(province === ''){
+                alert("Bạn chưa chọn thông tin!");
+            }else{
+                $.ajax({
+                    url: "{{route('delivery.addDelivery')}}",
+                    method: 'POST',
+                    headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        province:province,
+                        token:token,
+                    },
+                    success:function(data){
+                        // console.log(data);
+                        if(data == "return"){
+                            location.reload();
+                        }
+                    }
+                })
+            }
+        });
+    });
+    $(document).ready(function(){
+        $('.pay-cart').on('click',function(e){
+            e.preventDefault();
+            var typeShipping = $("input[type='radio'][name='type_ship']:checked").val();
+            var nameOrder = $("input[type='text'][name='name_order']").val();
+            var phoneOrder = $("input[type='tel'][name='phone_order']").val();
+            var emailOrder = $("input[type='email'][name='email_order']").val();
+            var totalOrder = $(".total-order").text();
+            var addressOrder = '';
+            if(typeShipping == 0){
+                var addressOrder = $(".name-address").text();
+            }else if(typeShipping == undefined){
+                var addressOrder = '';
+                var typeShipping = '';
+            }else{
+                var addressOrder = $("input[type='text'][name='address_order']").val();
+            }
+            $.ajax({
+                url: "{{route('order.saveInfo')}}",
+                method: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    type_shipping:typeShipping,
+                    name_order:nameOrder,
+                    address_order:addressOrder,
+                    phone_order:phoneOrder,
+                    email_order:emailOrder,
+                    total_order:totalOrder,
+                },
+                beforeSend:function(){
+                    $(document).find('span.error-text').text('');
+                },
+                success:function(data){
+                    if(data.status == 0){
+                        $.each(data.error,function(key, value){
+                            $('.error-'+key).text(value[0]);
+                        });
+                    }else if(data.status == 1){
+                        location.href = "{{route('order.checkInfo')}}";
+                    }
+                },
+            });
+            // alert(typeShipping+"-"+nameOrder+"-"+emailOrder+"-"+phoneOrder+"-"+addressOrder+"-"+totalOrder);
+        })
+        $('.add-order').on('click',function(e){
+            e.preventDefault();
+            var nameOrder = $('.name-order').text();
+            var phoneOrder = $('.phone-order').text();
+            var emailOrder = $('.email-order').text();
+            var totalOrder = $('.total-order').text();
+            var addressOrder = $('.address-order').text();
+            var token = $('input[name="_token"]').val();
+            var typeShipping = "{{(isset($typeShipping)) ? $typeShipping : ''}}";
+            var typePayment = $("input[type='radio'][name='payment']:checked").val();
+            var namePayment = '';
+            var statusOrder = '';
+            if(typeShipping == 0){
+                statusOrder = "Nhận sản phẩm tại cửa hàng";
+            }else{
+                statusOrder = "Cửa hàng vận chuyển cho khách hàng "+nameOrder;
+            }
+            if(typePayment){
+                if(typePayment == 0){
+                    namePayment = "Thanh toán khi nhận hàng";
+                }else if(typePayment == 1){
+                    var typeCard = $('.type-card').data('card');
+                    if(typeCard == 0){
+                        namePayment = $('.type-card').text();
+                    }else if(typeCard == 1){
+                        namePayment = $('.type-card').text();
+                    }
+                }
+            }else{
+                namePayment = '';
+            }
+            $.ajax({
+                url: "{{route('order.addOrder')}}",
+                method: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    nameOrder:nameOrder,
+                    phoneOrder:phoneOrder,
+                    emailOrder:emailOrder,
+                    addressOrder:addressOrder,
+                    totalOrder:totalOrder,
+                    statusOrder:statusOrder,
+                    namePayment:namePayment,
+                    token:token,
+                },
+                success:function(data){
+                    console.log(data);
+                }
+            });
+            // alert(nameOrder+"-"+phoneOrder+"-"+emailOrder+"-"+totalOrder+"-"+statusOrder+"-"+typePayment+"-"+namePayment);
+        });
     });
 </script>
     <!-- Template Javascript -->

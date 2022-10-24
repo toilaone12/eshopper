@@ -212,7 +212,7 @@
                                 @endif
                             @endforeach
                             @else
-                                {{'0 ₫'}}
+                                {{number_format($allTotal,0,'.',',')}} ₫
                             @endif
                         </h5>
                     </div>

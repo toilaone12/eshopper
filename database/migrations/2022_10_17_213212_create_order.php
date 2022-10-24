@@ -17,7 +17,7 @@ class CreateOrder extends Migration
             $table->increments('id_order');
             $table->string('code_order');
             $table->string('name_customer');
-            $table->integer('id_payment');
+            $table->integer('name_payment');
             $table->integer('total_order');
             $table->integer('status_order');
             $table->timestamps();

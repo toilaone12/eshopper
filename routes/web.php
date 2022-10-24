@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NetworkController;
 use App\Http\Controllers\OrderController;
@@ -85,6 +86,15 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
         Route::post('/insert-coupon', [CouponController::class, 'insertCoupon'])->name('coupon.insertCoupon');
         Route::post('/edit-coupon/{idCoupon}', [CouponController::class, 'editCoupon'])->name('coupon.editCoupon');
     });
+    //Delivery
+    Route::prefix('delivery')->group(function(){
+        Route::get('/list-delivery', [DeliveryController::class, 'listDelivery'])->name('delivery.listDelivery');
+        Route::get('/delete-delivery/{idDelivery}', [DeliveryController::class, 'deleteDelivery'])->name('delivery.deleteDelivery');
+        Route::get('/insert-form-delivery', [DeliveryController::class, 'insertFromDelivery'])->name('delivery.insertFromCoupon');
+        Route::post('/insert-delivery', [DeliveryController::class, 'insertDelivery'])->name('delivery.insertDelivery');
+        Route::post('/edit-delivery', [DeliveryController::class, 'editDelivery'])->name('delivery.editDelivery');
+        Route::post('/select-delivery', [DeliveryController::class, 'selectDelivery'])->name('delivery.selectDelivery');
+    });
 });
 Route::prefix('page')->group(function(){
     Route::get('/home-page',[HomeController::class,'homePage'])->name('home.page');
@@ -132,6 +142,13 @@ Route::prefix('page')->group(function(){
     });
     Route::prefix('order')->group(function(){
         Route::get('/check-out',[OrderController::class,'checkOut'])->name('order.checkOut');
+        Route::get('/check-info',[OrderController::class,'checkInfo'])->name('order.checkInfo');
+        Route::post('/save-info',[OrderController::class,'saveInfo'])->name('order.saveInfo');
+        Route::post('/add-order',[OrderController::class,'order'])->name('order.addOrder');
+    });
+    Route::prefix('delivery')->group(function(){
+        Route::post('/select-delivery', [DeliveryController::class, 'selectDelivery'])->name('delivery.selectDelivery');
+        Route::post('/add-delivery', [DeliveryController::class, 'calculatorDelivery'])->name('delivery.addDelivery');
     });
 });
 

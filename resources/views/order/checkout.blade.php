@@ -112,29 +112,34 @@
                     <div class="row">
                         <div class="col-md-12 form-group">
                             <label for="name">Họ và tên</label>
-                            <input class="form-control" id="name" type="text" placeholder="Họ và tên (bắt buộc)">
+                            <input class="form-control" id="name" name="name_order" type="text" placeholder="Họ và tên (bắt buộc)">
+                            <span class="text-danger f-14 error-text error-name_order"></span>
                         </div>
                         <div class="col-md-12 form-group">
                             <label for="phone">Số điện thoại</label>
-                            <input class="form-control" id="phone" type="tel" placeholder="Số điện thoại (bắt buộc)">
+                            <input class="form-control" id="phone" name="phone_order" type="tel" placeholder="Số điện thoại (bắt buộc)">
+                            <span class="text-danger f-14 error-text error-phone_order"></span>
+
                         </div>
                         <div class="col-md-12 form-group">
                             <label for="email">Email</label>
-                            <input class="form-control" id="email" type="email" placeholder="Email">
+                            <input class="form-control" id="email" name="email_order" type="email" placeholder="Email">
+                            <span class="text-danger f-14 error-text error-email_order"></span>
                         </div>
                         <div class="col-md-12">
                             <h4 class="font-weight-semi-bold mb-4">Phương thức giao hàng</h4>
+                            <span class="text-danger f-14 error-text error-type_shipping"></span>
                         </div>
                         <div class="d-flex justify-content-between">
                             <div class="col-md-12 form-group">
                                 <div class="custom-control custom-radio">
-                                    <input type="radio" name="ship" class="custom-control-input go-store" id="inshop">
+                                    <input type="radio" name="type_ship" class="custom-control-input go-store name-shipping" value="0" id="inshop">
                                     <label class="custom-control-label" for="inshop" data-toggle="collapse" data-target="#go-store">Nhận tại cửa hàng</label>
                                 </div>
                             </div>
                             <div class="col-md-12 form-group">
                                 <div class="custom-control custom-radio">
-                                    <input type="radio" name="ship" class="custom-control-input shipping-address" id="shipto">
+                                    <input type="radio" name="type_ship" class="custom-control-input shipping-address name-shipping" value="1" id="shipto">
                                     <label class="custom-control-label" for="shipto" data-toggle="collapse" data-target="#shipping-address">Giao hàng tận nơi</label>
                                 </div>
                             </div>
@@ -144,18 +149,43 @@
                 <div class="collapse-store mb-4 d-none" id="go-store">
                     <h4 class="font-weight-semi-bold mb-4">Địa chỉ cửa hàng</h4>
                     <div class="row">
-                        <div class="col-md-12 form-group">
-                            <span class="f-14">Địa chỉ: Triều Khúc, Tân Triều, Hà Nội</span>
+                        <div class="col-md-12 form-group f-16">
+                            Địa chỉ: <span class="f-14 name-address"> Triều Khúc, Tân Triều, Hà Nội</span>
                         </div>
                     </div>
                 </div>
                 <div class="collapse-address mb-4 d-none" id="shipping-address">
                     <h4 class="font-weight-semi-bold mb-4">Địa chỉ giao hàng</h4>
-                    <div class="row">
+                    @csrf
+                    <div class="row justify-content-center">
                         <div class="col-md-12 form-group">
-                            <label for="address">Địa chỉ</label>
-                            <input class="form-control" id="address" type="text" placeholder="Địa chỉ cụ thể">
+                            <label for="exampleFormControlInput1">Tên tỉnh, thành phố</label>
+                            <select name="province_feeship" id="province" class="form-control choose province">
+                                <option value="" class="f-14">Tỉnh / Thành phố</option>
+                                @foreach($selectProvince as $key => $p)
+                                <option value="{{$p->id_province}}" class="f-14 fee-province">
+                                    {{$p->name_province}}
+                                </option>
+                                @endforeach
+                            </select>
                         </div>
+                        <div class="col-md-12 form-group">
+                            <label for="exampleFormControlInput2">Tên quận, huyện</label>
+                            <select name="district_feeship" id="district" class="form-control choose">
+                                <option value="" class="f-14">Quận / Huyện</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="exampleFormControlInput3">Tên phường, xã</label>
+                            <select name="commune_feeship" id="commune" class="form-control choose">
+                                <option value="" class="f-14">Phường / Xã</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="address">Địa chỉ cụ thể</label>
+                            <input class="form-control" name="address_order" id="address" type="text" placeholder="Địa chỉ cụ thể">
+                        </div>
+                        <button class="btn btn-primary rounded add-delivery">Tính phí vận chuyển</button>
                     </div>
                 </div>
             </div>
@@ -173,6 +203,7 @@
                         @php
                             $cart = Session::get('cart');
                             $coupon = Session::get('coupon');
+                            $fee = Session::get('fee');
                             $allTotal = 0;
                         @endphp
                         @foreach($cart as $key => $c)
@@ -183,7 +214,7 @@
                         <div class="d-flex justify-content-between">
                             <p class="font-weight-medium f-14 mb-3 text-product-order">{{$c['nameProduct']}}</p>
                             <p class="font-weight-medium f-14 mb-3 mr-3">{{$c['quantityProduct']}}</p>
-                            <p class="font-weight-medium f-14 mb-3 mr-1">{{number_format($totalProduct,0,',','.')}} ₫</p>
+                            <p class="font-weight-medium f-14 mb-3 mr-1 price-product-order">{{number_format($totalProduct,0,',','.')}} ₫</p>
                         </div>
                         @endforeach
                         <hr class="mt-0">
@@ -191,7 +222,7 @@
                             <h6 class="font-weight-medium f-14">Tổng tiền</h6>
                             <h6 class="font-weight-medium f-14">{{number_format($allTotal,0,',','.')}} ₫</h6>
                         </div>
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between mb-3 pt-1">
                             <h6 class="font-weight-medium f-14">Mã giảm giá</h6>
                             <h6 class="font-weight-medium f-14">
                                 @if(isset($coupon))
@@ -199,55 +230,57 @@
                                     @if($cou['feature_coupon'] == 0)
                                     {{$cou['discount_coupon']}} %
                                     @else
-                                    {{number_format($cou['discount_coupon'],0,'.',',')}} ₫
+                                    {{number_format($cou['discount_coupon'],0,',','.')}} ₫
                                     @endif
                                 @endforeach
                                 @else
-                                    {{'0 ₫'}}
+                                    {{0}} ₫
                                 @endif
-                            </h6>
+                            </h6> 
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <h6 class="font-weight-medium f-14">Phí vận chuyển</h6>
+                            <h6 class="font-weight-medium f-14">
+                                @if(isset($fee))
+                                    {{number_format($fee,0,',','.')}} ₫
+                                @else
+                                    {{0}} ₫
+                                @endif
+                            </h6> 
                         </div>
                     </div>
                     <div class="card-footer border-secondary bg-transparent">
                         <div class="d-flex justify-content-between mt-2">
-                            <h5 class="font-weight-bold">Tổng cộng</h5>
-                            <h5 class="font-weight-bold">
-                                @if(isset($coupon))
-                                @foreach($coupon as $key => $cou)
-                                    @if($cou['feature_coupon'] == 0)
-                                    {{number_format($allTotal - (($cou['discount_coupon'] / 100) * $allTotal),0,'.',',')}} ₫
-                                    @else
-                                    {{number_format($allTotal - $cou['discount_coupon'],0,'.',',')}} ₫
-                                    @endif
-                                @endforeach
+                            <h5 class="font-weight-bold f-16">Tổng cộng</h5>
+                            <h5 class="font-weight-bold f-16 total-order">
+                                @if(($coupon) && ($fee))
+                                    @foreach($coupon as $key => $cou)
+                                        @if($cou['feature_coupon'] == 0)
+                                        {{number_format($allTotal - (($cou['discount_coupon'] / 100) * $allTotal) - $fee,0,',','.')}} ₫
+                                        @else
+                                        {{number_format($allTotal - $cou['discount_coupon'] - $fee,0,',','.')}} ₫
+                                        @endif
+                                    @endforeach
+                                @elseif(isset($coupon))
+                                    @foreach($coupon as $key => $cou)
+                                        @if($cou['feature_coupon'] == 0)
+                                        {{number_format($allTotal - (($cou['discount_coupon'] / 100) * $allTotal),0,',','.')}} ₫
+                                        @else
+                                        {{number_format($allTotal - $cou['discount_coupon'],0,',','.')}} ₫
+                                        @endif
+                                    @endforeach
+                                @elseif(isset($fee))
+                                    {{number_format($allTotal - $fee,0,',','.')}} ₫
                                 @else
-                                    {{'0 ₫'}}
+                                    {{number_format($allTotal,0,',','.')}} ₫
                                 @endif
-                            </h5>
+                            </h5> 
                         </div>
                     </div>
                 </div>
-                <div class="card border-secondary mb-5">
-                    <div class="card-header bg-secondary border-0">
-                        <h4 class="font-weight-semi-bold m-0">Payment</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" name="payment" id="paypal">
-                                <label class="custom-control-label" for="paypal">Thanh toán khi nhận hàng</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" name="payment" id="directcheck">
-                                <label class="custom-control-label" for="directcheck">Chuyển khoản</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer border-secondary bg-transparent">
-                    <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Đặt hàng</button>
+                
+                <div class="card-footer show-cash border-secondary bg-transparent">
+                    <button class="btn btn-lg btn-block rounded btn-primary font-weight-bold my-3 py-3 pay-cart">Tiếp tục</button>
                 </div>
             </div>
         </div>

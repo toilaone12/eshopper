@@ -150,6 +150,20 @@
                     </div>
                 </div>
             </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo6"
+                    aria-expanded="true" aria-controls="collapseTwo6">
+                    <i class="fa-solid fa-truck-fast"></i>
+                    <span>Vận chuyển</span>
+                </a>
+                <div id="collapseTwo6" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Chọn:</h6>
+                        <a class="collapse-item" href="{{route('delivery.listDelivery')}}">Danh sách phí vận chuyển</a>{{--sử dụng route() --}}
+                        <a class="collapse-item" href="{{route('delivery.insertFromCoupon')}}">Thêm phí vận chuyển</a>{{--sử dụng route() --}}
+                    </div>
+                </div>
+            </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
@@ -550,6 +564,54 @@
         $('.datetime').datetimepicker({
             step: 1,
             
+        });
+        $(document).ready(function(){
+            $('.choose').on('change',function(){
+                var action = $(this).attr('id');
+                var idDistrict = $(this).val();
+                var token = $('input[name="_token"]').val();
+                var result = '';
+                if(action == 'province'){
+                    result = 'district';
+                }else if(action == 'district'){
+                    result = 'commune';
+                }
+                // console.log(action+"-"+idDistrict+"-"+result);
+                $.ajax({
+                    url: "{{route('delivery.selectDelivery')}}",
+                    method: "POST",
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    data: {
+                        name:action,
+                        district:idDistrict,
+                        token:token,
+                    },
+                    success:function(data){
+                        $('#'+result).html(data);
+                        // console.log(data);
+                    }
+                });
+            });
+            $('.edit-delivery').on('blur',function(){
+                var idDelivery = $(this).data('id');
+                var feeDelivery = $(this).text();
+                var token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: "{{route('delivery.editDelivery')}}",
+                    method: "POST",
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    data: {
+                        idDelivery:idDelivery,
+                        feeDelivery:feeDelivery,
+                        token:token,
+                    },
+                    success:function(data){
+                        location.reload();
+                        // $('#'+result).html(data);
+                        // console.log(data);
+                    }
+                });
+            });
         });
     </script>
 </body>

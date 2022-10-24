@@ -7749,6 +7749,9 @@ button.bg-dark:focus {
 .m-auto {
   margin: auto !important;
 }
+.m-center {
+  margin: 0 auto !important;
+}
 
 .mt-auto,
 .my-auto {
@@ -9189,6 +9192,10 @@ button.bg-dark:focus {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.price-product-order{
+  width: 85px;
+  text-align: end;
+}
 
 .text-left {
   text-align: left !important;
@@ -9506,17 +9513,23 @@ a.text-dark:hover, a.text-dark:focus {
   color: #4285f4;
 }
 
-@media (max-width: 991.98px) {
-  .navbar-light .navbar-nav .nav-link {
-    padding: 5px 0px;
+@media (min-width: 991.98px) {
+  .background-check{
+    width: 100% !important;
   }
 }
 @media (max-width: 991.98px){
+  .navbar-light .navbar-nav .nav-link {
+    padding: 5px 0px;
+  }
   .bg-white-smoke{
     background-color: #fff !important;
   }
   .profile{
     display: none;
+  }
+  .background-check{
+    width: 50% !important;
   }
 }
 @media (min-width: 1200px){
@@ -9526,6 +9539,9 @@ a.text-dark:hover, a.text-dark:focus {
   .profile{
     display: flex;
     align-items: center;
+  }
+  .background-check{
+    width: 45% !important;
   }
 }
 .text-gray{
@@ -9761,6 +9777,10 @@ p {
   background-color: #ddd;
   font-weight: 600;
   border-radius: 5px;
+}
+.background-check{
+  border: 1px solid #ccc;
+  box-shadow: 3px 3px 3px 3px #ccc;
 }
 @keyframes showCart{
   from {
