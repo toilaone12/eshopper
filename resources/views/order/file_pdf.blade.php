@@ -52,6 +52,8 @@
         }
     </style>
     <h3 style="text-align: center;">Hoá đơn thanh toán</h3>
+    <div class="f-14">Tên người mua: {{$selectOrder->name_customer}}</div>
+
 <table class="table table-bordered">
     <thead>
         <tr>
