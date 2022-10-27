@@ -18,7 +18,8 @@
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-
+    <!-- SweetAlert -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.1/dist/sweetalert2.min.css">
     <!-- Libraries Stylesheet -->
     <link href="{{asset('frontend/lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
 
@@ -201,10 +202,10 @@
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.1/dist/sweetalert2.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="{{asset('frontend/lib/easing/easing.min.js')}}"></script>
     <script src="{{asset('frontend/lib/owlcarousel/owl.carousel.min.js')}}"></script>
-
     <!-- Contact Javascript File -->
     <script src="mail/jqBootstrapValidation.min.js"></script>
     <script src="mail/contact.js"></script>
@@ -458,57 +459,79 @@
             // alert(typeShipping+"-"+nameOrder+"-"+emailOrder+"-"+phoneOrder+"-"+addressOrder+"-"+totalOrder);
         })
         $('.add-order').on('click',function(e){
-            e.preventDefault();
-            var nameOrder = $('.name-order').text();
-            var phoneOrder = $('.phone-order').text();
-            var emailOrder = $('.email-order').text();
-            var totalOrder = $('.total-order').text();
-            var addressOrder = $('.address-order').text();
-            var token = $('input[name="_token"]').val();
-            var typeShipping = "{{(isset($typeShipping)) ? $typeShipping : ''}}";
-            var typePayment = $("input[type='radio'][name='payment']:checked").val();
-            var namePayment = '';
-            var statusOrder = '';
-            if(typeShipping == 0){
-                statusOrder = "Nhận sản phẩm tại cửa hàng";
-            }else{
-                statusOrder = "Cửa hàng vận chuyển cho khách hàng "+nameOrder;
-            }
-            if(typePayment){
-                if(typePayment == 0){
-                    namePayment = "Thanh toán khi nhận hàng";
-                }else if(typePayment == 1){
-                    var typeCard = $('.type-card').data('card');
-                    if(typeCard == 0){
-                        namePayment = $('.type-card').text();
-                    }else if(typeCard == 1){
-                        namePayment = $('.type-card').text();
+            Swal.fire({
+                title: 'Bạn có muốn đặt hàng không?',
+                text: "Bạn nên kiểm tra chắc chắn thông tin trước khi đặt hàng nhé!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Có, tôi đồng ý!',
+                cancelButtonText: "Không",
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    e.preventDefault();
+                    var nameOrder = $('.name-order').text();
+                    var phoneOrder = $('.phone-order').text();
+                    var emailOrder = $('.email-order').text();
+                    var totalOrder = $('.total-order').text();
+                    var addressOrder = $('.address-order').text();
+                    var token = $('input[name="_token"]').val();
+                    var typeShipping = "{{(isset($typeShipping)) ? $typeShipping : ''}}";
+                    var discountOrder = "{{(isset($coupon)) ? $coupon[0]['name_coupon'] : ''}}";
+                    var feeDelivery = "{{(isset($fee)) ? $fee : 0}}"
+                    var typePayment = $("input[type='radio'][name='payment']:checked").val();
+                    var namePayment = '';
+                    var statusOrder = '';
+                    if(typeShipping == 0){
+                        statusOrder = "Nhận sản phẩm tại cửa hàng";
+                    }else{
+                        statusOrder = "Cửa hàng vận chuyển cho khách hàng";
                     }
+                    if(typePayment){
+                        if(typePayment == 0){
+                            namePayment = "Thanh toán khi nhận hàng";
+                        }else if(typePayment == 1){
+                            var typeCard = $('.type-card').data('card');
+                            if(typeCard == 0){
+                                namePayment = $('.type-card').text();
+                            }else if(typeCard == 1){
+                                namePayment = $('.type-card').text();
+                            }
+                        }
+                    }else{
+                        namePayment = '';
+                    }
+                    // alert(feeDelivery);
+                    $.ajax({
+                        url: "{{route('order.addOrder')}}",
+                        method: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            nameOrder:nameOrder,
+                            phoneOrder:phoneOrder,
+                            emailOrder:emailOrder,
+                            addressOrder:addressOrder,
+                            totalOrder:totalOrder,
+                            statusOrder:statusOrder,
+                            namePayment:namePayment,
+                            discountOrder:discountOrder,
+                            feeDelivery:feeDelivery,
+                            token:token,
+                        },
+                        success:function(data){
+                            window.location.href = "{{route('cart.checkCart')}}";
+                        }
+                    });
+                    Swal.fire(
+                    'Đặt hàng thành công!',
+                    'Vui lòng kiểm tra mã đơn hàng tại email của bạn',
+                    'success'
+                    )
                 }
-            }else{
-                namePayment = '';
-            }
-            $.ajax({
-                url: "{{route('order.addOrder')}}",
-                method: "POST",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {
-                    nameOrder:nameOrder,
-                    phoneOrder:phoneOrder,
-                    emailOrder:emailOrder,
-                    addressOrder:addressOrder,
-                    totalOrder:totalOrder,
-                    statusOrder:statusOrder,
-                    namePayment:namePayment,
-                    token:token,
-                },
-                success:function(data){
-                    console.log(data);
-                }
-            });
-            // alert(nameOrder+"-"+phoneOrder+"-"+emailOrder+"-"+totalOrder+"-"+statusOrder+"-"+typePayment+"-"+namePayment);
+            })
         });
     });
 </script>

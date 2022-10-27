@@ -112,6 +112,8 @@
                     @csrf
                     @php
                         $checkInfo = Session::get('info');
+                        $coupon = Session::get('coupon');
+                        $fee = Session::get('fee');
                         $typeShipping = $checkInfo['typeShipping'];
                     @endphp
                     <div class="row px-3">
@@ -133,10 +135,20 @@
                             Giao hàng tại:<span class="f-16 text-dark address-order"> {{$checkInfo['addressOrder']}}</span>
                         </div>
                         @endif
+                        @if(isset($coupon))
+                        <div class="col-md-12 form-group f-16 ">
+                            Mã khuyến mãi áp dụng:<span class="f-16 text-dark"> {{$coupon[0]['code_coupon']}}</span>
+                        </div>
+                        @else
+                        <div class="col-md-12 form-group f-16 ">
+                            Mã khuyến mãi áp dụng:<span class="f-16 text-dark"> Không có</span>
+                        </div>
+                        @endif
                         <div class="col-md-12 form-group f-16 ">
                             Tổng tiền:<span class="f-16 text-dark total-order"> {{$checkInfo['totalOrder']}}</span>
                         </div>
                     </div>
+                    
                     @if($typeShipping == 1)
                     <div class="form-group f-16">
                         <div class="card-header bg-secondary border-0">

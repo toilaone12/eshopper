@@ -95,10 +95,14 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
         Route::post('/edit-delivery', [DeliveryController::class, 'editDelivery'])->name('delivery.editDelivery');
         Route::post('/select-delivery', [DeliveryController::class, 'selectDelivery'])->name('delivery.selectDelivery');
     });
+    Route::prefix('order')->group(function(){
+        Route::get('/list-order', [OrderController::class, 'listOrder'])->name('order.listOrder');
+        Route::get('/print-order/{codeOrder}', [OrderController::class, 'printPDF'])->name('order.printOrder');
+        Route::get('/detail-order/{codeOrder}', [OrderController::class, 'detailOrder'])->name('order.detailOrder');
+    });
 });
 Route::prefix('page')->group(function(){
-    Route::get('/home-page',[HomeController::class,'homePage'])->name('home.page');
-    
+    Route::get('/home-page',[HomeController::class,'homePage'])->name('home.page');   
     Route::get('/login',[HomeController::class, 'loginForm'])->name('home.loginForm');
     Route::post('/register',[HomeController::class,'register'])->name('home.register');
     Route::post('/login',[HomeController::class,'login'])->name('home.login');

@@ -164,6 +164,19 @@
                     </div>
                 </div>
             </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo7"
+                    aria-expanded="true" aria-controls="collapseTwo7">
+                    <i class="fa-solid fa-file-invoice"></i>
+                    <span>Đơn hàng</span>
+                </a>
+                <div id="collapseTwo7" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Chọn:</h6>
+                        <a class="collapse-item" href="{{route('order.listOrder')}}">Danh sách đơn hàng</a>{{--sử dụng route() --}}
+                    </div>
+                </div>
+            </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
@@ -540,6 +553,7 @@
     CKEDITOR.config.ForceSimpleAmpersand = true;
     $(document).ready( function () {
         $('#table_id').DataTable();
+        $('#table_id2').DataTable();
     } );
     </script>
     <script>

@@ -113,6 +113,7 @@ class CartController extends Controller
                         if($available == 0){
                             $coupon[] = array(
                                 'name_coupon' => $checkCoupon->name_coupon,
+                                'code_coupon' => $checkCoupon->code_coupon,
                                 'discount_coupon' => $checkCoupon->discount_coupon,
                                 'quantity_coupon' => $checkCoupon->quantity_coupon,
                                 'feature_coupon' => $checkCoupon->feature_coupon,
@@ -122,6 +123,7 @@ class CartController extends Controller
                     }else{
                         $coupon[] = array(
                             'name_coupon' => $checkCoupon->name_coupon,
+                            'code_coupon' => $checkCoupon->code_coupon,
                             'discount_coupon' => $checkCoupon->discount_coupon,
                             'quantity_coupon' => $checkCoupon->quantity_coupon,
                             'feature_coupon' => $checkCoupon->feature_coupon,

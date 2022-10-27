@@ -42,7 +42,7 @@
                 <div class="collapse navbar-collapse justify-content-between bg-white-smoke" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
                         <a href="#" class="nav-item nav-link text-gray active">Trang chủ</a>
-                        <a href="shop.html" class="nav-item nav-link text-gray">Shop</a>
+                        <a href="shop.html" class="nav-item nav-link text-gray">Tình trạng đơn hàng</a>
                         <a href="detail.html" class="nav-item nav-link text-gray">Shop Detail</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link text-gray dropdown-toggle" data-toggle="dropdown">Pages</a>
@@ -256,9 +256,9 @@
                                 @if(($coupon) && ($fee))
                                     @foreach($coupon as $key => $cou)
                                         @if($cou['feature_coupon'] == 0)
-                                        {{number_format($allTotal - (($cou['discount_coupon'] / 100) * $allTotal) - $fee,0,',','.')}} ₫
+                                        {{number_format($allTotal - (($cou['discount_coupon'] / 100) * $allTotal) + $fee,0,',','.')}} ₫
                                         @else
-                                        {{number_format($allTotal - $cou['discount_coupon'] - $fee,0,',','.')}} ₫
+                                        {{number_format($allTotal - $cou['discount_coupon'] + $fee,0,',','.')}} ₫
                                         @endif
                                     @endforeach
                                 @elseif(isset($coupon))
@@ -270,7 +270,7 @@
                                         @endif
                                     @endforeach
                                 @elseif(isset($fee))
-                                    {{number_format($allTotal - $fee,0,',','.')}} ₫
+                                    {{number_format($allTotal + $fee,0,',','.')}} ₫
                                 @else
                                     {{number_format($allTotal,0,',','.')}} ₫
                                 @endif
