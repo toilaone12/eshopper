@@ -627,6 +627,39 @@
                 });
             });
         });
+        $(document).ready(function(){
+            $('.change-status').change(function(){
+                var status = $(this).val();
+                var orderId = $(this).children(":selected").data('id');
+                var token = $('input[name="_token"]').val();
+                var productId = [];
+                var quantityOrder = [];
+                $('input[name="product_id"]').each(function(){
+                    productId.push($(this).val());
+                });
+                $('.quantity-order').each(function(){
+                    quantityOrder.push($(this).text());
+                })
+                // alert(quantityOrder);
+                $.ajax({
+                    url: "{{route('order.changeStatus')}}",
+                    method: "POST",
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    data: {
+                        status:status,
+                        orderId:orderId,
+                        productId:productId,
+                        quantityOrder:quantityOrder,
+                        token:token,
+                    },
+                    success:function(data){
+                        // location.reload();
+                        // // $('#'+result).html(data);
+                        console.log(data);
+                    }
+                });
+            });
+        });
     </script>
 </body>
 

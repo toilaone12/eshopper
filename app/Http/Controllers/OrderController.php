@@ -7,6 +7,7 @@ use App\Model\Category;
 use App\Model\Coupon;
 use App\Model\Order;
 use App\Model\OrderDetail;
+use App\Model\Product;
 use App\Model\Province;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Illuminate\Http\Request;
@@ -53,6 +54,37 @@ class OrderController extends Controller
             'selectCoupon',
         ));
         return $pdf->download('Hóa đơn của '.$nameOrder.'.pdf');
+    }
+    public function changeStatus(Request $request){
+        $data = $request->all();
+        // print_r($data);
+        $orderId = $data['orderId'];
+        $status = $data['status'];
+        $quantityOrder = $data['quantityOrder'];
+        $productId = $data['productId'];
+        $changeStatus = Order::find($orderId);
+        $changeStatus->status_order = $status;
+        $changeStatus->save();
+        if($changeStatus->status_order == 0){
+
+        }else if($changeStatus->status_order == 1){
+            foreach($productId as $keyProduct => $p){
+                $product = Product::find($p);
+                $quantity = $product->quantity_product;
+                $quantitySold = $product->quantity_sold_product;
+                foreach($quantityOrder as $keyQuantity => $q){
+                    if($keyProduct == $keyQuantity){
+                        if($quantitySold <= $quantity){
+                            $product->quantity_sold_product += $q;
+                            $product->quantity_product -= $q;
+                            $product->save();
+                        }else{
+                            echo "Hết";
+                        }
+                    }
+                }
+            }
+        }
     }
     //page
     public function checkOut(){

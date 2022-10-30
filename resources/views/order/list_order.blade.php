@@ -35,7 +35,17 @@
             <td>{{$o->coupon_order}}</td>
             <td>{{number_format($o->fee_delivery,0,',','.')}} ₫</td>
             <td>{{$o->total_order}}</td>
-            <td>{{($o->status_order == 1) ? 'Đơn hàng mới' : "Đơn hàng đã xử lý"}}</td>
+            <td class="{{
+                    ($o->status_order == 1) ? 'bg-info' : 
+                    (($o->status_order == 2) ? 'bg-success' :
+                    ((($o->status_order == 3) ? 'bg-danger' : 'bg-warning')))
+                }} text-white">
+                {{
+                    ($o->status_order == 1) ? 'Đã tiếp nhận đơn hàng' : 
+                    (($o->status_order == 2) ? "Giao hàng thành công" :
+                    ((($o->status_order == 3) ? "Hoàn trả / Hủy hàng" : "Đang chờ xử lý")))
+                }}
+            </td>
             <td>{{$o->created_at}}</td>
             <td>
                 <a href="{{route('order.detailOrder',['codeOrder'=>$o->code_order])}}" style="margin: 0 auto;" class="btn btn-success">

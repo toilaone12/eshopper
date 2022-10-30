@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateReview extends Migration
+class CreateWarehouse extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateReview extends Migration
      */
     public function up()
     {
-        Schema::create('review', function (Blueprint $table) {
-            $table->increments('id_review');
+        Schema::create('warehouse', function (Blueprint $table) {
+            $table->increments('id_warehouse');
+            $table->integer('id_supplier');
             $table->integer('id_product');
-            $table->string('name_review');
-            $table->text('content_review');
-            $table->integer('rating');
+            $table->integer('quantity_warehouse');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateReview extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('review');
+        Schema::dropIfExists('warehouse');
     }
 }

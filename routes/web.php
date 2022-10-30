@@ -99,6 +99,7 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
         Route::get('/list-order', [OrderController::class, 'listOrder'])->name('order.listOrder');
         Route::get('/print-order/{codeOrder}', [OrderController::class, 'printPDF'])->name('order.printOrder');
         Route::get('/detail-order/{codeOrder}', [OrderController::class, 'detailOrder'])->name('order.detailOrder');
+        Route::post('/change-status', [OrderController::class, 'changeStatus'])->name('order.changeStatus');
     });
 });
 Route::prefix('page')->group(function(){

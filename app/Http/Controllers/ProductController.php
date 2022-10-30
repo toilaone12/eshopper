@@ -49,7 +49,7 @@ class ProductController extends Controller
                 $db['price_product'] = $data['price_product'];
                 $db['description_product'] = $data['description_product'];
                 $db['content_product'] = $data['content_product'];
-                $db['number_comments'] = 0;
+                $db['number_reviews'] = 0;
                 $db['number_views'] = 0;
                 // created_at, updated_at có kiểu giá trị là timestamp r nên k cần set giá trị $date vào
                 $check_product = Product::create($db);
