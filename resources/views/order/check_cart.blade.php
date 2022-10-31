@@ -169,10 +169,10 @@
                             </div>
                             <div class="form-group collapse" id="show-card">
                                 <div class="row justify-content-center">
-                                    <div data-card="0" class="col-lg-5 border rounded shadow-sm px-3 mr-5 momo-card">Thanh toán qua Momo <br>
+                                    <div data-card="0" class="col-lg-5 border rounded shadow-sm px-3 text-center mr-5 momo-card">Thanh toán qua Momo <br>
                                         <img class="w-75 m-center" src="https://cellphones.com.vn/cart/_nuxt/img/moca.f4be0b9.png" alt="">
                                     </div>
-                                    <div data-card="1" class="col-lg-5 border rounded shadow-sm px-3 ml-2 vnpay-card">Thanh toán qua VNPay <br>
+                                    <div data-card="1" class="col-lg-5 border rounded shadow-sm px-3 text-center ml-2 vnpay-card">Thanh toán qua VNPay <br>
                                         <img class="w-75 m-center" src="https://cellphones.com.vn/cart/_nuxt/img/vnpay.c0bd59b.png" alt="">
                                     </div>
                                 </div>
