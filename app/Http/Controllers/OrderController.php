@@ -57,7 +57,7 @@ class OrderController extends Controller
     }
     public function changeStatus(Request $request){
         $data = $request->all();
-        // print_r($data);
+        print_r($data);
         $orderId = $data['orderId'];
         $status = $data['status'];
         $quantityOrder = $data['quantityOrder'];
@@ -67,7 +67,7 @@ class OrderController extends Controller
         $changeStatus->save();
         if($changeStatus->status_order == 0){
 
-        }else if($changeStatus->status_order == 1){
+        }else if($changeStatus->status_order == 3){
             foreach($productId as $keyProduct => $p){
                 $product = Product::find($p);
                 $quantity = $product->quantity_product;
@@ -75,8 +75,8 @@ class OrderController extends Controller
                 foreach($quantityOrder as $keyQuantity => $q){
                     if($keyProduct == $keyQuantity){
                         if($quantitySold <= $quantity){
-                            $product->quantity_sold_product += $q;
-                            $product->quantity_product -= $q;
+                            $product->quantity_sold_product -= $q;
+                            $product->quantity_product += $q;
                             $product->save();
                         }else{
                             echo "Hết";
@@ -159,7 +159,7 @@ class OrderController extends Controller
             'type_shipping' => $data['statusOrder'],
             'coupon_order' => $data['discountOrder'],
             'fee_delivery' => $data['feeDelivery'],
-            'status_order' => 1,
+            'status_order' => 0,
         );
         $order = Order::create($dbOrder);
         if($order){
@@ -174,22 +174,33 @@ class OrderController extends Controller
                     'price_product_order' => $c['priceProduct'],
                 );
                 $orderDetail = OrderDetail::create($dbOrderDetail);
-            }
-            if($orderDetail){
-                $data = array(
-                    'name' => $data['nameOrder'],
-                    'body' => 'Bạn vừa mua một đơn hàng từ eShopper',
-                    'email' => $data['emailOrder'],
-                    'codeOrder' => $codeOrder,
-                );
-                Mail::send('order.email_order',$data,function($message) use ($email,$name){
-                    $message->to($email)->subject("Hóa đơn từ eShopper");
-                    $message->from($email,$name);
-                });
-                Session::forget('$cart');
-                Session::forget('$fee');
-                Session::forget('$coupon');
-                Session::flush();
+                $productId = array($key);
+                $quantityOrder = array($c['quantityProduct']);
+                foreach($productId as $keyProduct => $p){
+                    $product = Product::find($p);
+                    foreach($quantityOrder as $keyQuantity => $q){
+                        $product->quantity_sold_product += $q;
+                        $product->quantity_product -= $q;
+                        $checkProduct = $product->save();
+                        if($checkProduct){
+                            $data = array(
+                                'name' => $data['nameOrder'],
+                                'body' => 'Bạn vừa mua một đơn hàng từ eShopper',
+                                'email' => $data['emailOrder'],
+                                'codeOrder' => $codeOrder,
+                            );
+                            Mail::send('order.email_order',$data,function($message) use ($email,$name){
+                                $message->to($email)->subject("Hóa đơn từ eShopper");
+                                $message->from($email,$name);
+                            });
+                            Session::forget('$cart');
+                            Session::forget('$fee');
+                            Session::forget('$coupon');
+                            Session::flush();
+                        }else{
+                        }
+                    }
+                }
             }
         }
     }

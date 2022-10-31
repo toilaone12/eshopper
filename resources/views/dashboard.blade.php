@@ -67,6 +67,19 @@
             </div>
 <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo8"
+                    aria-expanded="true" aria-controls="collapseTwo8">
+                    <i class="fas fa-users"></i>
+                    <span>Quản lý</span>
+                </a>
+                <div id="collapseTwo8" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Chọn:</h6>
+                        <a class="collapse-item" href="{{route('admin.listUser')}}">Danh sách tài khoản</a>{{--sử dụng route() --}}
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fa-solid fa-list"></i>
@@ -451,14 +464,9 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{route('admin.logout')}}" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
+                                    Đăng xuất
                                 </a>
                             </div>
                         </li>
@@ -501,15 +509,15 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Bạn muốn đăng xuất?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Hãy ấn nút "Đăng xuất" để trở lại đăng nhập</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="{{route('admin.logout')}}">Logout</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy bỏ</button>
+                    <a class="btn btn-primary" href="{{route('admin.logout')}}">Đăng xuất</a>
                 </div>
             </div>
         </div>
@@ -653,9 +661,9 @@
                         token:token,
                     },
                     success:function(data){
-                        // location.reload();
+                        location.reload();
                         // // $('#'+result).html(data);
-                        console.log(data);
+                        // console.log(data);
                     }
                 });
             });

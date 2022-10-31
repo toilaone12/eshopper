@@ -523,6 +523,7 @@
                         },
                         success:function(data){
                             window.location.href = "{{route('cart.checkCart')}}";
+                            // console.log(data);
                         }
                     });
                     Swal.fire(

@@ -35,6 +35,10 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin');
     Route::get('/logout', [AdminController::class, 'logout'])->name('admin.logout');
     Route::post('/save-login',[AdminController::class,'saveLogin'])->name('admin.saveLogin');
+    //User
+    Route::prefix('user')->group(function(){
+        Route::get('/list-user', [AdminController::class, 'listUser'])->name('admin.listUser');  
+    });
     //Category
     Route::prefix('category')->group(function(){
         Route::get('/list-category',[CategoryController::class, 'categoryList'])->name('category.listCategory');

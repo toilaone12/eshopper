@@ -74,4 +74,10 @@ class AdminController extends Controller
         Session::put('username',null);
         return redirect()->route('admin.login');
     }
+    public function listUser(){
+        $selectAdmin = Admin::all();
+        return view('admin.list_admin',compact(
+            'selectAdmin',
+        ));
+    }
 }
