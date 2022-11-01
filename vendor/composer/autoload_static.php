@@ -498,6 +498,7 @@ class ComposerStaticInitd32534f8b7ad578b44263116619e730e
     );
 
     public static $classMap = array (
+        'AdminSeeder' => __DIR__ . '/../..' . '/database/seeds/AdminSeeder.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\AdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminController.php',
@@ -540,6 +541,7 @@ class ComposerStaticInitd32534f8b7ad578b44263116619e730e
         'App\\Model\\Province' => __DIR__ . '/../..' . '/app/Model/Province.php',
         'App\\Model\\Rating' => __DIR__ . '/../..' . '/app/Model/Rating.php',
         'App\\Model\\Review' => __DIR__ . '/../..' . '/app/Model/Review.php',
+        'App\\Model\\Role' => __DIR__ . '/../..' . '/app/Model/Role.php',
         'App\\Model\\Slide' => __DIR__ . '/../..' . '/app/Model/Slide.php',
         'App\\Model\\User' => __DIR__ . '/../..' . '/app/Model/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
@@ -4276,6 +4278,7 @@ class ComposerStaticInitd32534f8b7ad578b44263116619e730e
         'Ramsey\\Uuid\\UuidInterface' => __DIR__ . '/..' . '/ramsey/uuid/src/UuidInterface.php',
         'Ramsey\\Uuid\\Validator\\GenericValidator' => __DIR__ . '/..' . '/ramsey/uuid/src/Validator/GenericValidator.php',
         'Ramsey\\Uuid\\Validator\\ValidatorInterface' => __DIR__ . '/..' . '/ramsey/uuid/src/Validator/ValidatorInterface.php',
+        'RoleSeeder' => __DIR__ . '/../..' . '/database/seeds/RoleSeeder.php',
         'Sabberworm\\CSS\\CSSList\\AtRuleBlockList' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/CSSList/AtRuleBlockList.php',
         'Sabberworm\\CSS\\CSSList\\CSSBlockList' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/CSSList/CSSBlockList.php',
         'Sabberworm\\CSS\\CSSList\\CSSList' => __DIR__ . '/..' . '/sabberworm/php-css-parser/src/CSSList/CSSList.php',

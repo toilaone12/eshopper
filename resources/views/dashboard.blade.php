@@ -66,6 +66,8 @@
                 EShopper
             </div>
 <!-- Nav Item - Pages Collapse Menu -->
+            @if(Auth::check())
+            @if(Auth::user()->id_role == 1)
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo8"
                     aria-expanded="true" aria-controls="collapseTwo8">
@@ -79,6 +81,9 @@
                     </div>
                 </div>
             </li>
+            @endif
+            @endif
+            
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
@@ -89,11 +94,14 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Chọn:</h6>
                         <a class="collapse-item" href="{{route('category.listCategory')}}">Danh sách danh mục</a>
+                        @if(Auth::check())
+                        @if(Auth::user()->id_role == 1)
                         <a class="collapse-item" href="{{route('category.insertFormCategory')}}">Thêm danh mục</a>
+                        @endif
+                        @endif
                     </div>
                 </div>
             </li>
-            <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo2"
                     aria-expanded="true" aria-controls="collapseTwo2">
@@ -104,10 +112,15 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Chọn:</h6>
                         <a class="collapse-item" href="{{route('brand.listBrand')}}">Danh sách thương hiệu</a>{{--sử dụng route() --}}
+                        @if(Auth::check())
+                        @if(Auth::user()->id_role == 1)
                         <a class="collapse-item" href="{{route('brand.insertFormBrand')}}">Thêm thương hiệu</a>{{--sử dụng route() --}}
+                        @endif
+                        @endif
                     </div>
                 </div>
             </li>
+            <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo1"
                     aria-expanded="true" aria-controls="collapseTwo1">
@@ -118,7 +131,11 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Chọn:</h6>
                         <a class="collapse-item" href="{{route('product.listFormProduct')}}">Danh sách sản phẩm</a>{{--sử dụng route() --}}
+                        @if(Auth::check())
+                        @if(Auth::user()->id_role == 1)
                         <a class="collapse-item" href="{{route('product.insertFormProduct')}}">Thêm sản phẩm</a>{{--sử dụng route() --}}
+                        @endif
+                        @endif
                     </div>
                 </div>
             </li>
@@ -132,10 +149,16 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Chọn:</h6>
                         <a class="collapse-item" href="{{route('slide.listSlide')}}">Danh sách quảng cáo</a>{{--sử dụng route() --}}
+                        @if(Auth::check())
+                        @if(Auth::user()->id_role == 1)
                         <a class="collapse-item" href="{{route('slide.insertFormSlide')}}">Thêm quảng cáo</a>{{--sử dụng route() --}}
+                        @endif
+                        @endif
                     </div>
                 </div>
             </li>
+            @if(Auth::check())
+            @if(Auth::user()->id_role == 1)
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo4"
                     aria-expanded="true" aria-controls="collapseTwo4">
@@ -149,6 +172,8 @@
                     </div>
                 </div>
             </li>
+            @endif
+            @endif
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo5"
                     aria-expanded="true" aria-controls="collapseTwo5">

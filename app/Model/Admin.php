@@ -9,7 +9,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Admin extends Authenticatable
 {
     //
-    use Notifiable;
     public $timestamps = true;
     protected $table = 'admin';
     protected $primaryKey = 'id_admin';
@@ -17,5 +16,8 @@ class Admin extends Authenticatable
     public function getAuthPassword()
     {
         return $this->password_admin;
+    }
+    public function hasRole($role){
+        return null !== Admin::where('id_role',$role)->first();
     }
 }

@@ -43,13 +43,19 @@
                         @endif
                         @endforeach
                     </ul>
+                    @if(Auth::check())
+                    @if(Auth::user()->id_role == 1)
                     <textarea name="" id="" cols="30" rows="3" class="md-textarea form-control mb-2 answer-question-{{$c->id_comment}}"></textarea>
                     <button class="btn btn-primary f-14 button-answer" data-comment-id="{{$c->id_comment}}" data-product-id="{{$c->id_product}}">
                         Trả lời bình luận
                     </button>
+                    @endif
+                    @endif
                 </td>
                 <td width="200">{{$c->created_at}}</td>
                 <td>{{$c->name_product}}</td>
+                @if(Auth::check())
+                @if(Auth::user()->id_role == 1)
                 <td>
                     <a href="" class="btn btn-success" style="margin-right:15px">
                         <i class="fa-solid fa-pen-to-square"></i>
@@ -58,6 +64,8 @@
                         <i class="fa-solid fa-xmark"></i>
                     </a>
                 </td>
+                @endif
+                @endif
             </tr>
             @endif
         @endforeach

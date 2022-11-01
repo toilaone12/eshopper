@@ -38,6 +38,7 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
     //User
     Route::prefix('user')->group(function(){
         Route::get('/list-user', [AdminController::class, 'listUser'])->name('admin.listUser');  
+        Route::post('/permission-user', [AdminController::class, 'permissionAdmin'])->name('admin.permissionAdmin');  
     });
     //Category
     Route::prefix('category')->group(function(){

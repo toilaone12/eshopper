@@ -80,4 +80,18 @@ class AdminController extends Controller
             'selectAdmin',
         ));
     }
+    public function permissionAdmin(Request $request){
+        $data = $request->all();
+        $name = $data['name_admin'];
+        $role = $data['role'];
+        $admin = Admin::where('name_admin',$name)->first();
+        print_r(Auth::check());
+        // if($role == 1){
+        //     $admin->id_role = $role;
+        // }else if($role ==2){
+        //     $admin->id_role = $role;
+        // }
+        // $admin->save();
+        // return redirect()->back();
+    }
 }

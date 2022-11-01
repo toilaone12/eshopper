@@ -6,6 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AdminSeeder' => $baseDir . '/database/seeds/AdminSeeder.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\AdminController' => $baseDir . '/app/Http/Controllers/AdminController.php',
@@ -48,6 +49,7 @@ return array(
     'App\\Model\\Province' => $baseDir . '/app/Model/Province.php',
     'App\\Model\\Rating' => $baseDir . '/app/Model/Rating.php',
     'App\\Model\\Review' => $baseDir . '/app/Model/Review.php',
+    'App\\Model\\Role' => $baseDir . '/app/Model/Role.php',
     'App\\Model\\Slide' => $baseDir . '/app/Model/Slide.php',
     'App\\Model\\User' => $baseDir . '/app/Model/User.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
@@ -3784,6 +3786,7 @@ return array(
     'Ramsey\\Uuid\\UuidInterface' => $vendorDir . '/ramsey/uuid/src/UuidInterface.php',
     'Ramsey\\Uuid\\Validator\\GenericValidator' => $vendorDir . '/ramsey/uuid/src/Validator/GenericValidator.php',
     'Ramsey\\Uuid\\Validator\\ValidatorInterface' => $vendorDir . '/ramsey/uuid/src/Validator/ValidatorInterface.php',
+    'RoleSeeder' => $baseDir . '/database/seeds/RoleSeeder.php',
     'Sabberworm\\CSS\\CSSList\\AtRuleBlockList' => $vendorDir . '/sabberworm/php-css-parser/src/CSSList/AtRuleBlockList.php',
     'Sabberworm\\CSS\\CSSList\\CSSBlockList' => $vendorDir . '/sabberworm/php-css-parser/src/CSSList/CSSBlockList.php',
     'Sabberworm\\CSS\\CSSList\\CSSList' => $vendorDir . '/sabberworm/php-css-parser/src/CSSList/CSSList.php',

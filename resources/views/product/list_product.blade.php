@@ -41,6 +41,8 @@
             <td>{{number_format($p->price_product,0,',','.')}} đ</td>
             <td ><span class="overflow-hidden text-nowrap d-inline-block" style="width: 150px; text-overflow:ellipsis;">{{$p->description_product}}</span></td>
             <td ><span class="overflow-hidden text-nowrap d-inline-block" style="width: 150px; text-overflow:ellipsis;">{{$p->content_product}}</span></td>
+            @if(Auth::check())
+            @if(Auth::user()->id_role == 1)
             <td>
                 <a href="{{route('product.editFormProduct',['idProduct'=>$p->id])}}" class="btn btn-success" style="margin-right:15px">
                     <i class="fa-solid fa-pen-to-square"></i>
@@ -49,6 +51,11 @@
                     <i class="fa-solid fa-xmark"></i>
                 </a>
             </td>
+            @else
+            <td>
+            </td>
+            @endif
+            @endif
         </tr>
         @endforeach
     </tbody>
