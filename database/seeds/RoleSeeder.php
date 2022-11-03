@@ -14,7 +14,7 @@ class RoleSeeder extends Seeder
     {
         //
         Role::truncate(); // xoa neu co CSDL
-        Role::create(['name_role' => 'admin']);
-        Role::create(['name_role' => 'staff']);
+        Role::create(['name_role' => 'Quản lý']);
+        Role::create(['name_role' => 'Nhân viên']);
     }
 }

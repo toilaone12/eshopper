@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use App\Model\Admin;
+use App\Model\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Validator;
@@ -66,6 +67,7 @@ class AdminController extends Controller
             return redirect()->route('admin');
             // echo Auth::attempt($dataAuth);
         }else{
+            Session::put('message','Kiểm tra lại tài khoản và mật khẩu');
             return redirect()->route('admin.login');
             // echo Auth::attempt($dataAuth);
         }
@@ -80,18 +82,51 @@ class AdminController extends Controller
             'selectAdmin',
         ));
     }
-    public function permissionAdmin(Request $request){
+    public function permissionAdmin(Request $request){ // cap quyen
         $data = $request->all();
         $name = $data['name_admin'];
         $role = $data['role'];
         $admin = Admin::where('name_admin',$name)->first();
-        print_r(Auth::check());
-        // if($role == 1){
-        //     $admin->id_role = $role;
-        // }else if($role ==2){
-        //     $admin->id_role = $role;
-        // }
-        // $admin->save();
-        // return redirect()->back();
+        // print_r(Auth::check());
+        if($role == 1){
+            $admin->id_role = $role;
+        }else if($role ==2){
+            $admin->id_role = $role;
+        }
+        $admin->save();
+        return redirect()->back();
+    }
+    public function deniedUser(Request $request){
+        $idAdmin = $request->get('id');
+        if(Auth::id() == $idAdmin){
+            return redirect()->back()->with('message','Bạn không thể xóa quyền của chính mình');
+        }else{
+            $admin = Admin::find($idAdmin);
+            $deniedUser = $admin->delete();
+            if($deniedUser){
+                return redirect()->back()->with('message','Xóa quyền thành công');
+            }
+        }
+    }
+    public function insertFormUser(){
+        $role = Role::all();
+        return view('user.insert_user',compact('role'));
+    }
+    public function insertUser(Request $request){
+        $data = $request->all();
+        Validator::make($data,[
+            'username' => ['required'],
+            'password' => ['required','max:32','min:6'],
+        ])->validate();
+        $user = Admin::create([
+            'name_admin' => $data['username'],
+            'password_admin' => md5($data['password']),
+            'id_role' => $data['name_role'],
+        ]);
+        if($user){
+            return redirect()->route('admin.listUser')->with('message','Cấp tài khoản thành công');
+        }else{
+            return redirect()->route('admin.listUser')->with('message','Cấp tài khoản thất bại');
+        }
     }
 }

@@ -32,6 +32,7 @@
 <body>
 	<?php
 		use Illuminate\Support\Facades\Cookie;
+		use Illuminate\Support\Facades\Session;
 	?>
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url({{asset('backend/img/hanoi.jpg')}});">
@@ -50,12 +51,18 @@
 						<input class="input100" type="text" name="username" value="@if(Cookie::get('username')) {{Cookie::get('username')}} @endif"  placeholder="Nhập tài khoản">
 						<span class="focus-input100" data-placeholder="&#xf207;"></span>
 					</div>
+					@error('username')
+					<span class="text-danger">{{$message}}</span>
+					@enderror
 
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
 						<input class="input100" type="password" id="password" value="@if(Cookie::get('password')) {{Cookie::get('password')}} @endif"  name="pass" placeholder="Nhập mật khẩu">
 						<span class="focus-input100" data-placeholder="&#xf191;"></span>
 						<i class="fa-solid fa-eye input-eye" id="open-eyes"></i>
 					</div>
+					@error('pass')
+					<span class="text-danger">{{$message}}</span>
+					@enderror
 
 					<div class="contact100-form-checkbox">
 						<input class="input-checkbox100" @if(Cookie::has('remember')) {{'checked'}} @else {{'a'}} @endif id="ckb1" type="checkbox" name="remember-me">
@@ -65,9 +72,15 @@
 					</div>
 					<div class="contact100-form-checkbox">
 						<label class="text-danger" for="ckb1">
-							@foreach($errors->get('pass') as $message)
-								{{$message}}
-							@endforeach
+							@php
+								$message = Session::get('message');
+								if(isset($message)){
+									echo $message;
+									Session::put('message','');
+								}else{
+
+								}
+							@endphp
 						</label>
 					</div>
 

@@ -56,7 +56,7 @@ return [
         'string' => 'The :attribute must be greater than or equal :value characters.',
         'array' => 'The :attribute must have :value items or more.',
     ],
-    'image' => ':attribute phải là hình ảnh..',
+    'image' => ':attribute phải là hình ảnh.',
     'in' => 'The selected :attribute is invalid.',
     'in_array' => 'The :attribute field does not exist in :other.',
     'integer' => 'The :attribute must be an integer.',
@@ -103,6 +103,9 @@ return [
     'name_brand' => [
         'unique' => "Thương hiệu không được trùng nhau.",
     ],
+    'name_supplier' => [
+        'unique' => "Nhà cung cấp không được trùng nhau.",
+    ],
     'required_if' => 'The :attribute field is required when :other is :value.',
     'required_unless' => 'The :attribute field is required unless :other is in :values.',
     'required_with' => 'The :attribute field is required when :values is present.',
@@ -119,7 +122,7 @@ return [
     'starts_with' => 'The :attribute must start with one of the following: :values.',
     'string' => 'The :attribute must be a string.',
     'timezone' => 'The :attribute must be a valid zone.',
-    'unique' => 'Thương hiệu không được trùng nhau.',
+    'unique' => ':attribute không được trùng nhau.',
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'The :attribute format is invalid.',
     'uuid' => 'The :attribute must be a valid UUID.',

@@ -21,6 +21,7 @@
     <!-- Custom styles for this template-->
     <link href="{{asset('backend/css/sb-admin-2.min.css')}}" rel="stylesheet">
     <link href="{{asset('backend/css/sb-admin-2.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.1/dist/sweetalert2.min.css">
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css" integrity="sha512-bYPO5jmStZ9WI2602V2zaivdAnbAhtfzmxnEGh9RwtlI00I9s8ulGe4oBa5XxiC6tCITJH/QG70jswBhbLkxPw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- CSS only -->
@@ -78,6 +79,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Chọn:</h6>
                         <a class="collapse-item" href="{{route('admin.listUser')}}">Danh sách tài khoản</a>{{--sử dụng route() --}}
+                        <a class="collapse-item" href="{{route('admin.insertFormUser')}}">Thêm tài khoản</a>
                     </div>
                 </div>
             </li>
@@ -215,7 +217,20 @@
                     </div>
                 </div>
             </li>
-
+            <li class="nav-item">   
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo9"
+                    aria-expanded="true" aria-controls="collapseTwo9">
+                    <i class="fa-sharp fa-solid fa-industry"></i>
+                    <span>Nhà cung cấp</span>
+                </a>
+                <div id="collapseTwo9" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Chọn:</h6>
+                        <a class="collapse-item" href="{{route('supplier.listSupplier')}}">Danh sách nhà cung cấp</a>{{--sử dụng route() --}}
+                        <a class="collapse-item" href="{{route('supplier.insertFormSupplier')}}">Thêm nhà cung cấp</a>{{--sử dụng route() --}}
+                    </div>
+                </div>
+            </li>
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
@@ -570,6 +585,9 @@
     <script src="{{asset('backend/js/demo/chart-pie-demo.js')}}"></script>
     <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha512-AIOTidJAcHBH2G/oZv9viEGXRqDNmfdPVPYOYKGy3fti0xIplnlgMHUGfuNRzC6FkzIo0iIxgFnr9RikFxK+sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.1/dist/sweetalert2.min.js"></script>
+    
     <!-- @Html.TextAreaFor(model=>model.CourseDescription, new { @id = "editor"}) -->
     <script>
     CKEDITOR.replace('ckeditor');
@@ -690,6 +708,31 @@
                         // // $('#'+result).html(data);
                         // console.log(data);
                     }
+                });
+            });
+            $('.delete-supplier').on('click',function(){
+                var choose = [];
+                $('.check-supplier:checked').each(function(){
+                    choose.push($(this).val());
+                });
+                // console.log(choose);
+                if(choose == ''){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi',
+                        text: 'Bạn chưa chọn nhà cung cấp muốn xóa!'
+                    });
+                }
+                $.ajax({
+                    url: "{{route('supplier.deleteSupplier')}}",
+                    method: "POST",
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    data: {
+                        choose:choose,
+                    },
+                    success:function(data){
+                        location.reload();
+                    } 
                 });
             });
         });

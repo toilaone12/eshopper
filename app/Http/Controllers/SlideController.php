@@ -48,7 +48,7 @@ class SlideController extends Controller
                 return redirect()->route('slide.insertFormSlide');
             }
         }else{
-            echo "1";
+            return redirect()->back();
         }
     }
     public function formEditSlide($idSlide){

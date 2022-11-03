@@ -12,7 +12,7 @@ class Admin extends Authenticatable
     public $timestamps = true;
     protected $table = 'admin';
     protected $primaryKey = 'id_admin';
-
+    protected $fillable = ['id_role','name_admin','password_admin'];
     public function getAuthPassword()
     {
         return $this->password_admin;

@@ -15,6 +15,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SlideController;
+use App\Http\Controllers\SupplierController;
 use App\Model\Product;
 use Illuminate\Support\Facades\Route;
 
@@ -37,50 +38,65 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
     Route::post('/save-login',[AdminController::class,'saveLogin'])->name('admin.saveLogin');
     //User
     Route::prefix('user')->group(function(){
-        Route::get('/list-user', [AdminController::class, 'listUser'])->name('admin.listUser');  
-        Route::post('/permission-user', [AdminController::class, 'permissionAdmin'])->name('admin.permissionAdmin');  
+        Route::group(['middleware' => 'auth.roles'],function(){
+            Route::get('/list-user', [AdminController::class, 'listUser'])->name('admin.listUser');  
+            Route::get('/denied-user', [AdminController::class, 'deniedUser'])->name('admin.deniedUser');             
+            Route::get('/insert-form-user', [AdminController::class, 'insertFormUser'])->name('admin.insertFormUser');             
+            Route::post('/insert-user', [AdminController::class, 'insertUser'])->name('admin.insertUser'); 
+            Route::post('/permission-user', [AdminController::class, 'permissionAdmin'])->name('admin.permissionAdmin'); 
+        }); //tranh moi nguoi tu ghi duong dan, muon kiem tra thi o trong lop AccessPermission.php
     });
     //Category
     Route::prefix('category')->group(function(){
+        Route::group(['middleware' => 'auth.roles'],function(){ //tranh moi nguoi tu ghi duong dan, muon kiem tra thi o trong lop AccessPermission.php
+            Route::get('/insert-form-category', [CategoryController::class, 'formInsertCategory'])->name('category.insertFormCategory');
+            Route::get('/edit-form-category/{idCategory}', [CategoryController::class, 'editFormCategory'])->name('category.editFormCategory');
+            Route::get('/delete-category/{idCategory}', [CategoryController::class, 'deleteCategory'])->name('category.deleteCategory');
+            Route::post('/insert-category', [CategoryController::class, 'insertCategory'])->name('category.insertCategory');
+            Route::post('/edit-category/{idCategory}', [CategoryController::class, 'editCategory'])->name('category.editCategory');
+        });
         Route::get('/list-category',[CategoryController::class, 'categoryList'])->name('category.listCategory');
-        Route::get('/insert-form-category', [CategoryController::class, 'formInsertCategory'])->name('category.insertFormCategory');
-        Route::get('/edit-form-category/{idCategory}', [CategoryController::class, 'editFormCategory'])->name('category.editFormCategory');
-        Route::get('/delete-category/{idCategory}', [CategoryController::class, 'deleteCategory'])->name('category.deleteCategory');
-        Route::post('/insert-category', [CategoryController::class, 'insertCategory'])->name('category.insertCategory');
-        Route::post('/edit-category/{idCategory}', [CategoryController::class, 'editCategory'])->name('category.editCategory');
     });
     //Product
     // đặt tên cho tất cả các route
     Route::prefix('product')->group(function(){
+        Route::group(['middleware' => 'auth.roles'],function(){
+            Route::get('/insert-form-product', [ProductController::class, 'formInsertProduct'])->name('product.insertFormProduct');
+            Route::get('/delete-product/{idProduct}', [ProductController::class, 'deleteProduct'])->name('product.deleteProduct');
+            Route::get('/edit-form-product/{idProduct}', [ProductController::class, 'editFormProduct'])->name('product.editFormProduct');
+            Route::post('/insert-product', [ProductController::class, 'insertProduct'])->name('product.insertProduct');
+            Route::post('/edit-product/{idProduct}', [ProductController::class, 'editProduct'])->name('product.editProduct');
+        });
         Route::get('/list-product', [ProductController::class, 'productList'])->name('product.listFormProduct');
-        Route::get('/insert-form-product', [ProductController::class, 'formInsertProduct'])->name('product.insertFormProduct');
-        Route::get('/delete-product/{idProduct}', [ProductController::class, 'deleteProduct'])->name('product.deleteProduct');
-        Route::get('/edit-form-product/{idProduct}', [ProductController::class, 'editFormProduct'])->name('product.editFormProduct');
-        Route::post('/insert-product', [ProductController::class, 'insertProduct'])->name('product.insertProduct');
-        Route::post('/edit-product/{idProduct}', [ProductController::class, 'editProduct'])->name('product.editProduct');
     });
     //Brand
     Route::prefix('brand')->group(function(){
+        Route::group(['middleware' => 'auth.roles'],function(){
+            Route::get('/insert-form-brand', [BrandController::class, 'formInsertBrand'])->name('brand.insertFormBrand');
+            Route::get('/edit-form-brand/{idBrand}', [BrandController::class, 'formEditBrand'])->name('brand.editFormBrand');
+            Route::get('/delete-brand/{idBrand}', [BrandController::class, 'deleteBrand'])->name('brand.deleteBrand');
+            Route::post('/insert-brand', [BrandController::class, 'insertBrand'])->name('brand.insertBrand');
+            Route::post('/edit-brand/{idBrand}', [BrandController::class, 'editBrand'])->name('brand.editBrand');
+        });
         Route::get('/list-brand', [BrandController::class, 'brandList'])->name('brand.listBrand');
-        Route::get('/insert-form-brand', [BrandController::class, 'formInsertBrand'])->name('brand.insertFormBrand');
-        Route::get('/edit-form-brand/{idBrand}', [BrandController::class, 'formEditBrand'])->name('brand.editFormBrand');
-        Route::get('/delete-brand/{idBrand}', [BrandController::class, 'deleteBrand'])->name('brand.deleteBrand');
-        Route::post('/insert-brand', [BrandController::class, 'insertBrand'])->name('brand.insertBrand');
-        Route::post('/edit-brand/{idBrand}', [BrandController::class, 'editBrand'])->name('brand.editBrand');
     });
     //Slide
     Route::prefix('slide')->group(function(){
+        Route::group(['middleware' => 'auth.roles'],function(){
+            Route::get('/insert-form-slide', [SlideController::class, 'formInsertSlide'])->name('slide.insertFormSlide');
+            Route::get('/edit-form-slide/{idSlide}', [SlideController::class, 'formEditSlide'])->name('slide.editFormSlide');
+            Route::get('/delete-slide/{idSlide}', [SlideController::class, 'deleteSlide'])->name('slide.deleteSlide');
+            Route::post('/insert-slide', [SlideController::class, 'insertSlide'])->name('slide.insertSlide');
+            Route::post('/edit-slide/{idSlide}', [SlideController::class, 'editSlide'])->name('slide.editSlide');
+        });
         Route::get('/list-slide', [SlideController::class, 'listSlide'])->name('slide.listSlide');
-        Route::get('/insert-form-slide', [SlideController::class, 'formInsertSlide'])->name('slide.insertFormSlide');
-        Route::get('/edit-form-slide/{idSlide}', [SlideController::class, 'formEditSlide'])->name('slide.editFormSlide');
-        Route::get('/delete-slide/{idSlide}', [SlideController::class, 'deleteSlide'])->name('slide.deleteSlide');
-        Route::post('/insert-slide', [SlideController::class, 'insertSlide'])->name('slide.insertSlide');
-        Route::post('/edit-slide/{idSlide}', [SlideController::class, 'editSlide'])->name('slide.editSlide');
     });
     //Comment 
     Route::prefix('comment')->group(function(){
-        Route::get('/list-comment', [CommentController::class, 'listComment'])->name('comment.listComment');
-        Route::post('/reply-comment', [CommentController::class, 'replyComment'])->name('comment.replyComment');
+        Route::group(['middleware' => 'auth.roles'],function(){
+            Route::get('/list-comment', [CommentController::class, 'listComment'])->name('comment.listComment');
+            Route::post('/reply-comment', [CommentController::class, 'replyComment'])->name('comment.replyComment');
+        });
     });
     //Coupon
     Route::prefix('coupon')->group(function(){
@@ -100,13 +116,24 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
         Route::post('/edit-delivery', [DeliveryController::class, 'editDelivery'])->name('delivery.editDelivery');
         Route::post('/select-delivery', [DeliveryController::class, 'selectDelivery'])->name('delivery.selectDelivery');
     });
+    //Order
     Route::prefix('order')->group(function(){
         Route::get('/list-order', [OrderController::class, 'listOrder'])->name('order.listOrder');
         Route::get('/print-order/{codeOrder}', [OrderController::class, 'printPDF'])->name('order.printOrder');
         Route::get('/detail-order/{codeOrder}', [OrderController::class, 'detailOrder'])->name('order.detailOrder');
         Route::post('/change-status', [OrderController::class, 'changeStatus'])->name('order.changeStatus');
     });
+    //Supplier
+    Route::prefix('supplier')->group(function(){
+        Route::get('/list-supplier', [SupplierController::class, 'listSupplier'])->name('supplier.listSupplier');
+        Route::get('/insert-form-supplier', [SupplierController::class, 'insertFormSupplier'])->name('supplier.insertFormSupplier');
+        Route::get('/edit-form-supplier', [SupplierController::class, 'editFormSupplier'])->name('supplier.editFormSupplier');
+        Route::post('/delete-supplier', [SupplierController::class, 'deleteSupplier'])->name('supplier.deleteSupplier');
+        Route::post('/insert-supplier', [SupplierController::class, 'insertSupplier'])->name('supplier.insertSupplier');
+        Route::post('/edit-supplier/{idSupplier}', [SupplierController::class, 'editSupplier'])->name('supplier.editSupplier');
+    });
 });
+//page
 Route::prefix('page')->group(function(){
     Route::get('/home-page',[HomeController::class,'homePage'])->name('home.page');   
     Route::get('/login',[HomeController::class, 'loginForm'])->name('home.loginForm');
