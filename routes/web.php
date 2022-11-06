@@ -11,6 +11,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NetworkController;
+use App\Http\Controllers\NoteController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
@@ -131,6 +132,16 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
         Route::post('/delete-supplier', [SupplierController::class, 'deleteSupplier'])->name('supplier.deleteSupplier');
         Route::post('/insert-supplier', [SupplierController::class, 'insertSupplier'])->name('supplier.insertSupplier');
         Route::post('/edit-supplier/{idSupplier}', [SupplierController::class, 'editSupplier'])->name('supplier.editSupplier');
+    });
+    //Note
+    Route::prefix('note')->group(function(){
+        Route::get('/list-note', [NoteController::class, 'listNote'])->name('note.listNote');
+        Route::get('/detail-note', [NoteController::class, 'detailNote'])->name('note.detailNote');
+        Route::get('/print-note/{codeNote}', [NoteController::class, 'printPDF'])->name('note.printNote'); 
+        Route::get('/import-form-note', [NoteController::class, 'importFormNote'])->name('note.importFormNote');
+        Route::get('/export-warehouse', [NoteController::class, 'exportToWarehouse'])->name('note.exportToWarehouse');
+        Route::post('/import-note', [NoteController::class, 'importNote'])->name('note.importNote');
+        Route::post('/import-detail-note', [NoteController::class, 'importDetailNote'])->name('note.importDetailNote');
     });
 });
 //page

@@ -25,6 +25,13 @@
         @enderror
     </div>
     <div class="form-group">
+        <label for="exampleFormControlInput2">Số điện thoại</label>
+        <input type="number" class="form-control" value="{{$supplier->phone_supplier}}" name="phone_supplier" min=1 placeholder="Số điện thoại nhà cung cấp" id="exampleFormControlInput2">
+        @error('phone_supplier')
+        <span class="text-danger">{{$message}}</span>
+        @enderror
+    </div>
+    <div class="form-group">
         <label for="exampleFormControlInput1">Địa chỉ nhà cung cấp</label>
         <input type="text" class="form-control" value="{{$supplier->address_supplier}}" name="address_supplier" id="exampleFormControlInput1" placeholder="Địa chỉ nhà cung cấp">
         @error('address_supplier')

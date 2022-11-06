@@ -22,6 +22,7 @@
                     <th>Chọn</th>
                     <th>STT</th>
                     <th>Tên nhà cung cấp</th>
+                    <th>Số điện thoại</th>
                     <th>Địa chỉ</th>
                     <th>Ngày khởi tạo</th>
                     <th>Ngày cập nhật</th>
@@ -40,6 +41,7 @@
                     <td width="50" align="center"><input type="checkbox" name="" value="{{$s->id_supplier}}" class="check-supplier" id=""></td>
                     <td width="50">{{$i}}</td>
                     <td width="150">{{$s->name_supplier}}</td>
+                    <td width="150">{{$s->phone_supplier}}</td>
                     <td width="500">{{$s->address_supplier}}</td>
                     <td>{{$s->created_at}}</td>
                     <td>{{$s->updated_at}}</td>

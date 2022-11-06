@@ -21,10 +21,12 @@ class SupplierController extends Controller
         $data = $request->all();
         Validator::make($data,[
             'name_supplier' => ['required','string','unique:supplier'],
+            'phone_supplier' => ['required','regex:/(84|0[3|5|7|8|9])+([0-9]{8})\b/'],
             'address_supplier' => ['required'],
         ])->validate();
         $supplier = Supplier::create([
             'name_supplier' => $data['name_supplier'],
+            'phone_supplier' => $data['phone_supplier'],
             'address_supplier' => $data['address_supplier'],
         ]);
         if($supplier){
@@ -40,11 +42,13 @@ class SupplierController extends Controller
     public function editSupplier(Request $request,$idSupplier){
         $data = $request->all();
         Validator::make($data,[
-            'name_supplier' => ['required','string','unique:supplier'],
+            'name_supplier' => ['required','string'],
+            'phone_supplier' => ['required','regex:/(84|0[3|5|7|8|9])+([0-9]{8})\b/'],
             'address_supplier' => ['required'],
             ])->validate();
         $supplier = Supplier::find($idSupplier);
         $supplier->name_supplier = $data['name_supplier'];
+        $supplier->phone_supplier = $data['phone_supplier'];
         $supplier->address_supplier = $data['address_supplier'];
         $supplier->save();
         if($supplier){

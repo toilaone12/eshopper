@@ -23,8 +23,15 @@
         @enderror
     </div>
     <div class="form-group">
-        <label for="exampleFormControlInput1">Địa chỉ nhà cung cấp</label>
-        <input type="text" class="form-control" name="address_supplier" id="exampleFormControlInput1" placeholder="Địa chỉ nhà cung cấp">
+        <label for="exampleFormControlInput2">Số điện thoại</label>
+        <input type="number" class="form-control" name="phone_supplier" min=1 placeholder="Số điện thoại nhà cung cấp" id="exampleFormControlInput2">
+        @error('phone_supplier')
+        <span class="text-danger">{{$message}}</span>
+        @enderror
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlInput3">Địa chỉ nhà cung cấp</label>
+        <input type="text" class="form-control" name="address_supplier" id="exampleFormControlInput3" placeholder="Địa chỉ nhà cung cấp">
         @error('address_supplier')
         <span class="text-danger">{{$message}}</span>
         @enderror

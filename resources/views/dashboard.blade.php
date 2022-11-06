@@ -25,6 +25,7 @@
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css" integrity="sha512-bYPO5jmStZ9WI2602V2zaivdAnbAhtfzmxnEGh9RwtlI00I9s8ulGe4oBa5XxiC6tCITJH/QG70jswBhbLkxPw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- CSS only -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 
 </head>
@@ -231,6 +232,33 @@
                     </div>
                 </div>
             </li>
+            <li class="nav-item">   
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo10"
+                    aria-expanded="true" aria-controls="collapseTwo10">
+                    <i class="fa-solid fa-warehouse"></i>
+                    <span>Kho hàng</span>
+                </a>
+                <div id="collapseTwo10" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Chọn:</h6>
+                        <a class="collapse-item" style="white-space:normal !important;" href="{{route('supplier.listSupplier')}}">Danh sách sản phẩm trong kho</a>{{--sử dụng route() --}}
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">   
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo11"
+                    aria-expanded="true" aria-controls="collapseTwo11">
+                    <i class="fa-solid fa-note-sticky"></i>
+                    <span>Phiếu</span>
+                </a>
+                <div id="collapseTwo11" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Chọn:</h6>
+                        <a class="collapse-item" style="white-space:normal !important;" href="{{route('note.listNote')}}">Danh sách phiếu hàng</a>{{--sử dụng route() --}}
+                        <a class="collapse-item" style="white-space:normal !important;" href="{{route('note.importFormNote')}}">Nhập hàng</a>{{--sử dụng route() --}}
+                    </div>
+                </div>
+            </li>
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
@@ -259,7 +287,7 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
@@ -277,7 +305,7 @@
                         <a class="collapse-item" href="blank.html">Blank Page</a>
                     </div>
                 </div>
-            </li>
+            </li> -->
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
@@ -735,7 +763,58 @@
                     } 
                 });
             });
+            $('.add-detail-note').on('click',function(){
+                var nameProduct = [];
+                var quantityProduct = [];
+                var priceProduct = [];
+                var token = $('input[name="_token"]').val();
+                if($('.name-product').val() === '' || $('.quantity-product').val() === '' || $('.price-product').val() === ''){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi',
+                        text: 'Bạn chưa nhập phiếu hàng!'
+                    });
+                }else{
+                    $('.name-product').each(function(){
+                        nameProduct.push($(this).val());
+                    });
+                    $('.quantity-product').each(function(){
+                        quantityProduct.push($(this).val());
+                    });
+                    $('.price-product').each(function(){
+                        priceProduct.push($(this).val());
+                    });
+                    $.ajax({
+                        url: "{{route('note.importDetailNote')}}",
+                        method: "POST",
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        data: {
+                            nameProduct:nameProduct,
+                            quantityProduct:quantityProduct,
+                            priceProduct:priceProduct,
+                            token:token
+                        },
+                        success:function(data){
+                            // console.log(data);
+                            window.location.href="{{route('note.listNote')}}";
+                        } 
+                    });
+                }
+            });
         });
+        $('.export-warehouse').on('click',function(e){
+            e.stopPropagation();
+            $('.warehouse').addClass('d-flex');
+            $('.warehouse').removeClass('d-none');
+        });
+        $('.close-warehouse').on('click',function(){
+            $('.warehouse').addClass('d-none');
+            $('.warehouse').removeClass('d-flex');
+        });
+        // $('.export-quantity').on('click',function(e){
+        //     e.preventDefault();
+        //     alert('a');
+        // })
     </script>
 </body>
 

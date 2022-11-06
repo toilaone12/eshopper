@@ -11021,7 +11021,45 @@ form.user .btn-user {
 .m-center{
   margin: 0 auto;
 }
-
+.warehouse{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  /* display: none; */
+}
+.bg-warehouse{
+  background-color: #f8f9fc;
+  width: 50% !important;
+}
+.close-warehouse{
+  position: absolute;
+  top: 292px;
+  right: 111px;
+  font-size: 22px;
+  color: #555;
+}
+@media (min-width: 768px) {
+  .close-warehouse{
+    position: absolute;
+    top: 475px;
+    right: 225px;
+    font-size: 30px;
+    color: #555;
+  }
+}
+@media (min-width: 1200px) {
+  .close-warehouse{
+    position: absolute;
+    top: 210px;
+    right: 485px;
+    font-size: 30px;
+    color: #555;
+  }
+}
 @-webkit-keyframes noise-anim {
   0% {
     clip: rect(49px, 9999px, 40px, 0);

@@ -158,12 +158,12 @@ class ProductController extends Controller
         $selectReview = Review::where('id_product',$idProduct)->get();
         $selectComment = Comment::where('id_product',$idProduct)->get();
         $selectAvgReview = Review::where('id_product',$idProduct)->avg('rating');
-        // if(isset($idProduct)){
-        //     $product = Product::find($idProduct);
-        //     $product->number_views += 1;
-        //     $product->save();
-        // }
-        // dd($selectReview);
+        if(isset($idProduct)){
+            $product = Product::find($idProduct);
+            $product->number_views += 1;
+            $product->save();
+        }
+        dd($selectReview);
         return view('product.detail_product',compact(
             'selectCategory',
             'selectProductId',
