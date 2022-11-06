@@ -241,7 +241,7 @@
                 <div id="collapseTwo10" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Chọn:</h6>
-                        <a class="collapse-item" style="white-space:normal !important;" href="{{route('supplier.listSupplier')}}">Danh sách sản phẩm trong kho</a>{{--sử dụng route() --}}
+                        <a class="collapse-item" style="white-space:normal !important;" href="{{route('warehouse.listWareHouse')}}">Danh sách sản phẩm trong kho</a>{{--sử dụng route() --}}
                     </div>
                 </div>
             </li>

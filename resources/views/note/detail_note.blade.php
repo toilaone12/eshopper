@@ -92,12 +92,16 @@
                 <a href="{{route('note.printNote',['codeNote' => $note->code_note])}}" class="f-14 w-100 btn btn-success">In phiếu</a>
             </div>
         </div>
+        @if(Auth::check())
+        @if(Auth::user()->id_role == 1)
         <div class="bg-white border border-info rounded w-100 p-3 mt-5">
             <p class="f-16">Xuất về kho hàng</p>
             <div class="form-group d-flex justify-content-center">
                 <a href="{{route('note.exportToWarehouse',['codeNote'=>$note->code_note])}}" class="f-14 w-100 btn btn-success">Xuất hàng</a>
             </div>
         </div>
+        @endif
+        @endif
     </div>
     <!-- <form action="" method="post">
         <div class="row justify-content-center align-items-center warehouse d-none">

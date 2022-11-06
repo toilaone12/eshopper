@@ -17,7 +17,9 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SlideController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\WareHouseController;
 use App\Model\Product;
+use App\Model\WareHouse;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -133,13 +135,19 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
         Route::post('/insert-supplier', [SupplierController::class, 'insertSupplier'])->name('supplier.insertSupplier');
         Route::post('/edit-supplier/{idSupplier}', [SupplierController::class, 'editSupplier'])->name('supplier.editSupplier');
     });
+    //WareHouse
+    Route::prefix('supplier')->group(function(){
+        Route::get('/list-warehouse', [WareHouseController::class, 'listWareHouse'])->name('warehouse.listWareHouse');
+    });
     //Note
     Route::prefix('note')->group(function(){
         Route::get('/list-note', [NoteController::class, 'listNote'])->name('note.listNote');
         Route::get('/detail-note', [NoteController::class, 'detailNote'])->name('note.detailNote');
         Route::get('/print-note/{codeNote}', [NoteController::class, 'printPDF'])->name('note.printNote'); 
         Route::get('/import-form-note', [NoteController::class, 'importFormNote'])->name('note.importFormNote');
-        Route::get('/export-warehouse', [NoteController::class, 'exportToWarehouse'])->name('note.exportToWarehouse');
+        Route::group(['middleware' => 'auth.roles'],function(){
+            Route::get('/export-warehouse', [NoteController::class, 'exportToWarehouse'])->name('note.exportToWarehouse');
+        });
         Route::post('/import-note', [NoteController::class, 'importNote'])->name('note.importNote');
         Route::post('/import-detail-note', [NoteController::class, 'importDetailNote'])->name('note.importDetailNote');
     });
