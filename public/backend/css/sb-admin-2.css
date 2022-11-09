@@ -11034,6 +11034,7 @@ form.user .btn-user {
 .bg-warehouse{
   background-color: #f8f9fc;
   width: 50% !important;
+  margin: 150px 0 !important;
 }
 .close-warehouse{
   position: absolute;
@@ -11054,7 +11055,7 @@ form.user .btn-user {
 @media (min-width: 1200px) {
   .close-warehouse{
     position: absolute;
-    top: 210px;
+    top: 160px;
     right: 485px;
     font-size: 30px;
     color: #555;

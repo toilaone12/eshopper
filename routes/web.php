@@ -136,8 +136,9 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
         Route::post('/edit-supplier/{idSupplier}', [SupplierController::class, 'editSupplier'])->name('supplier.editSupplier');
     });
     //WareHouse
-    Route::prefix('supplier')->group(function(){
+    Route::prefix('warehouse')->group(function(){
         Route::get('/list-warehouse', [WareHouseController::class, 'listWareHouse'])->name('warehouse.listWareHouse');
+        Route::post('/export-product', [WareHouseController::class, 'exportProduct'])->name('warehouse.exportProduct');
     });
     //Note
     Route::prefix('note')->group(function(){

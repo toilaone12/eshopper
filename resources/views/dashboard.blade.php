@@ -134,11 +134,6 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Chọn:</h6>
                         <a class="collapse-item" href="{{route('product.listFormProduct')}}">Danh sách sản phẩm</a>{{--sử dụng route() --}}
-                        @if(Auth::check())
-                        @if(Auth::user()->id_role == 1)
-                        <a class="collapse-item" href="{{route('product.insertFormProduct')}}">Thêm sản phẩm</a>{{--sử dụng route() --}}
-                        @endif
-                        @endif
                     </div>
                 </div>
             </li>
@@ -806,6 +801,11 @@
             e.stopPropagation();
             $('.warehouse').addClass('d-flex');
             $('.warehouse').removeClass('d-none');
+            var nameWareHouse = $(this).data('name');
+            var quantityWareHouse = $(this).data('quantity');
+            var priceWareHouse = $(this).data('price');
+            $('.name-product').html('<label for="exampleFormControlInput1">Tên sản phẩm</label><input type="text" class="form-control pe-none bg-light" value="'+nameWareHouse+'" name="name_product" id="exampleFormControlInput1" placeholder="Nhập tên">');
+            $('.quantity-product').html('<label for="exampleFormControlSelect3">Số lượng</label><input type="number" min=1 class="form-control pe-none bg-light" value="'+quantityWareHouse+'" name="quantity_product" id="exampleFormControlSelect3" placeholder="Nhập số lượng">');
         });
         $('.close-warehouse').on('click',function(){
             $('.warehouse').addClass('d-none');
