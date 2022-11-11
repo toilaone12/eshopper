@@ -58,6 +58,7 @@ class OrderController extends Controller
     }
     public function changeStatus(Request $request){
         $data = $request->all();
+        print_r($data);
         $orderId = $data['orderId'];
         $status = $data['status'];
         $quantityOrder = $data['quantityOrder'];
