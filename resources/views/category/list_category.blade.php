@@ -14,40 +14,49 @@
         ?>
     </p>
 </div>
-<table id="table_id" class="table">
-    <thead>
-        <tr align="center">
-            <th>Mã ID</th>
-            <th>Tên danh mục</th>
-            <th>Ngày khởi tạo</th>
-            <th>Ngày cập nhật</th>
-            <th>Chức năng</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach($getCategory as $key => $c)
-        <tr>
-            <td width="150">{{$c->id_category}}</td>
-            <td width="300">{{$c->name_category}}</td>
-            <td>{{$c->created_at}}</td>
-            <td>{{$c->updated_at}}</td>
-            @if(Auth::check())
-            @if(Auth::user()->id_role == 1)
-            <td>
-                <a href="{{route('category.editFormCategory',['idCategory'=>$c->id_category])}}" class="btn btn-success" style="margin-right:15px">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                </a>
-                <a href="{{route('category.deleteCategory',['idCategory'=>$c->id_category])}}" class="btn btn-danger">
-                    <i class="fa-solid fa-xmark"></i>
-                </a>
-            </td>
-            @else
-            <td>
-            </td>
-            @endif
-            @endif
-        </tr>
-        @endforeach
-    </tbody>
-</table>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Danh sách danh mục</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="table_id" class="table">
+                <thead>
+                    <tr align="center">
+                        <th>Mã ID</th>
+                        <th>Tên danh mục</th>
+                        <th>Ngày khởi tạo</th>
+                        <th>Ngày cập nhật</th>
+                        <th>Chức năng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($getCategory as $key => $c)
+                    <tr>
+                        <td width="150">{{$c->id_category}}</td>
+                        <td width="300">{{$c->name_category}}</td>
+                        <td>{{$c->created_at}}</td>
+                        <td>{{$c->updated_at}}</td>
+                        @if(Auth::check())
+                        @if(Auth::user()->id_role == 1)
+                        <td>
+                            <a href="{{route('category.editFormCategory',['idCategory'=>$c->id_category])}}" class="btn btn-success" style="margin-right:15px">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                            <a href="{{route('category.deleteCategory',['idCategory'=>$c->id_category])}}" class="btn btn-danger">
+                                <i class="fa-solid fa-xmark"></i>
+                            </a>
+                        </td>
+                        @else
+                        <td>
+                        </td>
+                        @endif
+                        @endif
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 @endsection

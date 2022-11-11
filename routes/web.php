@@ -16,6 +16,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SlideController;
+use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\WareHouseController;
 use App\Model\Product;
@@ -39,7 +40,7 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin');
     Route::get('/logout', [AdminController::class, 'logout'])->name('admin.logout');
     Route::post('/save-login',[AdminController::class,'saveLogin'])->name('admin.saveLogin');
-    //User
+    //User (Quản lý)
     Route::prefix('user')->group(function(){
         Route::group(['middleware' => 'auth.roles'],function(){
             Route::get('/list-user', [AdminController::class, 'listUser'])->name('admin.listUser');  
@@ -49,7 +50,7 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
             Route::post('/permission-user', [AdminController::class, 'permissionAdmin'])->name('admin.permissionAdmin'); 
         }); //tranh moi nguoi tu ghi duong dan, muon kiem tra thi o trong lop AccessPermission.php
     });
-    //Category
+    //Category (Danh mục)
     Route::prefix('category')->group(function(){
         Route::group(['middleware' => 'auth.roles'],function(){ //tranh moi nguoi tu ghi duong dan, muon kiem tra thi o trong lop AccessPermission.php
             Route::get('/insert-form-category', [CategoryController::class, 'formInsertCategory'])->name('category.insertFormCategory');
@@ -60,7 +61,7 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
         });
         Route::get('/list-category',[CategoryController::class, 'categoryList'])->name('category.listCategory');
     });
-    //Product
+    //Product (Sản phẩm)
     // đặt tên cho tất cả các route
     Route::prefix('product')->group(function(){
         Route::group(['middleware' => 'auth.roles'],function(){
@@ -72,7 +73,7 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
         });
         Route::get('/list-product', [ProductController::class, 'productList'])->name('product.listFormProduct');
     });
-    //Brand
+    //Brand (Thương hiệu)
     Route::prefix('brand')->group(function(){
         Route::group(['middleware' => 'auth.roles'],function(){
             Route::get('/insert-form-brand', [BrandController::class, 'formInsertBrand'])->name('brand.insertFormBrand');
@@ -83,7 +84,7 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
         });
         Route::get('/list-brand', [BrandController::class, 'brandList'])->name('brand.listBrand');
     });
-    //Slide
+    //Slide (Quảng cáo)
     Route::prefix('slide')->group(function(){
         Route::group(['middleware' => 'auth.roles'],function(){
             Route::get('/insert-form-slide', [SlideController::class, 'formInsertSlide'])->name('slide.insertFormSlide');
@@ -94,14 +95,14 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
         });
         Route::get('/list-slide', [SlideController::class, 'listSlide'])->name('slide.listSlide');
     });
-    //Comment 
+    //Comment (Bình luận)
     Route::prefix('comment')->group(function(){
         Route::group(['middleware' => 'auth.roles'],function(){
             Route::get('/list-comment', [CommentController::class, 'listComment'])->name('comment.listComment');
             Route::post('/reply-comment', [CommentController::class, 'replyComment'])->name('comment.replyComment');
         });
     });
-    //Coupon
+    //Coupon(Mã giảm giá)
     Route::prefix('coupon')->group(function(){
         Route::get('/list-coupon', [CouponController::class, 'listCoupon'])->name('coupon.listCoupon');
         Route::get('/insert-form-coupon', [CouponController::class, 'insertFromCoupon'])->name('coupon.insertFromCoupon');
@@ -110,7 +111,7 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
         Route::post('/insert-coupon', [CouponController::class, 'insertCoupon'])->name('coupon.insertCoupon');
         Route::post('/edit-coupon/{idCoupon}', [CouponController::class, 'editCoupon'])->name('coupon.editCoupon');
     });
-    //Delivery
+    //Delivery(Vận chuyển)
     Route::prefix('delivery')->group(function(){
         Route::get('/list-delivery', [DeliveryController::class, 'listDelivery'])->name('delivery.listDelivery');
         Route::get('/delete-delivery/{idDelivery}', [DeliveryController::class, 'deleteDelivery'])->name('delivery.deleteDelivery');
@@ -119,14 +120,14 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
         Route::post('/edit-delivery', [DeliveryController::class, 'editDelivery'])->name('delivery.editDelivery');
         Route::post('/select-delivery', [DeliveryController::class, 'selectDelivery'])->name('delivery.selectDelivery');
     });
-    //Order
+    //Order(Đơn đặt hàng)
     Route::prefix('order')->group(function(){
         Route::get('/list-order', [OrderController::class, 'listOrder'])->name('order.listOrder');
         Route::get('/print-order/{codeOrder}', [OrderController::class, 'printPDF'])->name('order.printOrder');
         Route::get('/detail-order/{codeOrder}', [OrderController::class, 'detailOrder'])->name('order.detailOrder');
         Route::post('/change-status', [OrderController::class, 'changeStatus'])->name('order.changeStatus');
     });
-    //Supplier
+    //Supplier(Nhà cung cấp)
     Route::prefix('supplier')->group(function(){
         Route::get('/list-supplier', [SupplierController::class, 'listSupplier'])->name('supplier.listSupplier');
         Route::get('/insert-form-supplier', [SupplierController::class, 'insertFormSupplier'])->name('supplier.insertFormSupplier');
@@ -135,12 +136,12 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
         Route::post('/insert-supplier', [SupplierController::class, 'insertSupplier'])->name('supplier.insertSupplier');
         Route::post('/edit-supplier/{idSupplier}', [SupplierController::class, 'editSupplier'])->name('supplier.editSupplier');
     });
-    //WareHouse
+    //WareHouse(Kho hàng)
     Route::prefix('warehouse')->group(function(){
         Route::get('/list-warehouse', [WareHouseController::class, 'listWareHouse'])->name('warehouse.listWareHouse');
         Route::post('/export-product', [WareHouseController::class, 'exportProduct'])->name('warehouse.exportProduct');
     });
-    //Note
+    //Note(Phiếu)
     Route::prefix('note')->group(function(){
         Route::get('/list-note', [NoteController::class, 'listNote'])->name('note.listNote');
         Route::get('/detail-note', [NoteController::class, 'detailNote'])->name('note.detailNote');
@@ -151,6 +152,11 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
         });
         Route::post('/import-note', [NoteController::class, 'importNote'])->name('note.importNote');
         Route::post('/import-detail-note', [NoteController::class, 'importDetailNote'])->name('note.importDetailNote');
+    });
+    //Statistic(Thống kê)
+    Route::prefix('statistic')->group(function(){
+        Route::get('/list-statistic',[StatisticController::class, 'listStatistic'])->name('statistic.listStatistic');
+        Route::post('/filter-date',[StatisticController::class, 'filterDate'])->name('statistic.filterDate');
     });
 });
 //page
