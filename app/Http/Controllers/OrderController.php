@@ -9,6 +9,7 @@ use App\Model\Order;
 use App\Model\OrderDetail;
 use App\Model\Product;
 use App\Model\Province;
+use App\Model\Statistic;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -57,16 +58,46 @@ class OrderController extends Controller
     }
     public function changeStatus(Request $request){
         $data = $request->all();
-        print_r($data);
         $orderId = $data['orderId'];
         $status = $data['status'];
         $quantityOrder = $data['quantityOrder'];
         $productId = $data['productId'];
+        $totalOrder = $data['totalOrder'];
         $changeStatus = Order::find($orderId);
         $changeStatus->status_order = $status;
         $changeStatus->save();
-        if($changeStatus->status_order == 0){
-
+        if($changeStatus->status_order == 2){
+            $date_order = $changeStatus->updated_at;
+            $date_order = date("Y-m-d",strtotime($changeStatus->updated_at));
+            $statistic = Statistic::where('date_statistic',$date_order)->get();
+            // print_r($statistic);
+            $allQuantity = 0;
+            foreach($quantityOrder as $keyQuantity => $q){
+                $allQuantity+=$q;
+            }
+            if(count($statistic) == 1){
+                $quantityStatistic = $statistic[0]->quantity_statistic;
+                $totalStatistic = $statistic[0]->price_statistic;
+                $quantityAll = $allQuantity + $quantityStatistic;
+                // print_r($allQuantity);
+                $totalAll = $totalOrder + $totalStatistic;
+                $statistic->toQuery()->update([
+                    'quantity_statistic' => $quantityAll,
+                    'price_statistic' => $totalAll,
+                    'date_statistic' => $date_order,
+                ]);
+                // echo "1";
+            }else{
+                $quantityAll = $allQuantity;
+                $totalAll = $totalOrder;
+                $arrayStatistic = array(
+                    'quantity_statistic' => $quantityAll,
+                    'price_statistic' => $totalAll,
+                    'date_statistic' => $date_order,
+                );
+                $createStatistic = Statistic::create($arrayStatistic);
+                // print_r($createStatistic);
+            }
         }else if($changeStatus->status_order == 3){
             foreach($productId as $keyProduct => $p){
                 $product = Product::find($p);

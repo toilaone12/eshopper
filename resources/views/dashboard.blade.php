@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Shop Tech</title>
+    <title>EShopper</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{asset('backend/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -27,7 +27,8 @@
     <!-- CSS only -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-
+    <!-- Morris -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 </head>
 
 <body id="page-top">
@@ -47,7 +48,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Shop Tech</div>
+                <div class="sidebar-brand-text mx-3">EShopper</div>
             </a>
 
             <!-- Divider -->
@@ -251,6 +252,19 @@
                         <h6 class="collapse-header">Chọn:</h6>
                         <a class="collapse-item" style="white-space:normal !important;" href="{{route('note.listNote')}}">Danh sách phiếu hàng</a>{{--sử dụng route() --}}
                         <a class="collapse-item" style="white-space:normal !important;" href="{{route('note.importFormNote')}}">Nhập hàng</a>{{--sử dụng route() --}}
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">   
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo12"
+                    aria-expanded="true" aria-controls="collapseTwo12">
+                    <i class="fa-solid fa-chart-simple"></i>
+                    <span>Thống kê</span>
+                </a>
+                <div id="collapseTwo12" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Chọn:</h6>
+                        <a class="collapse-item" style="white-space:normal !important;" href="{{route('statistic.listStatistic')}}">Thống kê sản phẩm</a>{{--sử dụng route() --}}
                     </div>
                 </div>
             </li>
@@ -610,7 +624,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha512-AIOTidJAcHBH2G/oZv9viEGXRqDNmfdPVPYOYKGy3fti0xIplnlgMHUGfuNRzC6FkzIo0iIxgFnr9RikFxK+sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Sweetalert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.1/dist/sweetalert2.min.js"></script>
-    
+    <!-- Morris -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
     <!-- @Html.TextAreaFor(model=>model.CourseDescription, new { @id = "editor"}) -->
     <script>
     CKEDITOR.replace('ckeditor');
@@ -651,7 +667,12 @@
         });
         $('.datetime').datetimepicker({
             step: 1,
-            
+        });
+        $('#datepicker1').datetimepicker({
+            step: 1,
+        });
+        $('#datepicker2').datetimepicker({
+            step: 1,
         });
         $(document).ready(function(){
             $('.choose').on('change',function(){
@@ -708,13 +729,14 @@
                 var token = $('input[name="_token"]').val();
                 var productId = [];
                 var quantityOrder = [];
+                var totalOrder = $('.total-order').data('total');
                 $('input[name="product_id"]').each(function(){
                     productId.push($(this).val());
                 });
                 $('.quantity-order').each(function(){
                     quantityOrder.push($(this).text());
                 })
-                // alert(quantityOrder);
+                // alert(totalOrder);
                 $.ajax({
                     url: "{{route('order.changeStatus')}}",
                     method: "POST",
@@ -724,10 +746,11 @@
                         orderId:orderId,
                         productId:productId,
                         quantityOrder:quantityOrder,
+                        totalOrder: totalOrder,
                         token:token,
                     },
                     success:function(data){
-                        location.reload();
+                        // location.reload();
                         // // $('#'+result).html(data);
                         // console.log(data);
                     }
@@ -811,10 +834,66 @@
             $('.warehouse').addClass('d-none');
             $('.warehouse').removeClass('d-flex');
         });
-        // $('.export-quantity').on('click',function(e){
-        //     e.preventDefault();
-        //     alert('a');
-        // })
+        //Thong ke
+        var chartOrder = new Morris.Bar({
+            // ID of the element in which to draw the chart.
+            element: 'areaChart',
+            parseTime:false,
+            // Chart data records -- each entry in this array corresponds to a point on
+            // the chart.
+            // data: [
+            //     { year: '2008', value: 20 },
+            //     { year: '2009', value: 10 },
+            //     { year: '2010', value: 5 },
+            //     { year: '2011', value: 5 },
+            //     { year: '2012', value: 20 }
+            // ],
+            // The name of the data record attribute that contains x-values.
+            xkey: 'name',
+            // A list of names of data record attributes that contain y-values.
+            ykeys: ['date','quantity'],
+            // Labels for the ykeys -- will be displayed when you hover over the
+            // chart.
+            labels: ['Ngày','Số lượng']
+        });
+        $(document).ready(function(){
+            $('.filter-date').on('click',function(e){
+                var fromDate = $('#datepicker1').val();
+                var toDate = $('#datepicker2').val();
+                var token = $('input[name="_token"]').val();
+                // alert(toDate+'-'+fromDate);
+                if(fromDate == "" || toDate == ""){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi',
+                        text: 'Không được để trống thông tin!'
+                    });
+                }else{
+                    if(fromDate >= toDate){
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi',
+                            text: 'Ngày kết thúc không được bé hơn ngày bắt đầu!'
+                        });
+                    }else{
+                        $.ajax({
+                            url: "{{route('statistic.filterDate')}}",
+                            method: "POST",
+                            dataType: "JSON",
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            data: {
+                                fromDate:fromDate,
+                                toDate:toDate,
+                                token:token,
+                            },
+                            success:function(data){
+                                chartOrder.setData(data);
+                            } 
+                        })
+                    }
+                }
+            })
+        });
     </script>
 </body>
 

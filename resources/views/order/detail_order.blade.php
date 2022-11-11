@@ -48,7 +48,7 @@
         <div class="border bg-white p-3">
             <table id="table_id2" class="table table-bordered mt-2">
                 <thead>
-                    <div class="d-flex justify-content-center pt-5">Danh sách chi tiết đơn hàng</div>
+                    <div class="d-flex justify-content-center">Danh sách chi tiết đơn hàng</div>
                 </thead>
                 <thead class="thead-dark">
                     <tr>
@@ -73,6 +73,7 @@
                         @php
                         $total = $do->price_product_order * $do->quantity_product_order;
                         $allTotal += $total;
+                        $allTotalChange = (($featureCoupon == 1) ?  ($allTotal + $feeDelivery - $discountCoupon) : $allTotal + $feeDelivery - ($allTotal * ($discountCoupon / 100)));
                         @endphp
                     <tr>
                         <td>{{$do->id_order_detail}}</td>
@@ -105,7 +106,7 @@
                     </tr>
                     <tr>
                         <td colspan="9" class="f-14">Tổng tiền: 
-                            {{number_format(($featureCoupon == 1) ?  $allTotal + $feeDelivery - $discountCoupon : $allTotal + $feeDelivery - ($allTotal * ($discountCoupon / 100)),0,',','.')}} ₫
+                            <span class="f-14 total-order" data-total="{{$allTotalChange}}">{{number_format($allTotalChange,0,',','.')}}</span>₫
                         </td>
                     </tr>
                 </tbody>

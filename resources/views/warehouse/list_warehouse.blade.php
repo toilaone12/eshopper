@@ -14,50 +14,61 @@
         ?>
     </p>
 </div>
-<table id="table_id" class="table">
-    <thead>
-        <tr align="center">
-            <th>STT</th>
-            <th>Tên sản phẩm</th>
-            <th>Số lượng tồn kho</th>
-            <th>Giá sản phẩm</th>
-            @if(Auth::check())
-            @if(Auth::user()->id_role == 1)
-            <th>Chức năng</th>
-            @endif
-            @endif
-        </tr>
-    </thead>
-    <tbody>
-        @php
-        $i = 0;
-        @endphp
-        @foreach($wareHouse as $key => $w)
-        @php
-        $i++
-        @endphp
-        <tr>
-            <td>{{$i}}</td>
-            <td>{{$w->name_product_warehouse}}</td>
-            <td>{{$w->quantity_product_warehouse}}</td>
-            <td>{{number_format($w->price_product_warehouse,0,',','.')}} ₫</td>
-            @if(Auth::check())
-            @if(Auth::user()->id_role == 1)
-            <td>
-                <button type="submit" 
-                data-name="{{$w->name_product_warehouse}}" 
-                data-quantity="{{$w->quantity_product_warehouse}}" 
-                data-price="{{$w->price_product_warehouse}}" 
-                class="btn btn-info text-white export-warehouse">
-                    <i class="fa-solid fa-file-export"></i>
-                </button>
-            </td>
-            @endif
-            @endif
-        </tr>
-        @endforeach
-    </tbody>
-</table>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Danh sách kho hàng</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="table_id" class="table table-bordered" width="100%" cellspacing="0">
+                <thead>
+                    <tr align="center">
+                        <th>STT</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lượng tồn kho</th>
+                        <th>Giá sản phẩm</th>
+                        <th>Ngày cập nhật</th>
+                        @if(Auth::check())
+                        @if(Auth::user()->id_role == 1)
+                        <th>Chức năng</th>
+                        @endif
+                        @endif
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                    $i = 0;
+                    @endphp
+                    @foreach($wareHouse as $key => $w)
+                    @php
+                    $i++
+                    @endphp
+                    <tr>
+                        <td>{{$i}}</td>
+                        <td>{{$w->name_product_warehouse}}</td>
+                        <td>{{$w->quantity_product_warehouse}}</td>
+                        <td>{{number_format($w->price_product_warehouse,0,',','.')}} ₫</td>
+                        <td>{{$w->updated_at}}</td>
+                        @if(Auth::check())
+                        @if(Auth::user()->id_role == 1)
+                        <td>
+                            <button type="submit" 
+                            data-name="{{$w->name_product_warehouse}}" 
+                            data-quantity="{{$w->quantity_product_warehouse}}" 
+                            data-price="{{$w->price_product_warehouse}}" 
+                            class="btn btn-info text-white export-warehouse">
+                                <i class="fa-solid fa-file-export"></i>
+                            </button>
+                        </td>
+                        @endif
+                        @endif
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 <form action="{{route('warehouse.exportProduct')}}" enctype="multipart/form-data" method="post">
     @csrf
     <div class="row justify-content-center align-items-center warehouse d-none overflow-auto">
