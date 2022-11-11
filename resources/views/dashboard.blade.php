@@ -750,7 +750,7 @@
                         token:token,
                     },
                     success:function(data){
-                        // location.reload();
+                        location.reload();
                         // // $('#'+result).html(data);
                         // console.log(data);
                     }
