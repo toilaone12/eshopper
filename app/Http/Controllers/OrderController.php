@@ -180,6 +180,16 @@ class OrderController extends Controller
         $email = $data['emailOrder'];
         $name = $data['nameOrder'];
         $codeOrder = substr(md5(microtime()),rand(0,26),5);
+        // $coupon = Session::get('coupon');
+        if($data['discountOrder'] !== ''){
+            $coupon = Coupon::where('name_coupon',$data['discountOrder'])->get();
+            if(count($coupon) == 1){
+                $quantityCoupon = $coupon[0]->quantity_coupon;
+                $quantityAfter = $quantityCoupon - 1;
+                $coupon[0]->quantity_coupon = $quantityAfter;
+                $coupon[0]->save();
+            }
+        }
         $dbOrder = array(
             'code_order' => $codeOrder,
             'name_customer' => $name,
