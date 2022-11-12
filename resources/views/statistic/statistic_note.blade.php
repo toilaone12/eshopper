@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-lg-8">
             <!-- Content Row -->
-            <p class="f-20 text-gray-800 mb-2">Thống kê sản phẩm (Trong vòng 1 tháng gần đây)</p>
+            <p class="f-20 text-gray-800 mb-2">Thống kê phiếu hàng (Trong vòng 1 tháng gần đây)</p>
             <div class="row">
                 <div class="col-xl-12 col-lg-7">
                     <!-- Area Chart -->
@@ -15,7 +15,7 @@
                         </div>
                         <div class="card-body">
                             <div class="chart-area">
-                                <div id="areaChart"></div>
+                                <div id="noteChart"></div>
                             </div>
                             <hr>
                             Styling for the area chart can be found in the

@@ -21,7 +21,7 @@ class WareHouseController extends Controller
         return view('warehouse.list_warehouse',compact(
             'wareHouse',
             'selectCategory',
-            'selectBrand',
+            'selectBrand'
         ));
     }
     public function exportProduct(Request $request){

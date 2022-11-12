@@ -834,22 +834,13 @@
             $('.warehouse').addClass('d-none');
             $('.warehouse').removeClass('d-flex');
         });
-        //Thong ke
+        //Thong ke hoa don
         $(document).ready(function(){
             showStatisticMonth();
             var chartOrder = new Morris.Line({
                 // ID of the element in which to draw the chart.
                 element: 'areaChart',
                 parseTime:false,
-                // Chart data records -- each entry in this array corresponds to a point on
-                // the chart.
-                // data: [
-                //     { year: '2008', value: 20 },
-                //     { year: '2009', value: 10 },
-                //     { year: '2010', value: 5 },
-                //     { year: '2011', value: 5 },
-                //     { year: '2012', value: 20 }
-                // ],
                 // The name of the data record attribute that contains x-values.
                 xkey: 'date',
                 // A list of names of data record attributes that contain y-values.
@@ -862,6 +853,94 @@
                 var token = $('input[name="_token"]').val();
                 $.ajax({
                     url: "{{route('statistic.showStatistic')}}",
+                    method: "POST",
+                    dataType: "JSON",
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    data: {
+                        token:token,
+                    },
+                    success:function(data){
+                        chartOrder.setData(data);
+                        // location.reload();
+                    } 
+                })
+            }
+            //tuy chon thoi gian
+            $('.filter-date').on('click',function(e){
+                var fromDate = $('#datepicker1').val();
+                var toDate = $('#datepicker2').val();
+                var token = $('input[name="_token"]').val();
+                // alert(toDate+'-'+fromDate);
+                if(fromDate == "" || toDate == ""){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi',
+                        text: 'Không được để trống thông tin!'
+                    });
+                }else{
+                    if(fromDate >= toDate){
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi',
+                            text: 'Ngày kết thúc không được bé hơn ngày bắt đầu!'
+                        });
+                    }else{
+                        $.ajax({
+                            url: "{{route('statistic.filterDate')}}",
+                            method: "POST",
+                            dataType: "JSON",
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            data: {
+                                fromDate:fromDate,
+                                toDate:toDate,
+                                token:token,
+                            },
+                            success:function(data){
+                                chartOrder.setData(data);
+                            } 
+                        })
+                    }
+                }
+            });
+            //chon theo ngay
+            $('.choose-statistic').on('change',function(e){
+                e.preventDefault();
+                var choose = $(this).val();
+                var token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: "{{route('statistic.filterSelect')}}",
+                    method: "POST",
+                    dataType: "JSON",
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    data: {
+                        choose:choose,
+                        token:token,
+                    },
+                    success:function(data){
+                        chartOrder.setData(data);
+                        // location.reload();
+                    } 
+                })
+            });
+        });
+        $(document).ready(function(){
+            showStatisticMonth();
+            var chartOrder = new Morris.Line({
+                // ID of the element in which to draw the chart.
+                element: 'noteChart',
+                parseTime:false,
+                // The name of the data record attribute that contains x-values.
+                xkey: 'date',
+                // A list of names of data record attributes that contain y-values.
+                ykeys: ['price','quantity'],
+                // Labels for the ykeys -- will be displayed when you hover over the
+                // chart.
+                labels: ['Giá','Số lượng']
+            });
+            function showStatisticMonth(){
+                var token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: "{{route('statistic.showStatisticNote')}}",
                     method: "POST",
                     dataType: "JSON",
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},

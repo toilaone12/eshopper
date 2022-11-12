@@ -24,7 +24,7 @@ class DeliveryController extends Controller
     public function insertFromDelivery(){
         $province = Province::all();
         return view('delivery.insert_delivery',compact(
-            'province',
+            'province'
         ));
     }
     public function selectDelivery(Request $request){

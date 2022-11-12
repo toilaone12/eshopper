@@ -20,7 +20,7 @@ class CartController extends Controller
         $selectBrand = Brand::all();
         return view('cart.cart_page',compact(
             'selectCategory',
-            'selectBrand',
+            'selectBrand'
         ));
     }
     public function addCart(Request $request){

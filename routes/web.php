@@ -159,6 +159,7 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
         Route::post('/filter-date',[StatisticController::class, 'filterDate'])->name('statistic.filterDate');
         Route::post('/filter-select',[StatisticController::class, 'filterSelect'])->name('statistic.filterSelect');
         Route::post('/select-statistic',[StatisticController::class, 'showStatistic'])->name('statistic.showStatistic');
+        Route::post('/select-statistic-note',[StatisticController::class, 'showStatistic'])->name('statistic.showStatisticNote');
     });
 });
 //page

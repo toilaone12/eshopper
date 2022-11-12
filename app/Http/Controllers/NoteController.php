@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Model\DetailImport;
 use App\Model\Note;
+use App\Model\StatisticNote;
 use App\Model\Supplier;
 use App\Model\WareHouse;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -18,7 +19,7 @@ class NoteController extends Controller
     public function listNote(){
         $note = Note::join('supplier as s','s.id_supplier','note.id_supplier')->get();
         return view('note.list_note',compact(
-            'note',
+            'note'
         ));
     }
     public function detailNote(Request $request){
@@ -27,13 +28,13 @@ class NoteController extends Controller
         $detailNote = DetailImport::where('code_note',$codeNote)->get();
         return view('note.detail_note',compact(
             'note',
-            'detailNote',
+            'detailNote'
         ));
     }
     public function importFormNote(){
         $supplier = Supplier::all();
         return view('note.import_note',compact(
-            'supplier',
+            'supplier'
         ));
     }
     public function importNote(Request $request){
@@ -98,7 +99,7 @@ class NoteController extends Controller
         $nameNote = $selectNote->name_supplier;
         $pdf = Pdf::loadView('note.export_pdf',compact(
             'selectNote',
-            'selectDetailNote',
+            'selectDetailNote'
         ));
         return $pdf->download('Hóa đơn của nhà cung cấp '.$nameNote.'.pdf');
     }
@@ -113,6 +114,33 @@ class NoteController extends Controller
                 $quantityAll = '';
                 $wareHouse = WareHouse::where('name_product_warehouse',$nameProduct)->get();
                 // dd($wareHouse);
+                $date_order = date("Y-m-d");
+                $statistic = StatisticNote::where('date_statistic_note',$date_order)->get();
+                // print_r(count($statistic).'</br>');
+                if(count($statistic) == 1){
+                    $quantityStatistic = $statistic[0]->quantity_statistic_note;
+                    $totalStatistic = $statistic[0]->price_statistic_note;
+                    $quantityAll = $quantityProduct + $quantityStatistic;
+                    // print_r($allQuantity);
+                    $totalAll = ($quantityProduct*$priceProduct) + $totalStatistic;
+                    // echo $quantityStatistic;
+                    $statistic->toQuery()->update([
+                        'quantity_statistic_note' => $quantityAll,
+                        'price_statistic_note' => $totalAll,
+                        'date_statistic_note' => $date_order,
+                    ]);
+                    // echo "1</br>";
+                }else{
+                    $quantityAll = $quantityProduct;
+                    $totalAll = $priceProduct * $quantityAll;
+                    $arrayStatistic = array(
+                        'quantity_statistic_note' => $quantityAll,
+                        'price_statistic_note' => $totalAll,
+                        'date_statistic_note' => $date_order,
+                    );
+                    $createStatistic = StatisticNote::create($arrayStatistic);
+                    // print_r($createStatistic);
+                }
                 if(count($wareHouse) == 1){
                     $quantityWareHouse = $wareHouse[0]->quantity_product_warehouse;
                     $quantityAll = $quantityProduct + $quantityWareHouse;

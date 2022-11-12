@@ -36,7 +36,7 @@ class OrderController extends Controller
         return view('order.detail_order',compact(
             'selectDetailOrder',
             'selectOrder',
-            'selectCoupon',
+            'selectCoupon'
         ));
     }
     public function printPDF($codeOrder){
@@ -52,7 +52,7 @@ class OrderController extends Controller
         $pdf = FacadePdf::loadView('order.file_pdf',compact(
             'selectOrder',
             'selectDetailOrder',
-            'selectCoupon',
+            'selectCoupon'
         ));
         return $pdf->download('Hóa đơn của '.$nameOrder.'.pdf');
     }
@@ -169,7 +169,7 @@ class OrderController extends Controller
             return view('order.check_cart',compact(
                 'selectBrand',
                 'selectCategory',
-                'selectProvince',
+                'selectProvince'
             ));
         }else{
             return redirect()->route('cart.checkCart');

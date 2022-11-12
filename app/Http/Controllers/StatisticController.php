@@ -16,7 +16,7 @@ class StatisticController extends Controller
 {
     //
     public function listStatistic(){
-        return view('statistic.statistic_product');
+        return view('statistic.statistic_note');
     }
     public function showStatistic(Request $request){
         $data = $request->all();
@@ -34,6 +34,7 @@ class StatisticController extends Controller
         }
         echo json_encode($productData);
     }
+    
     public function filterDate(Request $request){
         $data = $request->all();
         $fromDate = $data['fromDate'];

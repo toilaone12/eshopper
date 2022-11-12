@@ -79,7 +79,7 @@ class AdminController extends Controller
     public function listUser(){
         $selectAdmin = Admin::all();
         return view('admin.list_admin',compact(
-            'selectAdmin',
+            'selectAdmin'
         ));
     }
     public function permissionAdmin(Request $request){ // cap quyen

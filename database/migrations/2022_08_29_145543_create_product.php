@@ -21,6 +21,8 @@ class CreateProduct extends Migration
             $table->text('image_product');
             $table->integer('quantity_product');
             $table->integer('price_product');
+            $table->integer('number_reviews');
+            $table->integer('number_views');
             $table->text('description_product');
             $table->text('content_product');
             $table->timestamps();
