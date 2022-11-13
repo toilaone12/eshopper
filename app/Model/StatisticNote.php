@@ -10,5 +10,5 @@ class StatisticNote extends Model
     protected $table = 'statistic_note';
     public $timestamps = true;
     protected $primaryKey = 'id_statistic_note';
-    protected $fillable = ['quantity_statistic_note','price_statistic_note','date_statistic_note'];
+    protected $fillable = ['type_statistic_note','quantity_statistic_note','price_statistic_note','date_statistic_note'];
 }

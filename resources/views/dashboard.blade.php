@@ -674,6 +674,12 @@
         $('#datepicker2').datetimepicker({
             step: 1,
         });
+        $('#datepicker3').datetimepicker({
+            step: 1,
+        });
+        $('#datepicker4').datetimepicker({
+            step: 1,
+        });
         $(document).ready(function(){
             $('.choose').on('change',function(){
                 var action = $(this).attr('id');
@@ -924,10 +930,11 @@
             });
         });
         $(document).ready(function(){
-            showStatisticMonth();
-            var chartOrder = new Morris.Line({
+            showStatisticImportMonth();
+            showStatisticExportMonth();
+            var chartImportNote = new Morris.Bar({
                 // ID of the element in which to draw the chart.
-                element: 'noteChart',
+                element: 'importNoteChart',
                 parseTime:false,
                 // The name of the data record attribute that contains x-values.
                 xkey: 'date',
@@ -937,10 +944,22 @@
                 // chart.
                 labels: ['Giá','Số lượng']
             });
-            function showStatisticMonth(){
+            var chartExportNote = new Morris.Area({
+                // ID of the element in which to draw the chart.
+                element: 'exportNoteChart',
+                parseTime:false,
+                // The name of the data record attribute that contains x-values.
+                xkey: 'date',
+                // A list of names of data record attributes that contain y-values.
+                ykeys: ['price','quantity'],
+                // Labels for the ykeys -- will be displayed when you hover over the
+                // chart.
+                labels: ['Giá','Số lượng']
+            });
+            function showStatisticExportMonth(){
                 var token = $('input[name="_token"]').val();
                 $.ajax({
-                    url: "{{route('statistic.showStatisticNote')}}",
+                    url: "{{route('statistic.showStatisticExport')}}",
                     method: "POST",
                     dataType: "JSON",
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -948,13 +967,29 @@
                         token:token,
                     },
                     success:function(data){
-                        chartOrder.setData(data);
+                        chartExportNote.setData(data);
+                        // location.reload();
+                    } 
+                })
+            }
+            function showStatisticImportMonth(){
+                var token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: "{{route('statistic.showStatisticImport')}}",
+                    method: "POST",
+                    dataType: "JSON",
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    data: {
+                        token:token,
+                    },
+                    success:function(data){
+                        chartImportNote.setData(data);
                         // location.reload();
                     } 
                 })
             }
             //tuy chon thoi gian
-            $('.filter-date').on('click',function(e){
+            $('.filter-date-import').on('click',function(e){
                 var fromDate = $('#datepicker1').val();
                 var toDate = $('#datepicker2').val();
                 var token = $('input[name="_token"]').val();
@@ -974,7 +1009,7 @@
                         });
                     }else{
                         $.ajax({
-                            url: "{{route('statistic.filterDate')}}",
+                            url: "{{route('statistic.filterDateImport')}}",
                             method: "POST",
                             dataType: "JSON",
                             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -984,19 +1019,55 @@
                                 token:token,
                             },
                             success:function(data){
-                                chartOrder.setData(data);
+                                chartImportNote.setData(data);
+                            } 
+                        })
+                    }
+                }
+            });
+            $('.filter-date-export').on('click',function(e){
+                var fromDate = $('#datepicker1').val();
+                var toDate = $('#datepicker2').val();
+                var token = $('input[name="_token"]').val();
+                // alert(toDate+'-'+fromDate);
+                if(fromDate == "" || toDate == ""){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi',
+                        text: 'Không được để trống thông tin!'
+                    });
+                }else{
+                    if(fromDate >= toDate){
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi',
+                            text: 'Ngày kết thúc không được bé hơn ngày bắt đầu!'
+                        });
+                    }else{
+                        $.ajax({
+                            url: "{{route('statistic.filterDateExport')}}",
+                            method: "POST",
+                            dataType: "JSON",
+                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                            data: {
+                                fromDate:fromDate,
+                                toDate:toDate,
+                                token:token,
+                            },
+                            success:function(data){
+                                chartExportNote.setData(data);
                             } 
                         })
                     }
                 }
             });
             //chon theo ngay
-            $('.choose-statistic').on('change',function(e){
+            $('.choose-statistic-import').on('change',function(e){
                 e.preventDefault();
                 var choose = $(this).val();
                 var token = $('input[name="_token"]').val();
                 $.ajax({
-                    url: "{{route('statistic.filterSelect')}}",
+                    url: "{{route('statistic.filterSelectImport')}}",
                     method: "POST",
                     dataType: "JSON",
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -1005,7 +1076,28 @@
                         token:token,
                     },
                     success:function(data){
-                        chartOrder.setData(data);
+                        // chartExportNote.setData(data);
+                        chartImportNote.setData(data);
+                        // location.reload();
+                    } 
+                })
+            });
+            $('.choose-statistic-export').on('change',function(e){
+                e.preventDefault();
+                var choose = $(this).val();
+                var token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: "{{route('statistic.filterSelectExport')}}",
+                    method: "POST",
+                    dataType: "JSON",
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    data: {
+                        choose:choose,
+                        token:token,
+                    },
+                    success:function(data){
+                        // chartExportNote.setData(data);
+                        chartExportNote.setData(data);
                         // location.reload();
                     } 
                 })

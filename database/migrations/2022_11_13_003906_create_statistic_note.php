@@ -15,6 +15,7 @@ class CreateStatisticNote extends Migration
     {
         Schema::create('statistic_note', function (Blueprint $table) {
             $table->increments('id_statistic_note');
+            $table->integer('type_statistic_note');
             $table->integer('quantity_statistic_note');
             $table->integer('price_statistic_note');
             $table->date('date_statistic_note');

@@ -156,10 +156,16 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
     //Statistic(Thống kê)
     Route::prefix('statistic')->group(function(){
         Route::get('/list-statistic',[StatisticController::class, 'listStatistic'])->name('statistic.listStatistic');
+        Route::get('/list-statistic-note',[StatisticController::class, 'listStatisticNote'])->name('statistic.listStatisticNote');
         Route::post('/filter-date',[StatisticController::class, 'filterDate'])->name('statistic.filterDate');
+        Route::post('/filter-import',[StatisticController::class, 'filterDateImport'])->name('statistic.filterDateImport');
+        Route::post('/filter-export',[StatisticController::class, 'filterDateExport'])->name('statistic.filterDateExport');
         Route::post('/filter-select',[StatisticController::class, 'filterSelect'])->name('statistic.filterSelect');
+        Route::post('/filter-select-import',[StatisticController::class, 'filterSelectImport'])->name('statistic.filterSelectImport');
+        Route::post('/filter-select-export',[StatisticController::class, 'filterSelectExport'])->name('statistic.filterSelectExport');
         Route::post('/select-statistic',[StatisticController::class, 'showStatistic'])->name('statistic.showStatistic');
-        Route::post('/select-statistic-note',[StatisticController::class, 'showStatistic'])->name('statistic.showStatisticNote');
+        Route::post('/select-statistic-import',[StatisticController::class, 'showStatisticImport'])->name('statistic.showStatisticImport');
+        Route::post('/select-statistic-export',[StatisticController::class, 'showStatisticExport'])->name('statistic.showStatisticExport');
     });
 });
 //page
