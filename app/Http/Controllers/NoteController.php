@@ -63,14 +63,18 @@ class NoteController extends Controller
         $quantityProduct = $data['quantityProduct'];
         $priceProduct = $data['priceProduct'];
         if(isset($note)){
-            // print_r($nameProduct);
             $createNote = Note::create($note);
             if($createNote){
+                $quantityAll = 0;
+                $totalAll = 0;
+                $date_order = date("Y-m-d");
                 foreach($nameProduct as $keyName => $p){
                     foreach($quantityProduct as $keyQuantity => $q){
                         if($keyName == $keyQuantity){
                             foreach($priceProduct as $keyPrice => $pr){
                                 if($keyQuantity == $keyPrice){
+                                    $quantityAll += $q;
+                                    $totalAll += ($q * $pr);
                                     DetailImport::create([
                                         'code_note' => $codeNote,
                                         'name_product' => $p,
@@ -84,8 +88,30 @@ class NoteController extends Controller
                         }
                     }
                 }
-                
-                
+                $statistic = StatisticNote::where('date_statistic_note',$date_order)
+                ->where('type_statistic_note',0)->get();
+                if(count($statistic) == 1){
+                    $quantityStatistic = $statistic[0]->quantity_statistic_note;
+                    $totalStatistic = $statistic[0]->price_statistic_note;
+                    $quantityAll += $quantityStatistic;
+                    // print_r($allQuantity);
+                    $totalAll += $totalStatistic;
+                    // echo $quantityStatistic;
+                    $statistic->toQuery()->update([
+                        'type_statistic_note' => 0,
+                        'quantity_statistic_note' => $quantityAll,
+                        'price_statistic_note' => $totalAll,
+                        'date_statistic_note' => $date_order,
+                    ]);
+                }else{
+                    StatisticNote::create([
+                        'type_statistic_note' => 0,
+                        'quantity_statistic_note' => $quantityAll,
+                        'price_statistic_note' => $totalAll,
+                        'date_statistic_note' => $date_order,
+                    ]);
+                    // print_r($quantityAll."-".$priceAll);
+                }
             }else{
                 return redirect()->route('note.listNote')->with("Thêm phiếu hàng '.$nameNote.' thất bại");
             }
@@ -115,7 +141,7 @@ class NoteController extends Controller
                 $wareHouse = WareHouse::where('name_product_warehouse',$nameProduct)->get();
                 // dd($wareHouse);
                 $date_order = date("Y-m-d");
-                $statistic = StatisticNote::where('date_statistic_note',$date_order)->get();
+                $statistic = StatisticNote::where('date_statistic_note',$date_order)->where('type_statistic_note',1)->get();
                 // print_r(count($statistic).'</br>');
                 if(count($statistic) == 1){
                     $quantityStatistic = $statistic[0]->quantity_statistic_note;
@@ -125,21 +151,23 @@ class NoteController extends Controller
                     $totalAll = ($quantityProduct*$priceProduct) + $totalStatistic;
                     // echo $quantityStatistic;
                     $statistic->toQuery()->update([
+                        'type_statistic_note' => 1,
                         'quantity_statistic_note' => $quantityAll,
                         'price_statistic_note' => $totalAll,
                         'date_statistic_note' => $date_order,
                     ]);
-                    // echo "1</br>";
+                    // echo "vao day</br>";
                 }else{
                     $quantityAll = $quantityProduct;
                     $totalAll = $priceProduct * $quantityAll;
                     $arrayStatistic = array(
+                        'type_statistic_note' => 1,
                         'quantity_statistic_note' => $quantityAll,
                         'price_statistic_note' => $totalAll,
                         'date_statistic_note' => $date_order,
                     );
-                    $createStatistic = StatisticNote::create($arrayStatistic);
-                    // print_r($createStatistic);
+                    StatisticNote::create($arrayStatistic);
+                    // echo "vao day ne</br>";
                 }
                 if(count($wareHouse) == 1){
                     $quantityWareHouse = $wareHouse[0]->quantity_product_warehouse;
@@ -162,7 +190,7 @@ class NoteController extends Controller
                 }
             }
             $selectNote = Note::where('code_note',$codeNote)->first();
-            $selectNote->status_note = 1;
+            $selectNote->status_note = 0;
             $selectNote->save();
             return redirect()->back();
         }
