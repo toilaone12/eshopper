@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 06, 2022 lúc 01:12 PM
+-- Thời gian đã tạo: Th10 15, 2022 lúc 04:21 AM
 -- Phiên bản máy phục vụ: 10.4.24-MariaDB
 -- Phiên bản PHP: 7.4.29
 
@@ -42,7 +42,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id_admin`, `id_role`, `name_admin`, `password_admin`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 1, 'son', 'e10adc3949ba59abbe56e057f20f883e', 'UgE07bf8xKSwgTEU1jbn4W4a6am6Sg8bFqn3HXI4W1f3cJomK1dLiNlorViR', '2022-11-03 16:35:29', '2022-11-03 16:35:29'),
+(1, 1, 'son', 'e10adc3949ba59abbe56e057f20f883e', 'UgE07bf8xKSwgTEU1jbn4W4a6am6Sg8bFqn3HXI4W1f3cJomK1dLiNlorViR', '2022-11-03 16:35:29', '2022-11-08 18:49:18'),
 (2, 2, 'tu', 'e10adc3949ba59abbe56e057f20f883e', NULL, '2022-11-03 16:35:29', '2022-11-03 16:35:29'),
 (3, 1, 'toan', 'e10adc3949ba59abbe56e057f20f883e', NULL, '2022-11-03 16:35:29', '2022-11-03 16:35:29'),
 (4, 2, 'hong', 'e10adc3949ba59abbe56e057f20f883e', NULL, '2022-11-03 16:35:29', '2022-11-03 16:35:29'),
@@ -11342,7 +11342,7 @@ CREATE TABLE `coupon` (
 
 INSERT INTO `coupon` (`id_coupon`, `name_coupon`, `code_coupon`, `quantity_coupon`, `feature_coupon`, `discount_coupon`, `created_at`, `updated_at`, `time_coupon`) VALUES
 (2, 'Mã giảm giá tháng 10', 'NEWOCT2022', 10, 1, '100000', '2022-10-13 18:14:36', '2022-10-13 18:14:36', '2022-10-31 23:59:59'),
-(3, 'Siêu giảm giá tháng 10', 'SUPEROCT2022', 10, 0, '30', '2022-10-13 18:44:50', '2022-10-14 15:11:20', '2022-10-31 23:59:59'),
+(3, 'Siêu giảm giá tháng 10', 'SUPEROCT2022', 9, 0, '30', '2022-10-13 18:44:50', '2022-11-11 16:53:13', '2022-11-30 23:59:59'),
 (4, 'Mã siêu cấp tuần 3', 'SUPT3OCT2022', 15, 1, '200000', '2022-10-17 03:22:43', '2022-10-17 04:15:34', '2022-10-23 23:59:00');
 
 -- --------------------------------------------------------
@@ -12167,7 +12167,17 @@ CREATE TABLE `import_note` (
 
 INSERT INTO `import_note` (`id_import`, `code_note`, `name_product`, `quantity_product`, `price_product`, `created_at`, `updated_at`) VALUES
 (14, 'ad82f', 'Samsung M51', 12, 7999000, '2022-11-05 17:26:41', '2022-11-05 17:26:41'),
-(15, 'ad82f', 'Samsung Galaxy Z Flip4', 15, 38999000, '2022-11-05 17:26:41', '2022-11-05 17:26:41');
+(15, 'ad82f', 'Samsung Galaxy Z Flip4', 15, 38999000, '2022-11-05 17:26:41', '2022-11-05 17:26:41'),
+(16, 'e2f32', 'Samsung Galaxy Ultra22', 3, 12000000, '2022-11-06 14:52:44', '2022-11-06 14:52:44'),
+(17, 'e2f32', 'Airpod 2', 5, 2000000, '2022-11-06 14:52:44', '2022-11-06 14:52:44'),
+(18, 'e2f32', 'Samsung M51', 3, 7999000, '2022-11-06 14:52:44', '2022-11-06 14:52:44'),
+(19, 'e9b50', 'Samsung Galaxy Z Flip4', 1, 12000000, '2022-11-07 17:14:50', '2022-11-07 17:14:50'),
+(20, 'e9b50', 'Airpod 4', 12, 5000000, '2022-11-07 17:14:50', '2022-11-07 17:14:50'),
+(24, 'c6f1a', 'Samsung Galaxy Ultra22', 3, 20999000, '2022-11-13 09:52:37', '2022-11-13 09:52:37'),
+(25, 'c6f1a', 'Samsung Watch 3', 5, 5999000, '2022-11-13 09:52:37', '2022-11-13 09:52:37'),
+(26, 'c6f1a', 'Apple Watch 3', 7, 8999000, '2022-11-13 09:52:37', '2022-11-13 09:52:37'),
+(29, 'cdc1c', 'iphone14', 10, 35999000, '2022-11-13 10:09:29', '2022-11-13 10:09:29'),
+(30, 'cdc1c', 'Iphone13', 5, 25999000, '2022-11-13 10:09:29', '2022-11-13 10:09:29');
 
 -- --------------------------------------------------------
 
@@ -12206,7 +12216,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (37, '2022_10_30_221255_create_supplier', 8),
 (38, '2022_11_01_001538_create_role', 9),
 (39, '2022_11_05_002911_create_note', 10),
-(40, '2022_11_05_223514_create_import_note', 11);
+(40, '2022_11_05_223514_create_import_note', 11),
+(41, '2022_11_11_162233_create_statistic', 12),
+(42, '2022_11_13_003906_create_statistic_note', 13);
 
 -- --------------------------------------------------------
 
@@ -12220,6 +12232,7 @@ CREATE TABLE `note` (
   `code_note` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name_note` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `quantity_all` int(11) NOT NULL,
+  `status_note` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -12228,8 +12241,12 @@ CREATE TABLE `note` (
 -- Đang đổ dữ liệu cho bảng `note`
 --
 
-INSERT INTO `note` (`id_note`, `id_supplier`, `code_note`, `name_note`, `quantity_all`, `created_at`, `updated_at`) VALUES
-(46, 4, 'ad82f', 'Sản phẩm ngày 5/11', 2, '2022-11-05 17:26:41', '2022-11-05 17:26:41');
+INSERT INTO `note` (`id_note`, `id_supplier`, `code_note`, `name_note`, `quantity_all`, `status_note`, `created_at`, `updated_at`) VALUES
+(46, 4, 'ad82f', 'Sản phẩm ngày 5/11', 2, 1, '2022-11-05 17:26:41', '2022-11-12 18:24:28'),
+(47, 6, 'e2f32', 'Sản phẩm ngày 6/11', 3, 1, '2022-11-06 14:52:44', '2022-11-12 18:26:14'),
+(48, 5, 'e9b50', 'Sản phẩm ngày 8/11', 2, 1, '2022-11-07 17:14:50', '2022-11-12 17:57:17'),
+(54, 5, 'c6f1a', 'Sản phẩm ngày 11/11', 3, 1, '2022-11-13 09:52:37', '2022-11-13 09:52:59'),
+(57, 7, 'cdc1c', 'Sản phẩm ngày 13/11', 2, 0, '2022-11-13 10:09:29', '2022-11-13 10:09:29');
 
 -- --------------------------------------------------------
 
@@ -12259,20 +12276,22 @@ CREATE TABLE `order` (
 --
 
 INSERT INTO `order` (`id_order`, `code_order`, `name_customer`, `phone_order`, `address_order`, `email_order`, `name_payment`, `total_order`, `type_shipping`, `coupon_order`, `fee_delivery`, `status_order`, `created_at`, `updated_at`) VALUES
-(8, 'b5bbd', 'Sơn Kiều Đặng Bảo', '0386278998', '', 'toilaone12@gmail.com', NULL, '553.000 ₫', 'Nhận sản phẩm tại cửa hàng', 'Siêu giảm giá tháng 10', '0', 0, '2022-10-24 17:51:40', '2022-10-24 17:51:40'),
+(8, 'b5bbd', 'Sơn Kiều Đặng Bảo', '0386278998', '', 'toilaone12@gmail.com', NULL, '553.000 ₫', 'Nhận sản phẩm tại cửa hàng', 'Siêu giảm giá tháng 10', '0', 2, '2022-10-24 17:51:40', '2022-11-11 10:37:09'),
 (9, 'c2713', 'Sơn Kiều Đặng Bảo', '0386278998', '', 'toilaone12@gmail.com', NULL, '553.000 ₫', 'Nhận sản phẩm tại cửa hàng', 'Siêu giảm giá tháng 10', '0', 1, '2022-10-24 18:01:20', '2022-10-24 18:01:20'),
 (10, '03390', 'Sơn Kiều Đặng Bảo', '0386278998', '', 'toilaone12@gmail.com', NULL, '553.000 ₫', 'Nhận sản phẩm tại cửa hàng', 'Siêu giảm giá tháng 10', '0', 1, '2022-10-24 18:02:33', '2022-10-24 18:02:33'),
-(11, '14e02', 'Sơn Kiều Đặng Bảo', '0386278998', '', 'toilaone12@gmail.com', NULL, '553.000 ₫', 'Nhận sản phẩm tại cửa hàng', 'Siêu giảm giá tháng 10', '0', 1, '2022-10-24 18:03:26', '2022-10-24 18:03:26'),
+(11, '14e02', 'Sơn Kiều Đặng Bảo', '0386278998', '', 'toilaone12@gmail.com', NULL, '553.000 ₫', 'Nhận sản phẩm tại cửa hàng', NULL, '0', 1, '2022-10-24 18:03:26', '2022-10-24 18:03:26'),
 (12, '225ab', 'Sơn Kiều Đặng Bảo', '0386278998', '', 'toilaone12@gmail.com', 'Thanh toán khi nhận hàng', '18.587.000 ₫', 'Cửa hàng vận chuyển cho khách hàng  Sơn Kiều Đặng Bảo', 'Siêu giảm giá tháng 10', '0', 1, '2022-10-25 15:39:47', '2022-10-25 15:39:47'),
 (13, '22013', 'Sơn Kiều Đặng Bảo', '0386278998', '', 'toilaone12@gmail.com', 'Thanh toán khi nhận hàng', '18.587.000 ₫', 'Cửa hàng vận chuyển cho khách hàng  Sơn Kiều Đặng Bảo', 'Siêu giảm giá tháng 10', '0', 3, '2022-10-25 15:41:29', '2022-10-25 15:41:29'),
-(14, 'ca623', 'Sơn Kiều Đặng Bảo', '0386278998', '', 'toilaone12@gmail.com', 'Thanh toán qua Momo', '18.587.000 ₫', 'Cửa hàng vận chuyển cho khách hàng  Sơn Kiều Đặng Bảo', 'Siêu giảm giá tháng 10', '0', 1, '2022-10-25 15:43:18', '2022-10-31 16:18:58'),
+(14, 'ca623', 'Sơn Kiều Đặng Bảo', '0386278998', '', 'toilaone12@gmail.com', 'Thanh toán qua Momo', '18.587.000 ₫', 'Cửa hàng vận chuyển cho khách hàng  Sơn Kiều Đặng Bảo', 'Siêu giảm giá tháng 10', '0', 2, '2022-10-25 15:43:18', '2022-10-31 16:18:58'),
 (15, '66080', 'Sơn Kiều Đặng Bảo', '0386278998', '', 'toilaone12@gmail.com', 'Thanh toán qua VNPay', '18.587.000 ₫', 'Cửa hàng vận chuyển cho khách hàng  Sơn Kiều Đặng Bảo', 'Siêu giảm giá tháng 10', '0', 0, '2022-10-25 15:44:17', '2022-10-25 15:44:17'),
 (16, '23aaf', 'Sơn Kiều Đặng Bảo', '0386278998', '', 'toilaone12@gmail.com', 'Thanh toán qua Momo', '18.587.000 ₫', 'Cửa hàng vận chuyển cho khách hàng  Sơn Kiều Đặng Bảo', 'Siêu giảm giá tháng 10', '0', 0, '2022-10-25 15:45:27', '2022-10-25 15:45:27'),
 (17, 'ffd42', 'Sơn Kiều Đặng Bảo', '0386278998', '', 'toilaone12@gmail.com', 'Thanh toán khi nhận hàng', '18.587.000 ₫', 'Cửa hàng vận chuyển cho khách hàng  Sơn Kiều Đặng Bảo', 'Siêu giảm giá tháng 10', '0', 1, '2022-10-25 15:46:27', '2022-10-30 18:05:40'),
 (18, 'c25c1', 'Sơn Kiều Đặng Bảo', '0386278998', '', 'toilaone12@gmail.com', 'Thanh toán khi nhận hàng', '18.587.000 ₫', 'Cửa hàng vận chuyển cho khách hàng  Sơn Kiều Đặng Bảo', 'Siêu giảm giá tháng 10', '0', 1, '2022-10-25 15:47:12', '2022-10-30 18:13:39'),
-(19, '91e9d', 'Tuấn', '0386278998', 'HN', 'toilaone12@gmail.com', 'Thanh toán qua VNPay', '15.293.000 ₫', 'Cửa hàng vận chuyển cho khách hàng  Tuấn', 'Mã giảm giá tháng 10', '100000', 1, '2022-10-25 16:20:00', '2022-10-25 16:20:00'),
+(19, '91e9d', 'Tuấn', '0386278998', 'HN', 'toilaone12@gmail.com', 'Thanh toán qua VNPay', '15.293.000 ₫', 'Cửa hàng vận chuyển cho khách hàng  Tuấn', 'Mã giảm giá tháng 10', '100000', 2, '2022-10-25 16:20:00', '2022-11-11 10:38:34'),
 (37, '70eb9', 'Nam', '0388911231', 'Thành phố Hà Nội', 'baoson3005@gmail.com', 'Thanh toán khi nhận hàng', '131.132.000 ₫', 'Cửa hàng vận chuyển cho khách hàng', 'Mã giảm giá tháng 10', '12000', 0, '2022-10-31 16:27:52', '2022-10-31 16:27:52'),
-(38, '128c2', 'Nga', '0339912331', 'Triều Khúc, Tân Triều, Hà Nội', 'abc123@gmail.com', NULL, '22.692.000 ₫', 'Nhận sản phẩm tại cửa hàng', 'Mã giảm giá tháng 10', '12000', 3, '2022-10-31 16:34:22', '2022-10-31 16:36:54');
+(38, '128c2', 'Nga', '0339912331', 'Triều Khúc, Tân Triều, Hà Nội', 'abc123@gmail.com', NULL, '22.692.000 ₫', 'Nhận sản phẩm tại cửa hàng', 'Mã giảm giá tháng 10', '12000', 3, '2022-10-31 16:34:22', '2022-10-31 16:36:54'),
+(39, 'cc9dd', 'Ngao Ngan', '0391234567', 'Thành phố Hà Nội', 'ngan@gmail.com', 'Thanh toán khi nhận hàng', '25.002.000 ₫', 'Cửa hàng vận chuyển cho khách hàng', NULL, '12000', 0, '2022-11-11 16:38:48', '2022-11-11 16:38:48'),
+(40, 'de1a9', 'Sơn Kiều Đặng Bảo', '0386278998', 'Triều Khúc, Tân Triều, Hà Nội', 'toilaone12@gmail.com', NULL, '28.693.000 ₫', 'Nhận sản phẩm tại cửa hàng', 'Siêu giảm giá tháng 10', '0', 0, '2022-11-11 16:53:13', '2022-11-11 16:53:13');
 
 -- --------------------------------------------------------
 
@@ -12317,7 +12336,9 @@ INSERT INTO `order_detail` (`id_order_detail`, `id_product`, `code_order`, `name
 (45, 2, '70eb9', 'Samsung Galaxy Z Fold4', 3, 40990000, '2022-10-31 16:27:52', '2022-10-31 16:27:52'),
 (46, 5, '70eb9', 'Airpod 2', 3, 2750000, '2022-10-31 16:28:05', '2022-10-31 16:28:05'),
 (47, 6, '128c2', 'Xiaomi Band 6', 1, 790000, '2022-10-31 16:34:22', '2022-10-31 16:34:22'),
-(48, 1, '128c2', 'Samsung Galaxy Z Flip4', 1, 21990000, '2022-10-31 16:34:26', '2022-10-31 16:34:26');
+(48, 1, '128c2', 'Samsung Galaxy Z Flip4', 1, 21990000, '2022-10-31 16:34:26', '2022-10-31 16:34:26'),
+(49, 3, 'cc9dd', 'Samsung Galaxy Ultra22', 1, 24990000, '2022-11-11 16:38:48', '2022-11-11 16:38:48'),
+(50, 2, 'de1a9', 'Samsung Galaxy Z Fold4', 1, 40990000, '2022-11-11 16:53:13', '2022-11-11 16:53:13');
 
 -- --------------------------------------------------------
 
@@ -12360,11 +12381,12 @@ CREATE TABLE `product` (
 
 INSERT INTO `product` (`id`, `id_category`, `id_brand`, `name_product`, `image_product`, `quantity_product`, `quantity_sold_product`, `price_product`, `description_product`, `content_product`, `number_reviews`, `number_views`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, 'Samsung Galaxy Z Flip4', 'samsung_galaxy_z_flip_m_i_2022-1_1.jpg', 10, 0, 21990000, '<ul>\r\n	<li>Thiết kế nhỏ gọn,cảm giác đeo thoải mái</li>\r\n	<li>Trang bị các tính năng theo dõi sức khoẻ như đo nhịp tim,chỉ số oxy trong máu,theo dõi giấc ngủ</li>\r\n	<li>Thời lượng pin dài lên đến 15 ngày sử dụng,sạc đầy trong 1.5 giờ</li>\r\n	<li>Tương thích với thiết bị Android 5.0 và iOS 10 trở lên</li>\r\n	<li>Luyện tập mọi nơi với kháng nước 5ATM và 30 chế độ tập thể thao</li>\r\n</ul>', '<h2><strong>ĐẶC ĐIỂM NỔI BẬT</strong></h2>\r\n\r\n<ul>\r\n	<li>Ngoại hình thời trang - cầm nắm cực sang với thiết kế gập vỏ sò độc đáo</li>\r\n	<li>Công nghệ màn hình hàng đầu đến từ Samsung - 6.7 inch, tấm nền Dynamic AMOLED 2X</li>\r\n	<li>Trang bị camera chất lượng - Bộ đôi camera có cùng độ phân giải 12 MP, chống rung, chụp đêm</li>\r\n	<li>Hiệu năng mạnh mẽ đến từ dòng chip cao cấp của Qualcomm - Snapdragon 8+ Gen 1</li>\r\n</ul>\r\n\r\n<p>Tiếp tục là một mẫu smartphone màn hình gập độc đáo, đầy lôi cuốn và mới mẻ từ hãng công nghệ Hàn Quốc, dự kiến sẽ có tên là&nbsp;<strong>Samsung Galaxy Z Flip 4</strong>&nbsp;với nhiều nâng cấp. Đây hứa hẹn sẽ là một siêu phẩm bùng nổ trong thời gian tới và thu hút được sự quan tâm của đông đảo người dùng với nhiều cải tiến từ ngoại hình, camera, bộ vi xử lý và viên pin được nâng cấp.</p>\r\n\r\n<h2><span style=\"font-size:20px\"><strong>So sánh điện thoại&nbsp;Samsung Z Flip4 với&nbsp;Samsung Galaxy Z Flip3</strong></span></h2>\r\n\r\n<table>\r\n	<tbody>\r\n		<tr>\r\n			<td>&nbsp;</td>\r\n			<td>\r\n			<p><strong>Samsung Galaxy Z Flip4 5G</strong></p>\r\n			</td>\r\n			<td>\r\n			<p><strong>Samsung Galaxy Z Flip3 5G</strong></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p><strong>Giá niêm yết</strong></p>\r\n			</td>\r\n			<td>\r\n			<p>23.990.000</p>\r\n			</td>\r\n			<td>\r\n			<p>24.990.000</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p><strong>Kích thước màn hình</strong></p>\r\n			</td>\r\n			<td>\r\n			<p>Màn hình chính: 6.7 inch</p>\r\n\r\n			<p>Màn hình phụ: 1.9 inch</p>\r\n			</td>\r\n			<td>\r\n			<p>Màn hình chính: 6.7 inch</p>\r\n\r\n			<p>Màn hình phụ: 1.9 inch</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p><strong>Tần số quét</strong></p>\r\n			</td>\r\n			<td>\r\n			<p>120Hz</p>\r\n			</td>\r\n			<td>\r\n			<p>120Hz</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p><strong>Trọng lượng</strong></p>\r\n			</td>\r\n			<td>\r\n			<p>187 g&nbsp;</p>\r\n			</td>\r\n			<td>\r\n			<p>183g&nbsp;</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p><strong>Công nghệ màn hình</strong></p>\r\n			</td>\r\n			<td>\r\n			<p>&nbsp;Foldable Dynamic AMOLED 2X</p>\r\n			</td>\r\n			<td>\r\n			<p>&nbsp;Super AMOLED</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p><strong>Camera sau</strong></p>\r\n			</td>\r\n			<td>\r\n			<p>Camera góc siêu rộng: 12MP</p>\r\n\r\n			<p>Camera góc rộng: 12MP&nbsp;</p>\r\n			</td>\r\n			<td>\r\n			<p>Camera góc siêu rộng: 12MP, f/2.2</p>\r\n\r\n			<p>Camera góc rộng: 12MP, f/1.8&nbsp;</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p><strong>Camera trước</strong></p>\r\n			</td>\r\n			<td>\r\n			<p>Camera Selfie 10MP</p>\r\n			</td>\r\n			<td>\r\n			<p>Góc rộng 10MP, f/2.4</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p><strong>Dung lượng RAM</strong></p>\r\n			</td>\r\n			<td>\r\n			<p>8GB</p>\r\n			</td>\r\n			<td>\r\n			<p>8GB</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p><strong>Bộ nhớ trong</strong></p>\r\n			</td>\r\n			<td>\r\n			<p>128GB/256GB/512GB</p>\r\n			</td>\r\n			<td>\r\n			<p>128GB/ 256GB</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p><strong>Thẻ SIM</strong></p>\r\n			</td>\r\n			<td>\r\n			<p>1 Nano SIM &amp; 1 eSIM</p>\r\n			</td>\r\n			<td>\r\n			<p>2 SIM (nano‑SIM và eSIM)</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p><strong>Chỉ số kháng nước</strong></p>\r\n			</td>\r\n			<td>\r\n			<p>IPX8</p>\r\n			</td>\r\n			<td>\r\n			<p>IPX8</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p><strong>Cảm biến vân tay</strong></p>\r\n			</td>\r\n			<td>\r\n			<p>Cảm biến vân tay cạnh bên</p>\r\n			</td>\r\n			<td>\r\n			<p>Cảm biến vân tay cạnh bên</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p><strong>Sạc nhanh</strong></p>\r\n			</td>\r\n			<td>\r\n			<p>3700mAh</p>\r\n\r\n			<p>Sạc nhanh 25W</p>\r\n\r\n			<p>Sạc không dây 10W</p>\r\n\r\n			<p>Sạc ngược không dây</p>\r\n			</td>\r\n			<td>\r\n			<p>3300 mAh</p>\r\n\r\n			<p>Sạc nhanh 15W</p>\r\n\r\n			<p>Sạc không dây 10W</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p><strong>CPU</strong></p>\r\n			</td>\r\n			<td>\r\n			<p>Snapdragon 8+ Gen 1</p>\r\n			</td>\r\n			<td>\r\n			<p>Snapdragon 888 8 (5nm)</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p><strong>GPU</strong></p>\r\n			</td>\r\n			<td>\r\n			<p>Adreno 670</p>\r\n			</td>\r\n			<td>\r\n			<p>Adreno 660l</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p><strong>Hệ điều hành</strong></p>\r\n			</td>\r\n			<td>\r\n			<p>Android 12</p>\r\n			</td>\r\n			<td>\r\n			<p>Android 11</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p><strong>Màu sắc</strong></p>\r\n			</td>\r\n			<td>\r\n			<p>Tím Bora</p>\r\n\r\n			<p>Xám Graphite</p>\r\n\r\n			<p>Hồng Champagne</p>\r\n\r\n			<p>Xanh Lovebird</p>\r\n			</td>\r\n			<td>\r\n			<p>Đen Phantom</p>\r\n\r\n			<p>Kem Ivory</p>\r\n\r\n			<p>Xanh Phantom</p>\r\n\r\n			<p>Tím Lilac</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n\r\n<p>Khi điện thoại Samsung Z Flip4 chính thức ra mắt, người dùng Samsung Z Flip3 sẽ phân vân có nên nâng cấp lên mẫu điện thoại mới này hay không. Vậy cùng tìm hiểu Samsung Z Flip4 với Flip 3 có gì khác biệt.</p>\r\n\r\n<h2><strong>Đánh giá điện thoại Samsung&nbsp;Flip 4 chi tiết</strong></h2>\r\n\r\n<p>Là mẫu điện thoại cao cấp được ra mắt hàng năm của Samsung, do đó&nbsp;Samsung ZFlip 4 được rất nhiều người quan tâm. Vậy sản phẩm&nbsp;được thiết kế ra sao, tính năng có gì nổi bật? Cùng tìm hiểu chi tiết ngay dưới đây.</p>\r\n\r\n<h3><strong>Thiết kế đột phá đầy lôi cuốn</strong></h3>\r\n\r\n<p><strong>Samsung Galaxy Z Flip 4</strong>&nbsp;sở hữu thiết kế nhìn chung không có nhiều khác biệt so với thế hệ trước đó. Điện thoại vẫn sở hữu một thiết kế bao gồm hai tone màu với màn hình gập. Tuy nhiên các chi tiết sẽ được chăm chút hơn rất nhiều so với người đàn anh Z Flip 3.</p>\r\n\r\n<p><strong>Điện thoại Samsung&nbsp;ZFlip 4</strong>&nbsp;tiếp tục là một mẫu mã sang chảnh, thời thượng của Samsung được lấy cảm hứng từ hộp trang điểm cầm tay của các chị em hay chiếc vỏ sò. Với công nghệ gập đột phá, Samsung đã tạo ra một chiếc smartphone mang đậm dấu ấn Samsung trên thị trường. Đóng lại là phụ kiện công nghệ với kích thước 4.2-inch, vừa vặn mọi ngăn túi. Mở ra là một chiếc smartphone gập phá vỡ mọi giới hạn từ trước đến nay.</p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"Thiết kế đột phá đầy lôi cuốn\" src=\"https://cdn.cellphones.com.vn/media/wysiwyg/mobile/samsung/samsung-galaxy-z-flip-4-14.jpg\" /></p>\r\n\r\n<p>Khung nhôm của máy được bo tròn tinh tế với những đường nét mềm mại. Trông rất cao cấp. Chạm vào thì vô cùng thoải mái. Hơn nữa, lớp phủ nhám nhẹ trên bề mặt kính máy sẽ hạn chế tối đa dấu vân tay hoặc vết bẩn để máy luôn mới và sạch.</p>\r\n\r\n<p><strong>Galaxy Z Flip 4</strong>&nbsp;tiếp tục được trang bị kính siêu mỏng Ultra Thin Glass (UTG). Công nghệ màn hình này mang cho bạn trải nghiệm linh hoạt không tưởng. Bền hơn 80% so với phiên bản Z Flip trước đó. Và có gập mở đến 200.000 lần mà không gặp trục trặc gì.&nbsp;Phần bản lề này không chỉ bền bỉ hơn mà cũng nhỏ và nhẹ hơn.</p>\r\n\r\n<p>Nếu nếp gấp giữa màn hình từng là một điểm yếu trên Samsung Galaxy Z Flip 3 thì điều này đã hoàn toàn được cải thiện trên thế mới kế nhiệm này. Khi mở ra, màn hình&nbsp;<strong>Z Flip 4</strong>&nbsp;vẫn tồn tại những nếp gấp tuy nhiên nếp gấp này mờ hơn đáng kể, rất khó để nhìn thấy và hoàn toàn không ảnh hưởng đến các trải nghiệm của người dùng.</p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"Đánh giá Samsung Galaxy Z Flip 4\" src=\"https://cdn.cellphones.com.vn/media/wysiwyg/mobile/samsung/samsung-galaxy-z-flip-4-13.jpg\" /></p>\r\n\r\n<p>Thiết kế màn hình gập độc đáo này còn hỗ trợ người dùng trò chuyện rảnh tay vô cùng tiện lợi. Khi gập góc 90 độ, điện thoại có thể tự đứng mà không cần người dùng luôn cầm trên tay hay sử dụng phụ kiện hỗ trợ.</p>\r\n\r\n<p>Samsung Galaxy Z Flip 4 này giúp bạn thỏa sức sáng tạo mà không lo hư hỏng do ướt bởi khả năng kháng nước đạt chuẩn IPX8. Giúp điện thoại chịu đựng được ở độ sâu 1.5m trong môi trường nước (tối đa 30 phút).</p>\r\n\r\n<h3><strong>Trải nghiệm xem hình ảnh đỉnh cao nhất từ trước đến nay</strong></h3>\r\n\r\n<p>Giải trí và thao tác mà không cần mở điện thoại. Samsung Z Flip 4 cho phép bạn kiểm tra tin nhắn, chụp ảnh, phát nhạc và hơn thế nữa ngay trên màn hình ngoài trực quan lớn hơn với kích thước 1.9-inch.</p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"Trải nghiệm xem hình ảnh đỉnh cao nhất từ trước đến nay\" src=\"https://cdn.cellphones.com.vn/media/wysiwyg/mobile/samsung/samsung-galaxy-z-flip-4-10.jpg\" /></p>\r\n\r\n<p>Cuộn và lướt mượt mà hơn để bắt kịp mọi thông tin, xu hướng mới nhất với màn hình chính 120Hz. Kết hợp với tính năng tối ưu theo nội dung xem cho bạn trải nghiệm xem trên màn hình thêm mãn nhãn.</p>\r\n\r\n<p>Sở hữu công nghệ Dynamic AMOLED 2X trên màn hình chính 6.7 inch độ phân giải 2640 x 1080 pixel, Galaxy Z Flip 4 đưa bạn đến gần hơn với thế giới giải trí chuẩn điện ảnh và cực kỳ sống động.</p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"Trải nghiệm xem hình ảnh đỉnh cao nhất từ trước đến nay\" src=\"https://cdn.cellphones.com.vn/media/wysiwyg/mobile/samsung/samsung-galaxy-z-flip-4-12.jpg\" /></p>\r\n\r\n<p><strong>Samsung Flip 4</strong>&nbsp;với màn hình tỉ lệ 21:9, được đánh giá là một bước cải tiến so với nhiều mầu điện thoại màn hình gập trước đây của SamSung. Đặc biệt, camera đã được ẩn trong màn hình nhờ đó mà các trải nghiệm chơi game hay xem phim có thể diễn ra liền mạch hơn. Tuy là điện thoại gập nhưng khi mở máy ra hết hơn thì máy mang lại màn hình 6.7 inch cùng khả năng hiển thị sắc nét không hề thua kém mẫu điện thoại cơ bản nào.</p>\r\n\r\n<p>Màn hình trên Z Flip 4 còn hỗ trợ khả năng chia đôi màn hình thông minh nhờ đó người dùng có thể vừa làm việc vừa nhắn tin hay xem video vô cùng tiện lợi.</p>\r\n\r\n<h3><strong>Camera định hình lại phong cách chụp ảnh của bạn</strong></h3>\r\n\r\n<p><strong>Samsung Z Flip 4</strong>&nbsp;được trang bị bộ đôi camera sau 12MP ngay trên màn hình ngoài và camera trước ở màn hình trong là 10MP. Điểm đặc biệt ở phiên bản này đó là camera sau có khả năng xoay, mang đến trải nghiệm nhiếp ảnh mới mẻ và thú vị nhất từ trước đến nay.</p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"Định hình lại phong cách chụp ảnh của bạn\" src=\"https://cdn.cellphones.com.vn/media/wysiwyg/mobile/samsung/samsung-galaxy-z-flip-4-5_3.jpg\" /></p>\r\n\r\n<p>Tuy không có nhiều khác biệt về thông số so với người tiền nhiệm nhưng điện thoại Galaxy Z Flip 4 có thể mang lại khả năng chụp ảnh chất lượng hơn với phần mềm được cải thiện. Cụ thể, Samsung Galaxy Z Flip 4 có thể mang lại những bức ảnh chất lượng cao qua những tính năng chụp ảnh thông minh.</p>\r\n\r\n<p>Camera selfie trên ZFlip 4 có thể mang lại những bức ảnh tự sướng tự nhiên, màu sắc sống động. Đặc biệt thiết kế màn hình gập thông minh còn hỗ trợ chụp ảnh selfie từ màn hình ngoài vô cùng tiện lợi. Khi cần chụp chỉ nhần nhấn nút&nbsp; tăng – giảm âm lượng là có thể chụp nhanh mà không cần mở máy.</p>\r\n\r\n<p>Hay với chế độ tự đứng người dùng có thể chụp ảnh và quay pin dễ dàng thông qua cử chỉ tay, kể cả trong các chuyến đi một mình.</p>\r\n\r\n<p>Điện thoại Samsung Flip 4 cho phép bạn bắt trọn mọi khoảnh khắc chỉ với 1 chạm. Chỉ cần chọn chế độ Flex cam là có thể chụp ảnh và quay phim cùng một lúc đầy sáng tạo với nhiều góc độ mới lạ.</p>\r\n\r\n<p>Không chỉ vậy, Flex cam còn cho phép điện thoại đứng vững trên bề mặt phẳng, bạn có thể ghi trọn mọi thước phim ấn tượng, không bị mờ mà không cần đến phụ kiện hỗ trợ rườm rà.</p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"Định hình lại phong cách chụp ảnh của bạn\" src=\"https://cdn.cellphones.com.vn/media/wysiwyg/mobile/samsung/samsung-galaxy-z-flip-4-4_1.jpg\" /></p>\r\n\r\n<h3><strong>Dung lượng lưu trữ thoải mái</strong></h3>\r\n\r\n<p><strong>Điện thoại Samsung Z Flip 4</strong>&nbsp;được trang bị dung lượng bộ nhớ trong phiên bản tiêu chuẩn là 128GB. Đây là một mức dung lượng lớn giúp người dùng có thể thoải mái cài đặt và lưu trữ các ứng dụng mà không cần lo lắng đầy bộ nhớ.</p>\r\n\r\n<p>Ở phiên bản dung lượng tối đa, Galaxy Z Flip 4 với 512GB bộ nhớ mang lại một không gian lưu trữ khổng lồ. Bộ nhớ lưu trữ lớn đặc biệt thích hợp với dùng dùng sáng tạo nội dung, cần lưu trữ hình ảnh và video độ phân giải cao với số lượng lớn.</p>\r\n\r\n<h3><strong>Chip xử lý mạnh mẽ, cân mọi tác vụ</strong></h3>\r\n\r\n<p>Không chỉ được chú trong nâng cấp về thiết kế bên ngoài mà cấu hình phần cứng trên&nbsp;<strong>Galaxy Z Flip 4</strong>&nbsp;cũng được chú trọng đầu tư. Cụ thể, điện thoại sẽ được trang bị con chip Snapdragon 8+ Gen 1 mới nhất. Trong đó có lõi chính Cortex-X1&nbsp;hoạt động trên tốc độ 2.995 GHz, ba lõi là Cortex-A78&nbsp;hoạt động với tốc độ 2.42GHz. Cuối cùng là bốn lõi Cortex-A55&nbsp;với tốc độ tới 1.8 GHz.</p>\r\n\r\n<p>Kết hợp với bộ nhớ RAM tới 8GB nhờ đó thiết bị mang lại không khả năng đa nhiệm ổn định và mượt mà. Người dùng có thể thoải mái chơi game đồ họa 3D nặng hay xem youtube, livestream một cách thoải mái mà không cần lo lắng đến tình trạng giật – lag.</p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"Đánh giá Samsung Galaxy Z Flip 4\" src=\"https://cdn.cellphones.com.vn/media/wysiwyg/mobile/samsung/samsung-galaxy-z-flip-4-3_1.jpg\" /></p>\r\n\r\n<p>Thiết bị còn nâng cao khả năng giải trí với công nghệ Dolby Atmos. Nhờ đó mà các trải nghiệm âm thanh trong trò chơi, video giải trí phát ra vô cùng sống động.</p>\r\n\r\n<h3><strong>Viên pin dung lượng lớn, sạc nhanh siêu tốc</strong></h3>\r\n\r\n<p>Với pin kép thông minh 3700mAh, sạc nhanh 25W và công nghệ AI tích hợp để tối ưu mức pin theo thói quen trải nghiệm,&nbsp;<strong>Samsung Z Flip 4</strong>&nbsp;cho bạn nhiều thời gian hơn để hoàn thành công việc hoặc làm điều bạn thích.&nbsp;Nhìn chung, với mức dung lượng lớn này Samsung Galaxy Z Flip 4 mang lại thời gián sử dụng nhiều giờ.&nbsp;</p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"Mọi trải nghiệm trong tầm tay với viên pin dung lượng lớn\" src=\"https://cdn.cellphones.com.vn/media/wysiwyg/mobile/samsung/samsung-galaxy-z-flip-4-9_1.jpg\" /></p>\r\n\r\n<p>Bên cạnh đó là một con chip tiết kiệm điện năng, nhờ đó mà thời gian trả nghiệm và sử dụng của Galaxy Z Flip 4 sẽ kéo dài hơn. Không chỉ sạc nhanh có dây công suất lớn, điện thoại còn hỗ trợ tính năng sạc nhanh không dây Fast Wireless Charging 2.0. &nbsp;</p>\r\n\r\n<p>Điện thoại thông minh Samsung Z Flip 4 còn được trang bị tính năng bảo mật vân tay một chạm thông minh. Nhờ đó người dùng có thể mở khóa nhanh chóng mà không cần tháo khẩu trang. Kết hợp với đó là Samsung Knox giúp bảo vệ dữ liệu theo thời gian thực.</p>\r\n\r\n<h3><strong>Khả năng chống nước và bụi tốt</strong></h3>\r\n\r\n<p>Là sản phẩm flagship do đó Z Flip 4 chắc chắn sẽ được trang bị tính năng kháng nước và bụi bẩn. Với tính năng kháng nước thông minh này, người dùng có thể mang theo sống ảo ở bể bơi, gần sông suối. Tính năng hỗ trợ người dùng có thể sử dụng trong nhiều điều kiện môi trường và thời tiết.</p>\r\n\r\n<p>Tuy nhiên, nhà sản xuất sẽ không bảo hành tính năng này, do đó khuyến khích người tiêu dùng không nên test thử.</p>\r\n\r\n<h2><strong>Samsung Galaxy&nbsp;Z Flip 4 gập được bao nhiêu lần?</strong></h2>\r\n\r\n<p>Với mẫu màn hình gập người dùng rất quan tâm đến độ bền của thiết bị và với Galaxy Z Flip 4 cũng không ngoại lệ. Ở thế hệ Galaxy Z Flip 3, thiết bị cũng vượt qua bài kiểm tra với gần&nbsp;200.000 lần gập mở. Như vậy Galaxy Z Flip 4 với nhiều cải tiến về bản lề cũng sẽ cho khả năng gập mở tương tự hoặc lớn hơn.</p>\r\n\r\n<p>Như vậy người dùng hoàn toàn có thể an tâm và sử dụng thiết bị lên tới gần 4 năm với trung bình 150 lần gập – mở mỗi ngày.</p>\r\n\r\n<p>Hơn thế nữa, phần vỏ của máy được hoàn thiện từ lớp kính cường lực cứng nhất hiện tại - Corning Gorilla Glass Victus cùng bản lệ được bảo vệ bởi khung nhôm Armor Aluminum vô cùng bền bỉ.</p>\r\n\r\n<h2><strong>Samsung Galaxy Z Flip 4 khi nào ra mắt?</strong></h2>\r\n\r\n<p>Với những tính năng hấp dẫn, đây là một trong những chiếc smartphone được nhiều người dùng quan tâm trong năm 2022. Vậy điện thoại Samsung Z Flip 4 bao giờ ra mắt? Tính đến thời điểm hiện tại vẫn chưa có nhiều thông tin chính thức về thời gian ra mắt của mẫu điện thoại Samsung mới này. Tuy nhiên, khả năng rất lớn thiết bị sẽ được Samsung giới thiệu đến người dùng tại sự kiện Galaxy Unpacked 2022. Sự kiện dự kiến được tổ chức vào ngày 10 tháng 8 tới đây.</p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"Đánh giá Samsung Galaxy Z Flip 4\" src=\"https://cdn.cellphones.com.vn/media/wysiwyg/mobile/samsung/samsung-galaxy-z-flip-4-8_2.jpg\" /></p>\r\n\r\n<p>Thế hệ Samsung Galaxy Z Flip 3 cũng được giới thiệu trong sự kiện này nên có thể nói gần như chắc chắn Flip 4 sẽ được chính thức ra mắt cùng với&nbsp;<a href=\"https://cellphones.com.vn/samsung-galaxy-z-fold-4.html\" target=\"_blank\"><strong>Z Fold 4</strong></a>&nbsp;vào ngày 10 tháng 8 năm 2022. Tuy nhiên cũng không ngoại trừ khả năng khác khi mà thế hệ màn hình gập không được Samsung cho ra mắt theo chu kỳ nhất định khi Galaxy Z Flip thế hệ đầu được ra mắt vào tháng 2 và thế hệ tiếp theo được ra mắt trong tháng 8.</p>\r\n\r\n<h2><strong>Samsung Galaxy Z&nbsp;Flip 4&nbsp;giá bao nhiêu?</strong></h2>\r\n\r\n<p>Cũng như ngày ra mắt, hiện tại vẫn chưa có nhiều thông tin về giá bán của mẫu điện thoại màn hình gập dạng vỏ sò này. Tuy nhiên có nhiều dự kiến về giá bán được đưa ra bởi các trang tin công nghệ thì Samsung Flip 4 có thể lên kệ với mức giá 1229 USD ở thị trường Hoa Kỳ hay 1050 EUR ở thị trường Châu Âu, tương đương từ 27 đến 28 triệu đồng.</p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"Đánh giá Samsung Galaxy Z Flip 4\" src=\"https://cdn.cellphones.com.vn/media/wysiwyg/mobile/samsung/samsung-galaxy-z-flip-4-11.jpg\" /></p>\r\n\r\n<p>Giá bán mẫu điện thoại mới Samsung Z Flip 4 dự kiến sẽ lên kệ thấp hơn so với người tiền nhiệm Z Flip 3. Điều này cũng có thể sảy ra khi nhiều nguồn tin cho thấy mẫu điện thoại đồng hành Galaxy Z Fold 4 được lên kệ thấp hơn Galaxy Z Fold 3. Hay thế hệ Galaxy Z Flip 3 cũng rẻ hơn tới gần 400 USD so với Galaxy Z Flip thế hệ đầu.</p>\r\n\r\n<h2><strong>Điện thoại Samsung Galaxy&nbsp;Z Flip 4 có mấy màu sắc?</strong></h2>\r\n\r\n<p>Về màu sắc,&nbsp;<strong>điện thoại Samsung Galaxy Z Fold 4</strong>&nbsp;sẽ có nhiều phiên bản màu hơn so với Z Flip 3. Cụ thể, nếu Samsung Z Flip 3 sở hữu bốn màu sắc:</p>\r\n\r\n<p>-&nbsp; &nbsp;Tím Bora</p>\r\n\r\n<p>-&nbsp; &nbsp;Xám Graphite</p>\r\n\r\n<p>-&nbsp; &nbsp;Xanh Lovebird</p>\r\n\r\n<p>-&nbsp; &nbsp;Hồng Champagne</p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"Điện thoại Samsung Galaxy Z Flip 4 có mấy màu sắc?\" src=\"https://cdn.cellphones.com.vn/media/wysiwyg/mobile/samsung/samsung-galaxy-z-flip-4-15.jpg\" /></p>\r\n\r\n<p>Bên cạnh đó với phiên bản&nbsp;Samsung Z Flip 4 đặc biệt, Samsung đã trang bị phiên bản&nbsp;phiên bản Bespoke. Nhờ đó mà người dùng có thể kết hợp các màu sắc khác nhau để tự do khoe cá tính. Trong đó khung viền có ba màu lựa chọn là&nbsp;vàng đồng, đen, bạc.</p>\r\n\r\n<h2><strong>Đánh giá dung lượng pin Samsung Z Flip4&nbsp;</strong></h2>\r\n\r\n<p>(Cập nhật 20/8)</p>\r\n\r\n<p>Điện thoại Samsung Z Flip4 sở hữu viên pin dung lượng lên đến&nbsp;3700 mAh, tăng 12% so với người tiên nhiệm. Cụ thể, trong bài test, điện thoại cho thời gian lướt web lên đến 11 tiếng 40 phút, nếu sử dụng để xem Youtube liên tục, thiết bị có thể trụ đến 9 tiếng 45 phút (Lưu ý thời gian sử dụng có thể thay đổi tùy theo mức độ sáng của màn hình).</p>\r\n\r\n<h2><strong>Samsung Z Flip4 nâng cấp gì so với Z Flip 3?</strong></h2>\r\n\r\n<p>(Cập nhật 14/08)</p>\r\n\r\n<p>Sau khi&nbsp;Samsung Z Flip4 chính thức được trình làng, người dùng có thể dễ dàng nhận thấy mẫu Samsung Z mới này kế thừa nhiều đặc điểm của người đi trước nhưng cũng được cải tiến nhiều tính năng.</p>\r\n\r\n<h3><strong>Ngoại hình sang trọng hơn</strong></h3>\r\n\r\n<p>Khác với khung viền bo tròn trên Z Flip 3 thì Samsung Z Flip 4 tuy vẫn ở hữu thiết kế gập như hộp trang điểm nhưng sang trọng hơn với khung viền vuông vắn. Do đó nếu Samsung Z Flip 3 hơi hướng nữ tính thì Galaxy Z Flip 4 lại có chút mạnh mẽ, phù hợp cho cả người dùng nam và nữ.</p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"Samsung Z Flip4 - Ngoại hình sang trọng\" src=\"https://cdn.cellphones.com.vn/media/wysiwyg/mobile/samsung/samsung-galaxy-z-flip-4-14_1.jpg\" /></p>\r\n\r\n<p>Phần bản lề trên Z Flip 4 được Samsung hoàn thiện tỉ mỉ hơn, tổng thể gọn hơn và ít bị nhô ra ngoài. Khung viền kim loại của thiết bị cũng khá mỏng giúp tăng tỉ lệ của mặt lưng kính giúp thiết bị sở hữu một vẻ ngoài sang trọng.</p>\r\n\r\n<h3><strong>Màn hình bổ sung nhiều tính năng</strong></h3>\r\n\r\n<p>Tuy không có sự thay đổi về kích thước so với thế hệ cũ nhưng Z Flip 4 được nâng cấp thêm nhiều tính năng thông minh. Đơn cử như màn hình phụ người dùng có thể tạo được Ar emoji cá nhân, tạo nhieefeu widget hơn hay trả lời tin nhắn nhanh. Màn hình chính bền hơn với mặt kính cường lực Gorilla Glass Victus+.</p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"Samsung Z Flip4 - màn hinh nhiều tính năng\" src=\"https://cdn.cellphones.com.vn/media/wysiwyg/mobile/samsung/samsung-galaxy-z-flip-4-12_1.jpg\" /></p>\r\n\r\n<h3><strong>Cảm biến camera được nâng cấp</strong></h3>\r\n\r\n<p>Tuy vẫn giữ thông số độ phân giải nhưng cảm biến trên Galaxy Z Flip 4 đã được nâng cấp. Cụ thể cảm biến camera chính được thay đổi từ 1,4µm lên 1,8µm. Nhờ đó mà khả năng chụp ảnh trên thế hệ Z Flip 4 sẽ tốt hơn với hình ảnh sắc nét hơn, khả năng thu sáng tốt hơn.</p>\r\n\r\n<h3><strong>Nâng cấp con chip cùng bộ nhớ trong</strong></h3>\r\n\r\n<p>Điểm khác biệt lớn nhất trong cấu hình Samsung Z Flip 4 đó chính là con chip Snapdragon 8+, con chip mạnh mẽ mang lại một hiệu năng vượt trội. Bên cạnh đó, bộ nhớ trong trên thiết bị cũng được mở rộng với phiên bản cấu hình tối đa có dung lượng bộ nhớ lên đến 512GB.</p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"Samsung Z Flip4 - Nâng cấp về hiệu năng\" src=\"https://cdn.cellphones.com.vn/media/wysiwyg/mobile/samsung/samsung-galaxy-z-flip-4-13_1.jpg\" /></p>\r\n\r\n<h3><strong>Viên pin được nâng cấp về dung lượng và khả năng sạc nhanh</strong></h3>\r\n\r\n<p>Pin cải thiện là tính năng được nhiều người dùng hi vọng trước khi điện thoại chính tức ra mắt và Samsung đã thỏa mãn mong ước của người dùng. Z Flip 4 không chỉ được nâng cấp về dung lượng pin lên 3700 mAh (Lớn hơn 12% so với thế hệ trước) mà còn nâng cấp khả năng sạc nhanh từ 15W lên 25W.</p>\r\n\r\n<h2><strong>Tổng hợp tin đồn về Samsung Z Flip4 trước ngày ra mắt</strong></h2>\r\n\r\n<p>Điện thoại mới dòng Galaxy Z series nhận được nhiều sự chú ý của người tiêu dùng trước thềm ra mắt. Nếu bạn quan tâm đến siêu phẩm điện thoại này, hãy cùng cập nhật những tin tức mới nhất sau đây. Nội dung sẽ được cập nhật liên tục dựa trên các tin đồn cho đến khi&nbsp;<a href=\"https://cellphones.com.vn/samsung-galaxy-z-flip-4.html\" target=\"_blank\"><strong>Samsung Z Flip 4</strong></a>&nbsp;chính thức được ra mắt trên toàn thế giới.</p>\r\n\r\n<h3><strong>Ưu đãi khủng khi đặt trước Galaxy Z mới 2022 (cập nhật ngày 01/08/2022)</strong></h3>\r\n\r\n<p>Đối với các khách hàng tại thị trường Mỹ, nếu những ai đang quan tâm đến các sản phẩm sắp được Samsung ra mắt sắp tới thì có thể lựa chọn đặt hàng trước để nhận được nhiều ưu đãi hấp dẫn giá tốt.&nbsp;</p>\r\n\r\n<p>Samsung cho biết, nếu khách hàng đặt trước bộ đôi siêu phẩm màn hình gập&nbsp;<strong>Galaxy Z Flip 4</strong>&nbsp;hay&nbsp;<strong>Z Fold 4</strong>&nbsp;thì sẽ nhận được mức khuyến mãi giảm giá lên đến 100 USD (tương đương 2.3 triệu đồng).</p>\r\n\r\n<p>Ngoài ra, bạn có thể mua đồng hồ Galaxy Watch mới với ưu đãi đến 50 USD (tương đương 1.15 triệu đồng) cũng như Galaxy Buds mới với ưu đãi 30 USD (tương đương 700 ngàn đồng). Nếu khách hàng tại Mỹ lựa chọn đặt trước cả ba thiết bị Galaxy sắp tới, thì sẽ nhận được tổng ưu đãi giảm giá lên đến 200 USD (gần 5 triệu đồng).</p>\r\n\r\n<h3><strong>Samsung tung teaser chính thức của Galaxy Z mới&nbsp;(cập nhật ngày 31/07/2022)</strong></h3>\r\n\r\n<p>Mới đây, gã khổng lồ công nghệ Hàn Quốc vừa chia sẻ cho chúng ta video teaser mới nhất về sự kiện Galaxy Unpacked năm 2022, qua đó xác nhận thiết kế loạt siêu phẩm màn hình gập Galaxy Z thế hệ mới.</p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"Teaser chính thức của Galaxy Z Flip 4\" src=\"https://cdn.cellphones.com.vn/media/wysiwyg/mobile/samsung/teaser-samsung-galaxy-z-flip-4.jpg\" width=\"830\" /></p>\r\n\r\n<p>Theo trang Gizmochina, video quảng cáo dài 45 giây mới này không có nhiều khác biệt so với các video mà chúng ta đã thấy trước đó, có slogan “linh hoạt tốt hơn phẳng”, thể hiện cho chúng ta thấy rằng một chiếc smartphone sở hữu màn hình gập sẽ thích sử dụng hơn một chiếc điện thoại màn hình phẳng thông thường. Qua video, có thể thấy dòng Galaxy Z thế hệ mới sẽ có ngôn ngữ thiết kế gần như tương đồng với thế hệ Galaxy Z Fold3 và Z Flip3.</p>\r\n\r\n<h3><strong>Nếp gấp màn hình gần như biến mất hoàn toàn (cập nhật ngày 30/07/2022)</strong></h3>\r\n\r\n<p>Theo hình ảnh thực tế được TechTalkTV chia sẻ mới đây, màn hình của&nbsp;<strong>điện thoại Galaxy Z Flip 4</strong>&nbsp;có vẻ như đã được nâng cấp. Đặc biệt là phần nếp gấp ở giữa màn hình khi mở ra gần như biến mất hoàn toàn, chúng ta chỉ có thể nhìn thấy một vạch ánh sáng chói nhẹ ở phần nếp gấp này. Tuy nhiên, nếu chỉ nhìn ở một góc độ thì vẫn rất khó để khẳng định nếp gấp này vẫn còn tồn tại trên phiên bản mới này hay không.</p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"Nếp gấp màn hình sẽ biến mất trên Z Flip 4\" src=\"https://cdn.cellphones.com.vn/media/wysiwyg/mobile/samsung/samsung-galaxy-z-flip-4-7_3.jpg\" width=\"830\" /></p>\r\n\r\n<p>Trên Galaxy Z Flip 3, chúng ta rất dễ dàng nhìn thấy phần nếp gấp ở giữa màn hình khi nhìn nghiêng. Tuy nhiên đối với nhiều người dùng, đây cũng không phải là một vấn đề quá lớn khi sử dụng chiếc điện thoại màn hình gập này. Và ở thế hệ mới năm nay, nhiều tín đồ công nghệ vẫn rất chờ đợi hãng Samsung sẽ nâng cấp màn hình, đặc biệt là phần nếp gấp vốn được rất nhiều người quan tâm.</p>\r\n\r\n<h3><strong>Giá bán sản phẩm có thể đắt hơn&nbsp;(cập nhật ngày 29/07/2022)</strong></h3>\r\n\r\n<p><strong>Điện thoại Samsung Galaxy Z Flip 4</strong>&nbsp;gần như chắc chắn sẽ ra mắt vào sự kiện Unpacked diễn ra vào ngày 10 tháng 8 tới. Càng cận kề ngày ra mắt, Galaxy Z Flip 4 càng lộ nhiều thông tin về giá bán và cấu hình. Trong đó giá bán Samsung Galaxy Z Flip 4 dự kiến sẽ tăng khoảng 31 USD so với giá khởi điểm của người tiền nhiệm Z Flip 3. Dự đoán sự tăng giá tập trung nhiều ở các nước Châu Âu do sự sụt giảm của đồng tiền chung.</p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"Samsung Galaxy Z Flip 4 có thể bán với giá đắt hơn\" src=\"https://cdn.cellphones.com.vn/media/wysiwyg/mobile/samsung/samsung-galaxy-z-flip-4-3_1.jpg\" /></p>\r\n\r\n<h3><strong>Bốn màu sắc lộ diện&nbsp;(cập nhật ngày 26/7/2022)</strong></h3>\r\n\r\n<p>Trước nhiều tin đồn về màu sắc trước đó thì cận kề ngày ra mắt, Samsung Galaxy Z Flip 4 có thể sẽ được lên kệ với bốn phiên bản màu, lần lượt là tím nhạt, vàng hồng, xanh lam và than chì.</p>\r\n\r\n<p>Về kích thước, Samsung Galaxy Z Flip 4 sẽ được trang bị viền màn hình mỏng hơn, bản lề chắc chắn hơn. Máy cũng sẽ được trang bị viên pin lớn hơn cho thời gian sử dụng lâu hơn.</p>\r\n\r\n<h3><strong>Lộ diện giá bán Samsung Z Flip 4&nbsp;(cập nhật ngày 24/07/2022)</strong></h3>\r\n\r\n<p>Sự kiện ra mắt ngày càng đến gần và ngày càng nhiều thông tin về mẫu flagship này rò rỉ. Mới đây có nhiều thông tin về giá bán Galaxy Z Flip 4 ở nhiều thị trường:</p>\r\n\r\n<p>Giá bán Samsung Galaxy Z Flip 4 tại thị trường Châu Âu:</p>\r\n\r\n<ul>\r\n	<li>\r\n	<p>- Phiên bản 128GB:&nbsp;1109&nbsp;EUR&nbsp;≈ 26.6 triệu đồng</p>\r\n	</li>\r\n	<li>\r\n	<p>- Phiên&nbsp;bản 256GB: 1169 EUR ≈ 28.1 triệu đồng</p>\r\n	</li>\r\n	<li>\r\n	<p>- Phiên&nbsp;bản 512GB: 1289 EUR ≈ 30.9 triệu đồng</p>\r\n	</li>\r\n</ul>\r\n\r\n<p>Đánh giá chung mẫu điện thoại Z Flip 4 sẽ có giá bán tăng nhẹ so với thời điểm ra mắt của phiên bản tiền nhiệm.&nbsp;Nguyên nhân của sự tăng giá này có thể do vấn đề lạm phát và sự khan hiếm của chipset.</p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"Lộ diện giá bán điện thoại Samsung Galaxy Z Flip 4\" src=\"https://cdn.cellphones.com.vn/media/wysiwyg/mobile/samsung/samsung-galaxy-z-flip-4-6_2.jpg\" /></p>\r\n\r\n<h3><strong>Có thêm phiên bản màu tím hoa oải hương&nbsp;(cập nhật ngày 16/7/2022)</strong></h3>\r\n\r\n<p>Bên cạnh nhiều màu sắc trước đó thì Samsung Flip 4 còn được trang bị thêm một màu sắc mới độc đáo – màu tím hoa oải hương. Trên phiên bản tím độc đáo này, các chi tiết sẽ trở nên tinh tế hơn với anten tối màu hơn, nút bấm trông rõ ràng hơn.</p>\r\n\r\n<p>Thiết kế mẫu điện thoại Samsung mới này không quá khác người tiền nhiệm nhưng cũng sẽ được hoàn thiện tinh tế hơn với màu sắc đậm hơn. Bên cạnh đó camera trông lồi hơn với những nâng cấp và cải tiến trong chất lượng hình ảnh.</p>\r\n\r\n<h3><strong>Z Flip 4 hỗ trợ esim tại thị trường Hàn Quốc&nbsp;(cập nhật ngày 15/7/2022)</strong></h3>\r\n\r\n<p>Tại thị trường quê nhà, mẫu điện thoại mới Samsung Z Flip 4 sẽ được trang bị dịch vụ eSIM. Tuy nhiên với các máy tại thị trường khác, trong đó có Flip 4 chính hãng có thể sẽ chưa được trang bị tính năng này.</p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"Samsung Z Flip 4 hỗ trợ esim tại thị trường Hàn Quốc\" src=\"https://cdn.cellphones.com.vn/media/wysiwyg/mobile/samsung/samsung-galaxy-z-flip-4-2_2.jpg\" /></p>\r\n\r\n<h2><strong>Điện thoại Samsung Galaxy&nbsp;Z Flip4 chính hãng giá bán bao nhiêu tiền</strong></h2>\r\n\r\n<p>Với năm lựa chọn màu sắc khác nhau, giá bán&nbsp;Samsung Galaxy Z Flip4 dự kiến lần lượt là:</p>\r\n\r\n<p>-&nbsp; &nbsp; Samsung Galaxy Z Flip4 128GB:&nbsp;23,990,000đ</p>\r\n\r\n<p>-&nbsp; &nbsp;&nbsp;Samsung Galaxy Z Flip4&nbsp;256GB: 25,990,000đ</p>\r\n\r\n<p>-&nbsp; &nbsp;&nbsp;Samsung Galaxy Z Flip4&nbsp;256GB BESPOKE:&nbsp;26,990,000đ</p>\r\n\r\n<p>-&nbsp; &nbsp;&nbsp;Samsung Galaxy Z Flip4 5G 512GB BESPOKE:&nbsp;29,490,000đ</p>\r\n\r\n<h2><strong>Mua Samsung Z Flip 4 chính hãng giá tốt tại CellphoneS</strong></h2>\r\n\r\n<p>Một phiên bản smartphone có phong cách độc nhất vô nhị chỉ có thể là chiếc&nbsp;<strong>Samsung Galaxy Z Flip 4</strong>&nbsp;thế hệ mới năm 2022 này. Sản phẩm sẽ sớm được bán tại CellphoneS, để là một trong số những người đầu tiên sở hữu siêu phẩm này, bạn hãy nhớ điền thông tin đặt hàng bên trên nhé! Mọi thắc mắc xin vui lòng liên hệ hotline 1800 2097.&nbsp;Ngoài ra, tại CellphoneS còn nhiều mẫu điện thoại Samsung chất lượng khác với đa dạng giá bán cho người dùng lựa chọn.</p>', 1, 0, '2022-09-16 13:27:43', '2022-10-31 16:36:54'),
-(2, 1, 1, 'Samsung Galaxy Z Fold4', 'samsung_galaxy_z_fold_4-7.jpg', 2, 3, 40990000, 'Good', '', 7, 15, '2022-09-16 13:31:27', '2022-10-31 16:27:52'),
-(3, 1, 1, 'Samsung Galaxy Ultra22', 'sm-s908_galaxys22ultra_front_burgundy_211119.jpg', 3, 1, 24990000, 'a', '', 3, 2, '2022-09-16 13:34:01', '2022-10-30 18:13:39'),
+(2, 1, 1, 'Samsung Galaxy Z Fold4', 'samsung_galaxy_z_fold_4-7.jpg', 1, 4, 40990000, 'Good', '', 7, 15, '2022-09-16 13:31:27', '2022-11-11 16:53:13'),
+(3, 1, 1, 'Samsung Galaxy Ultra22', 'sm-s908_galaxys22ultra_front_burgundy_211119.jpg', 2, 2, 24990000, 'a', '', 3, 2, '2022-09-16 13:34:01', '2022-11-11 16:38:48'),
 (4, 3, 2, 'Airpod 3', 'airpod-3.jpg', 3, 0, 4590000, 'a', '', 0, 0, '2022-09-16 13:36:55', '2022-09-16 13:39:12'),
-(5, 3, 2, 'Airpod 2', 'airpods-2_6.jpg', 0, 3, 2750000, 'a', '', 0, 0, '2022-09-16 13:39:03', '2022-10-31 16:28:05'),
-(6, 2, 6, 'Xiaomi Band 6', 'xiaomiband6.jpg', 15, 2, 790000, 'a', '', 0, 0, '2022-09-16 14:40:05', '2022-10-31 16:36:54');
+(5, 3, 2, 'Airpod 2', 'airpods-2_6.jpg', 10, 3, 2750000, 'a', '', 0, 0, '2022-09-16 13:39:03', '2022-11-09 15:50:46'),
+(6, 2, 6, 'Xiaomi Band 6', 'xiaomiband6.jpg', 15, 2, 790000, 'a', '', 0, 0, '2022-09-16 14:40:05', '2022-10-31 16:36:54'),
+(8, 3, 2, 'Airpod 4', 'airpod-3.jpg', 24, 0, 3999000, '<p>a</p>', '<p>a</p>', 0, 0, '2022-11-08 18:47:07', '2022-11-09 15:40:43');
 
 -- --------------------------------------------------------
 
@@ -12528,6 +12550,55 @@ INSERT INTO `slide` (`id_slide`, `image_slide`, `name_slide`, `created_at`, `upd
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `statistic`
+--
+
+CREATE TABLE `statistic` (
+  `id_statistic` int(10) UNSIGNED NOT NULL,
+  `quantity_statistic` int(11) NOT NULL,
+  `price_statistic` int(11) NOT NULL,
+  `date_statistic` date NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `statistic`
+--
+
+INSERT INTO `statistic` (`id_statistic`, `quantity_statistic`, `price_statistic`, `date_statistic`, `created_at`, `updated_at`) VALUES
+(3, 15, 23649000, '2022-11-11', NULL, '2022-11-11 10:38:34'),
+(4, 3, 18599000, '2022-10-31', '2022-11-11 10:39:33', '2022-11-11 10:39:33');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `statistic_note`
+--
+
+CREATE TABLE `statistic_note` (
+  `id_statistic_note` int(10) UNSIGNED NOT NULL,
+  `type_statistic_note` int(11) NOT NULL,
+  `quantity_statistic_note` int(11) NOT NULL,
+  `price_statistic_note` int(11) NOT NULL,
+  `date_statistic_note` date NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `statistic_note`
+--
+
+INSERT INTO `statistic_note` (`id_statistic_note`, `type_statistic_note`, `quantity_statistic_note`, `price_statistic_note`, `date_statistic_note`, `created_at`, `updated_at`) VALUES
+(1, 1, 45, 860955000, '2022-11-13', '2022-11-12 17:57:17', '2022-11-13 09:59:52'),
+(4, 1, 11, 69997000, '2021-11-11', '2022-11-12 18:26:14', '2022-11-12 18:26:14'),
+(5, 0, 30, 525982000, '2022-11-13', '2022-11-13 09:52:37', '2022-11-13 10:09:29'),
+(9, 0, 5, 350000000, '2022-08-22', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `supplier`
 --
 
@@ -12575,12 +12646,25 @@ CREATE TABLE `users` (
 
 CREATE TABLE `warehouse` (
   `id_warehouse` int(10) UNSIGNED NOT NULL,
-  `id_supplier` int(11) NOT NULL,
-  `id_product` int(11) NOT NULL,
-  `quantity_warehouse` int(11) NOT NULL,
+  `name_product_warehouse` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `quantity_product_warehouse` int(11) NOT NULL,
+  `price_product_warehouse` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `warehouse`
+--
+
+INSERT INTO `warehouse` (`id_warehouse`, `name_product_warehouse`, `quantity_product_warehouse`, `price_product_warehouse`, `created_at`, `updated_at`) VALUES
+(1, 'Samsung M51', 69, 7999000, '2022-11-06 14:35:15', '2022-11-12 18:26:14'),
+(2, 'Samsung Galaxy Z Flip4', 77, 38999000, '2022-11-06 14:35:15', '2022-11-12 18:24:28'),
+(3, 'Samsung Galaxy Ultra22', 15, 20999000, '2022-11-06 14:52:59', '2022-11-13 09:59:52'),
+(4, 'Airpod 2', 10, 2000000, '2022-11-06 14:52:59', '2022-11-12 18:26:14'),
+(5, 'Airpod 4', 12, 5000000, '2022-11-07 17:15:49', '2022-11-12 17:57:17'),
+(6, 'Samsung Watch 3', 10, 5999000, '2022-11-13 09:52:59', '2022-11-13 09:59:52'),
+(7, 'Apple Watch 3', 14, 8999000, '2022-11-13 09:52:59', '2022-11-13 09:59:52');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -12713,6 +12797,18 @@ ALTER TABLE `slide`
   ADD PRIMARY KEY (`id_slide`);
 
 --
+-- Chỉ mục cho bảng `statistic`
+--
+ALTER TABLE `statistic`
+  ADD PRIMARY KEY (`id_statistic`);
+
+--
+-- Chỉ mục cho bảng `statistic_note`
+--
+ALTER TABLE `statistic_note`
+  ADD PRIMARY KEY (`id_statistic_note`);
+
+--
 -- Chỉ mục cho bảng `supplier`
 --
 ALTER TABLE `supplier`
@@ -12787,37 +12883,37 @@ ALTER TABLE `feeship`
 -- AUTO_INCREMENT cho bảng `import_note`
 --
 ALTER TABLE `import_note`
-  MODIFY `id_import` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_import` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT cho bảng `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT cho bảng `note`
 --
 ALTER TABLE `note`
-  MODIFY `id_note` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id_note` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT cho bảng `order`
 --
 ALTER TABLE `order`
-  MODIFY `id_order` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id_order` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT cho bảng `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `id_order_detail` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id_order_detail` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT cho bảng `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `review`
@@ -12838,6 +12934,18 @@ ALTER TABLE `slide`
   MODIFY `id_slide` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT cho bảng `statistic`
+--
+ALTER TABLE `statistic`
+  MODIFY `id_statistic` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT cho bảng `statistic_note`
+--
+ALTER TABLE `statistic_note`
+  MODIFY `id_statistic_note` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT cho bảng `supplier`
 --
 ALTER TABLE `supplier`
@@ -12853,7 +12961,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT cho bảng `warehouse`
 --
 ALTER TABLE `warehouse`
-  MODIFY `id_warehouse` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_warehouse` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
