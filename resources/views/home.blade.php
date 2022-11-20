@@ -22,7 +22,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.1/dist/sweetalert2.min.css">
     <!-- Libraries Stylesheet -->
     <link href="{{asset('frontend/lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
-
+    <!-- LightSlider -->
+    <link href="{{asset('frontend/css/lightslider.css')}}" rel="stylesheet">
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{asset('frontend/css/style.css')}}" rel="stylesheet">
 </head>
@@ -206,6 +207,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="{{asset('frontend/lib/easing/easing.min.js')}}"></script>
     <script src="{{asset('frontend/lib/owlcarousel/owl.carousel.min.js')}}"></script>
+    <!-- LightSlider -->
+    
     <!-- Contact Javascript File -->
     <script src="mail/jqBootstrapValidation.min.js"></script>
     <script src="mail/contact.js"></script>
@@ -534,10 +537,19 @@
                 }
             })
         });
+        //light-slider
+        $('#lightSlider').lightSlider({
+            gallery: true,
+            item: 1,
+            loop:true,
+            slideMargin: 0,
+            thumbItem: 3
+        });
     });
 </script>
     <!-- Template Javascript -->
     <script src="{{asset('frontend/js/main.js')}}"></script>
+    <script src="{{asset('frontend/js/lightslider.js')}}"></script>
 </body>
 
 </html>

@@ -21,7 +21,10 @@ class HomeController extends Controller
     public function homePage(){
         $selectCategory = Category::all();
         $selectBrand = Brand::take(6)->get();
+        // DB::enableQueryLog();
         $selectOutstanding = Product::take(10)->orderBy('updated_at','asc')->get();
+        // $query = DB::getQueryLog();
+        // dd($query);
         $selectSlide = Slide::take(6)->where('updated_at','<',Slide::max('updated_at'))->get();
         $selectFirstSlide = Slide::where('updated_at','=',Slide::max('updated_at'))->get();
         $selectProduct = Product::join('brand as b','b.id_brand','product.id_brand')->get();
@@ -89,7 +92,7 @@ class HomeController extends Controller
         $imageCustomer = $checkLogin['image_customer'];
         if($checkLogin){
             Session::put('id',$idCustomer);
-            Session::put('username',$emailCustomer);
+            Session::put('usernameCustomer',$emailCustomer);
             Session::put('nameCustomer',$nameCustomer);
             Session::put('imageCustomer',$imageCustomer);
             return redirect()->route('home.page');

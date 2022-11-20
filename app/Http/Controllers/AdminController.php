@@ -20,7 +20,7 @@ class AdminController extends Controller
         return view('admin.login');
     }
     public function dashboard(){
-        $username = Session::get('username');
+        $username = Session::get('usernameAdmin');
         if($username){
             return view('admin.content');
         }else{
@@ -38,11 +38,11 @@ class AdminController extends Controller
             'pass'=> ['max:32','min:6'],
         ])->validate();
         if($request->has('remember-me')){
-            Cookie::queue('username',$userName,10);
+            Cookie::queue('usernameAdmin',$userName,10);
             Cookie::queue('password',$pass,10);
             Cookie::queue('remember','',10);
         }else{
-            Cookie::queue('username','',10);
+            Cookie::queue('usernameAdmin','',10);
             Cookie::queue('password','',10);
             Cookie::queue('no-remember','',10);
             $remember = Cookie::get('remember');
@@ -53,7 +53,7 @@ class AdminController extends Controller
         // $checkLogin = Admin::where('name_admin',$userName)->where('password_admin',$passMd5)->first();
         // if($checkLogin){
         //     Session::put('username',$userName); 
-        //     return redirect()->route('admin');
+        //     return redirect()->route('admin.dashboard');
         // }else{
         //     return redirect()->route('admin.login');
         // }
@@ -63,8 +63,8 @@ class AdminController extends Controller
         ];
         $remember = $request->has('remember-me') ? true : false;
         if(Auth::attempt($dataAuth,$remember)){
-            Session::put('username',$userName); 
-            return redirect()->route('admin');
+            Session::put('usernameAdmin',$userName); 
+            return redirect()->route('admin.dashboard');
             // echo Auth::attempt($dataAuth);
         }else{
             Session::put('message','Kiểm tra lại tài khoản và mật khẩu');

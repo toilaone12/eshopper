@@ -106,8 +106,7 @@ class CategoryController extends Controller
         }
         if(isset($max) && isset($min)){
             $selectProductByCategory = $selectProductByCategory
-            ->where('product.price_product','<=',$max)
-            ->where('product.price_product','>=',$min);
+            ->whereBetween('product.price_product',$min,$max);
         }
         if(isset($min)){
             $selectProductByCategory = $selectProductByCategory

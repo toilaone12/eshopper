@@ -6,6 +6,7 @@ use App\Model\Brand;
 use App\Model\Category;
 use App\Model\Coupon;
 use App\Model\Product;
+use App\Model\ProductColor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -66,11 +67,11 @@ class CartController extends Controller
     }
     public function updateCart(Request $request){
         $id = $request->get('id_product');
-        $product = Product::find($id);
+        $product = ProductColor::where('id_product',$id)->first();
         $quantityProduct = $request->get('quantity_product');
         $cart = Session::get('cart');
         if(isset($cart[$id])){
-            if($quantityProduct <= $product->quantity_product){
+            if($quantityProduct <= $product->quantity_product_color){
                 $cart[$id]['quantityProduct'] = $quantityProduct;
             }else{
                 $cart[$id]['quantityProduct'] = $cart[$id]['quantityProduct'];

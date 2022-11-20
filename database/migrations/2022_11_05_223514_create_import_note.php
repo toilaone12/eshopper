@@ -15,6 +15,7 @@ class CreateImportNote extends Migration
     {
         Schema::create('import_note', function (Blueprint $table) {
             $table->increments('id_import');
+            $table->integer('id_color');
             $table->string('code_note');
             $table->string('name_product');;
             $table->integer('quantity_product');

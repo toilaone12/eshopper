@@ -19,7 +19,7 @@ class CreateProduct extends Migration
             $table->integer('id_brand');
             $table->string('name_product');
             $table->text('image_product');
-            $table->integer('quantity_product');
+            $table->integer('quantity_sold_product');
             $table->integer('price_product');
             $table->integer('number_reviews');
             $table->integer('number_views');

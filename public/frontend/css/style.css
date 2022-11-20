@@ -3158,7 +3158,7 @@ input[type="button"].btn-block {
 .dropleft .dropdown-menu {
   top: 0;
   right: 100%;
-  left: 368px;
+  left: 291px;
   margin-top: 0;
   margin-right: 0.125rem;
 }
@@ -9781,6 +9781,25 @@ p {
 .background-check{
   border: 1px solid #ccc;
   box-shadow: 3px 3px 3px 3px #ccc;
+}
+.slider-product{
+  list-style: none outside none;
+  padding-left: 0;
+  margin-bottom:0;
+}
+.item-product{
+  display: block;
+  float: left;
+  margin-right: 6px;
+  cursor:pointer;
+}
+.item-product>img{
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
+.demo{
+  width:450px;
 }
 @keyframes showCart{
   from {

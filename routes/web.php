@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ColorController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\CustomerController;
@@ -37,7 +38,7 @@ use Illuminate\Support\Facades\Route;
 //Admin
 Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong $callback
     Route::get('/login',[AdminController::class,'login'])->name('admin.login');
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin');
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/logout', [AdminController::class, 'logout'])->name('admin.logout');
     Route::post('/save-login',[AdminController::class,'saveLogin'])->name('admin.saveLogin');
     //User (Quản lý)
@@ -68,8 +69,12 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
             Route::get('/insert-form-product', [ProductController::class, 'formInsertProduct'])->name('product.insertFormProduct');
             Route::get('/delete-product/{idProduct}', [ProductController::class, 'deleteProduct'])->name('product.deleteProduct');
             Route::get('/edit-form-product/{idProduct}', [ProductController::class, 'editFormProduct'])->name('product.editFormProduct');
+            Route::get('/create-thumbnails/{idProduct}', [ProductController::class, 'createThumbnails'])->name('product.createThumbnails');
+            Route::get('/delete-thumbnails/{idGallery}', [ProductController::class, 'deleteThumbnails'])->name('product.deleteThumbnails');
             Route::post('/insert-product', [ProductController::class, 'insertProduct'])->name('product.insertProduct');
             Route::post('/edit-product/{idProduct}', [ProductController::class, 'editProduct'])->name('product.editProduct');
+            Route::post('/insert-thumbnails', [ProductController::class, 'insertThumbnails'])->name('product.insertThumbnails');
+            Route::post('/update-thumbnails', [ProductController::class, 'updateThumbnails'])->name('product.updateThumbnails');
         });
         Route::get('/list-product', [ProductController::class, 'productList'])->name('product.listFormProduct');
     });
@@ -95,6 +100,13 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
         });
         Route::get('/list-slide', [SlideController::class, 'listSlide'])->name('slide.listSlide');
     });
+    //Customer 
+    Route::prefix('customer')->group(function(){
+        Route::get('/list-customer', [CustomerController::class, 'listCustomer'])->name('customer.listCustomer');
+        Route::group(['middleware' => 'auth.roles'],function(){
+            Route::post('/reply-comment', [CommentController::class, 'replyComment'])->name('comment.replyComment');
+        });
+    });
     //Comment (Bình luận)
     Route::prefix('comment')->group(function(){
         Route::group(['middleware' => 'auth.roles'],function(){
@@ -110,6 +122,8 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
         Route::get('/delete-coupon/{idCoupon}', [CouponController::class, 'deleteCoupon'])->name('coupon.deleteCoupon');
         Route::post('/insert-coupon', [CouponController::class, 'insertCoupon'])->name('coupon.insertCoupon');
         Route::post('/edit-coupon/{idCoupon}', [CouponController::class, 'editCoupon'])->name('coupon.editCoupon');
+        Route::post('/upload-customer-vip', [CouponController::class, 'uploadCustomerVip'])->name('coupon.uploadCustomerVip');
+        Route::post('/upload-customer-normal', [CouponController::class, 'uploadCustomerNormal'])->name('coupon.uploadCustomerNormal');
     });
     //Delivery(Vận chuyển)
     Route::prefix('delivery')->group(function(){
@@ -166,6 +180,12 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
         Route::post('/select-statistic',[StatisticController::class, 'showStatistic'])->name('statistic.showStatistic');
         Route::post('/select-statistic-import',[StatisticController::class, 'showStatisticImport'])->name('statistic.showStatisticImport');
         Route::post('/select-statistic-export',[StatisticController::class, 'showStatisticExport'])->name('statistic.showStatisticExport');
+    });
+    Route::prefix('color')->group(function(){
+        Route::get('/list-color',[ColorController::class, 'listColor'])->name('color.listColor');
+        Route::get('/delete-color',[ColorController::class, 'deleteColor'])->name('color.deleteColor');
+        Route::post('/insert-color',[ColorController::class, 'insertColor'])->name('color.insertColor');
+        Route::post('/update-color',[ColorController::class, 'updateColor'])->name('color.updateColor');
     });
 });
 //page

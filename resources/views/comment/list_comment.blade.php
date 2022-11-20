@@ -63,11 +63,11 @@
                             @if(Auth::check())
                             @if(Auth::user()->id_role == 1)
                             <td>
-                                <a href="" class="btn btn-success" style="margin-right:15px">
+                                <a href="" class="btn btn-success mb-2">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                                 <a href="" class="btn btn-danger">
-                                    <i class="fa-solid fa-xmark"></i>
+                                    <i class="fa-solid fa-rectangle-xmark"></i>
                                 </a>
                             </td>
                             @endif

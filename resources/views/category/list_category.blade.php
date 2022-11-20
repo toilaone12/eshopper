@@ -44,7 +44,7 @@
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </a>
                             <a href="{{route('category.deleteCategory',['idCategory'=>$c->id_category])}}" class="btn btn-danger">
-                                <i class="fa-solid fa-xmark"></i>
+                                <i class="fa-solid fa-rectangle-xmark"></i>
                             </a>
                         </td>
                         @else

@@ -8,6 +8,7 @@ use App\Model\Coupon;
 use App\Model\Order;
 use App\Model\OrderDetail;
 use App\Model\Product;
+use App\Model\ProductColor;
 use App\Model\Province;
 use App\Model\Statistic;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
@@ -220,10 +221,12 @@ class OrderController extends Controller
                 $quantityOrder = array($c['quantityProduct']);
                 foreach($productId as $keyProduct => $p){
                     $product = Product::find($p);
+                    $productColor = ProductColor::where('id_product',$p)->first();
                     foreach($quantityOrder as $keyQuantity => $q){
                         $product->quantity_sold_product += $q;
-                        $product->quantity_product -= $q;
+                        $productColor->quantity_product_color -= $q;
                         $checkProduct = $product->save();
+                        $productColor->save();
                         if($checkProduct){
                             $data = array(
                                 'name' => $data['nameOrder'],
