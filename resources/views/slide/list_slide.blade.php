@@ -52,7 +52,7 @@
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </a>
                             <a href="{{route('slide.deleteSlide',['idSlide'=>$s->id_slide])}}" class="btn btn-danger">
-                                <i class="fa-solid fa-xmark"></i>
+                                <i class="fa-solid fa-rectangle-xmark"></i>
                             </a>
                         </td>
                     </tr>

@@ -106,9 +106,23 @@
     <div class="row px-xl-5">
         <div class="col-lg-5 pb-5">
             <div id="product-carousel" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner border">
+            <div class="demo">
+                <ul class="slider-product" id="lightSlider">
+                    <li class="item-product" data-thumb="{{url('images/product/'.$selectProductId->image_product)}}">
+                        <img class="w-75 m-auto d-block" src="{{url('images/product/'.$selectProductId->image_product)}}" />
+                    </li>
+                    @foreach($galleryProduct as $key => $gallery)
+                    @if($selectProductId->id == $gallery->id_product)
+                    <li class="item-product" data-thumb="{{url('images/gallery/'.$gallery->image_gallery)}}">
+                        <img class="w-75 m-auto d-block" src="{{url('images/gallery/'.$gallery->image_gallery)}}" />
+                    </li>
+                    @endif
+                    @endforeach
+                </ul>
+            </div>
+                <!-- <div class="carousel-inner border">
                     <div class="carousel-item active">
-                        <img class="w-100 h-100" src="{{url('images/product/'.$selectProductId->image_product)}}" alt="Image">
+                        <img class="w-75 h-50 m-auto d-block" src="{{url('images/product/'.$selectProductId->image_product)}}" alt="Image">
                     </div>
                 </div>
                 <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
@@ -116,7 +130,7 @@
                 </a>
                 <a class="carousel-control-next" href="#product-carousel" data-slide="next">
                     <i class="fa fa-2x fa-angle-right text-dark"></i>
-                </a>
+                </a> -->
             </div>
         </div>
         <div class="col-lg-7 pb-5">
@@ -136,11 +150,13 @@
             <p class="mb-4">{!!html_entity_decode($selectProductId->description_product,ENT_HTML5)!!}</p>
             <div class="d-flex mb-4">
                 <p class="text-dark font-weight-medium mb-0 mr-3">Màu sắc:</p>
+                @foreach($selectProductColorId as $key => $cl)
                 <div class="custom-control custom-radio custom-control-inline">
                     <input type="radio" class="custom-control-input" id="color-1" name="color">
-                    <label class="custom-control-label" for="color-1">Đen</label>
+                    <label class="custom-control-label" for="color-1">{{$cl->name_color}}</label>
                 </div>
-                <div class="custom-control custom-radio custom-control-inline">
+                @endforeach
+                <!-- <div class="custom-control custom-radio custom-control-inline">
                     <input type="radio" class="custom-control-input" id="color-2" name="color">
                     <label class="custom-control-label" for="color-2">Trắng</label>
                 </div>
@@ -155,7 +171,7 @@
                 <div class="custom-control custom-radio custom-control-inline">
                     <input type="radio" class="custom-control-input" id="color-5" name="color">
                     <label class="custom-control-label" for="color-5">Hồng</label>
-                </div>
+                </div> -->
             </div>
             <form action="{{route('cart.addCart')}}" method="POST">
                 @csrf
@@ -167,7 +183,7 @@
                             </button>
                         </div> -->
                         <input type="hidden" name="id_product" value="{{$selectProductId->id}}">
-                        <input type="number" min="0" max="{{$selectProductId->quantity_product}}" name="quantity_product" class="form-control bg-secondary text-center" value="1">
+                        <input type="number" min="0" max="{{$selectProductId->quantity_product_color}}" name="quantity_product" class="form-control bg-secondary text-center" value="1">
                         <!-- <div class="input-group-btn">
                             <button class="btn btn-primary btn-plus" max>
                                 <i class="fa fa-plus"></i>

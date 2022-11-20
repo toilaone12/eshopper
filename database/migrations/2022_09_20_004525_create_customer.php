@@ -23,7 +23,7 @@ class CreateCustomer extends Migration
             $table->string('phone_customer');
             $table->string('address_customer');
             $table->string('password_customer');
-            $table->integer('facebook_id');
+            $table->integer('vip_customer');
             $table->timestamps();
         });
     }

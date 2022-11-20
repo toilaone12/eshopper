@@ -56,7 +56,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="{{route('admin')}}">{{--sử dụng route() --}}
+                <a class="nav-link" href="{{route('admin.dashboard')}}">{{--sử dụng route() --}}
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -124,6 +124,19 @@
                     </div>
                 </div>
             </li>
+            <li class="nav-item">   
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo14"
+                    aria-expanded="true" aria-controls="collapseTwo14">
+                    <i class="fa-solid fa-fill"></i>
+                    <span>Màu sắc</span>
+                </a>
+                <div id="collapseTwo14" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Chọn:</h6>
+                        <a class="collapse-item" style="white-space:normal !important;" href="{{route('color.listColor')}}">Danh sách màu sắc</a>{{--sử dụng route() --}}
+                    </div>
+                </div>
+            </li>
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo1"
@@ -153,6 +166,19 @@
                         <a class="collapse-item" href="{{route('slide.insertFormSlide')}}">Thêm quảng cáo</a>{{--sử dụng route() --}}
                         @endif
                         @endif
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo13"
+                    aria-expanded="true" aria-controls="collapseTwo13">
+                    <i class="fa-solid fa-person"></i>
+                    <span>Khách hàng</span>
+                </a>
+                <div id="collapseTwo13" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Chọn:</h6>
+                        <a class="collapse-item" href="{{route('customer.listCustomer')}}">Danh sách khách hàng</a>{{--sử dụng route() --}}
                     </div>
                 </div>
             </li>
@@ -270,7 +296,7 @@
                 </div>
             </li>
             <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
@@ -286,15 +312,11 @@
                         <a class="collapse-item" href="utilities-other.html">Other</a>
                     </div>
                 </div>
-            </li>
+            </li> -->
 
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Addons
-            </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
             <!-- <li class="nav-item">
@@ -317,19 +339,6 @@
                 </div>
             </li> -->
 
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
-            </li>
-
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
-            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -337,13 +346,6 @@
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-            <!-- Sidebar Message -->
-            <div class="sidebar-card d-none d-lg-flex">
-                <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
-                <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
-                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
             </div>
 
         </ul>
@@ -528,7 +530,7 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                                     <?php
-                                        $username = Session::get('username');
+                                        $username = Session::get('usernameAdmin');
                                         if(isset($username)){
                                             echo $username;
                                         }else{
@@ -790,41 +792,62 @@
             });
             $('.add-detail-note').on('click',function(){
                 var nameProduct = [];
+                var nameProductA = [];
                 var quantityProduct = [];
                 var priceProduct = [];
+                var colorProduct = [];
                 var token = $('input[name="_token"]').val();
-                if($('.name-product').val() === '' || $('.quantity-product').val() === '' || $('.price-product').val() === ''){
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Lỗi',
-                        text: 'Bạn chưa nhập phiếu hàng!'
+                // if($('.name-product').val() === '' || $('.quantity-product').val() === '' || $('.price-product').val() === ''){
+                //     Swal.fire({
+                //         icon: 'error',
+                //         title: 'Lỗi',
+                //         text: 'Bạn chưa nhập phiếu hàng!'
+                //     });
+                // }else{
+                    // $('.price-product').each(function(){
+                    //     priceProduct.push($(this).val());
+                    // });
+                    // $('.name-product').each(function(i1){
+                    //     nameProduct.push($(this).val());
+                    // });
+                    // $('.color-product:checked').each(function(i2){
+                    //     b = $(this).data('stt');
+                    //     // console.log(i1+"--"+i2);
+                    //     nameProduct.push($('#name-'+b).val());
+                        
+                    // });
+                    $('.quantity-product').each(function(index1,val){
+                        $('.color-product:checked').each(function(index){
+                            if(index1 == index){
+                                a = $(this).val();
+                                b = $(this).data('stt');
+                                if($(this).val() !== ''){
+                                    quantityProduct.push($('#number-'+a+'-'+b).val());
+                                }
+                                colorProduct.push($(this).val());
+                                nameProduct.push($('#name-'+b).val());   
+                                priceProduct.push($('#price-'+b).val());
+                            }
+                        });
                     });
-                }else{
-                    $('.name-product').each(function(){
-                        nameProduct.push($(this).val());
-                    });
-                    $('.quantity-product').each(function(){
-                        quantityProduct.push($(this).val());
-                    });
-                    $('.price-product').each(function(){
-                        priceProduct.push($(this).val());
-                    });
+                    // console.log(nameProduct+"-"+colorProduct+"-"+quantityProduct+"-"+priceProduct);
                     $.ajax({
                         url: "{{route('note.importDetailNote')}}",
                         method: "POST",
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         data: {
                             nameProduct:nameProduct,
+                            colorProduct:colorProduct,
                             quantityProduct:quantityProduct,
                             priceProduct:priceProduct,
                             token:token
                         },
                         success:function(data){
-                            // console.log(data);
-                            window.location.href="{{route('note.listNote')}}";
+                            console.log(data);
+                            // window.location.href="{{route('note.listNote')}}";
                         } 
                     });
-                }
+                // }
             });
         });
         $('.export-warehouse').on('click',function(e){
@@ -833,8 +856,10 @@
             $('.warehouse').removeClass('d-none');
             var nameWareHouse = $(this).data('name');
             var quantityWareHouse = $(this).data('quantity');
-            var priceWareHouse = $(this).data('price');
+            var colorIdWareHouse = $(this).data('color-id');
+            var colorNameWareHouse = $(this).data('color-name');
             $('.name-product').html('<label for="exampleFormControlInput1">Tên sản phẩm</label><input type="text" class="form-control pe-none bg-light" value="'+nameWareHouse+'" name="name_product" id="exampleFormControlInput1" placeholder="Nhập tên">');
+            $('.color-product').html('<label for="exampleFormControlInput1">Màu sắc</label><select name="color_product" class="form-select pe-none bg-light" id="exampleFormControlFile1"><option value="'+colorIdWareHouse+'">'+colorNameWareHouse+'</option></select>');
             $('.quantity-product').html('<label for="exampleFormControlSelect3">Số lượng</label><input type="number" min=1 class="form-control pe-none bg-light" value="'+quantityWareHouse+'" name="quantity_product" id="exampleFormControlSelect3" placeholder="Nhập số lượng">');
         });
         $('.close-warehouse').on('click',function(){
@@ -1102,6 +1127,178 @@
                         // location.reload();
                     } 
                 })
+            });
+        });
+        $(document).ready(function(){
+            $('.upload-coupon-vip').on('click',function(){
+                var idCoupon = $('input[type="checkbox"]:checked');
+                var arrayId = [];
+                var token = $('input[name="_token"]').val();
+                idCoupon.each(function(){
+                    arrayId.push($(this).val());
+                });
+                if(arrayId == ''){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi',
+                        text: 'Bạn chưa chọn mã giảm giá để cấp cho khách hàng!'
+                    });
+                }else{
+                    $.ajax({
+                        url: "{{route('coupon.uploadCustomerVip')}}",
+                        method: "POST",
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        data: {
+                            arrayId:arrayId,
+                            token:token,
+                        },
+                        success:function(data){
+                            // console.log(data);
+                            location.reload();
+                        } 
+                    });
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Cập nhật thành công',
+                        text: 'Yêu cầu của bạn đã được chấp nhận!'
+                    })
+                }
+            });
+            $('.upload-coupon-normal').on('click',function(){
+                var idCoupon = $('input[type="checkbox"]:checked');
+                var arrayId = [];
+                var token = $('input[name="_token"]').val();
+                idCoupon.each(function(){
+                    arrayId.push($(this).val());
+                });
+                if(arrayId == ''){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi',
+                        text: 'Bạn chưa chọn mã giảm giá để cấp cho khách hàng!'
+                    });
+                }else{
+                    $.ajax({
+                        url: "{{route('coupon.uploadCustomerNormal')}}",
+                        method: "POST",
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        data: {
+                            arrayId:arrayId,
+                            token:token,
+                        },
+                        success:function(data){
+                            // console.log(data);
+                            location.reload();
+                        } 
+                    });
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Cập nhật thành công',
+                        text: 'Yêu cầu của bạn đã được chấp nhận!'
+                    })
+                }
+            });
+        });
+        $(document).ready(function(){
+            $('.insert-gallery').on('click',function(e){
+                e.stopPropagation();
+                $('.gallery').addClass('d-flex');
+                $('.gallery').removeClass('d-none');
+            });
+            $('.gallery-close').on('click',function(e){
+                $('.gallery').addClass('d-none');
+                $('.gallery').removeClass('d-flex');
+            })
+            // $('.add-gallery').on('change',function(){
+            //     var token = $('input[name="_token"]').val();
+            //     var image = $('#file')[0].files;
+            //     if(image.length > 3){
+            //         Swal.fire({
+            //             icon: 'error',
+            //             title: 'Vấn đề về ảnh của bạn',
+            //             text: 'Số ảnh trong sản phẩm không quá 3 sản phẩm'
+            //         }) 
+            //     }else if(image.length == ''){
+            //         Swal.fire({
+            //             icon: 'error',
+            //             title: 'Vấn đề về ảnh của bạn',
+            //             text: 'Bạn không thể để ảnh trống được'
+            //         }) 
+            //     }else if(image.size > 20000000){
+            //         Swal.fire({
+            //             icon: 'error',
+            //             title: 'Vấn đề về ảnh của bạn',
+            //             text: 'Ảnh của bạn không thế quá 2MB'
+            //         }) 
+            //     }
+            //     // image.each(function(){
+            //     //     arrayImage.push($(this).val());
+            //     // });
+            // });
+            $('.update-gallery').change(function(){
+                var token = $('input[name="_token"]').val();
+                var idGallery = $(this).data('gallery');
+                var image = $('#file-'+idGallery)[0].files[0];
+                var formData = new FormData();
+
+                formData.append('image_gallery',$('#file-'+idGallery)[0].files[0]);
+                formData.append('id_gallery',idGallery);
+                // for(var value of formData.keys()){
+                //     console.log(value);
+                // }
+                $.ajax({
+                    url: "{{route('product.updateThumbnails')}}",
+                    method: "POST",
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    data: formData,
+                    contentType:false,
+                    cache:false,
+                    processData:false,
+                    success:function(data){
+                        // console.log(data);
+                        location.reload();
+                    } 
+                });
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Cập nhật thành công',
+                    text: 'Yêu cầu của bạn đã được chấp nhận!'
+                });
+            })
+        });
+        $(document).ready(function(){
+            $('.create-color').click(function(){
+                $('.color').addClass('d-flex');
+                $('.color').removeClass('d-none');
+            });
+            $('.color-close').on('click',function(e){
+                $('.color').addClass('d-none');
+                $('.color').removeClass('d-flex');
+            })
+            $('.update-color').blur(function(){
+                var idColor = $(this).data('color');
+                var nameColor = $(this).text();
+                if(nameColor == ''){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Có vấn đề',
+                        text: 'Bạn chưa chọn màu sắc để thay đổi!'
+                    }) 
+                }else{
+                    $.ajax({
+                        url: "{{route('color.updateColor')}}",
+                        method: "POST",
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        data: {
+                            idColor:idColor,
+                            nameColor:nameColor
+                        },
+                        success:function(data){
+                            // console.log(data);
+                            location.reload();
+                        } 
+                    })
+                }
             });
         });
     </script>

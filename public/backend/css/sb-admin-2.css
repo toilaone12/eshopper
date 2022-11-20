@@ -11021,7 +11021,9 @@ form.user .btn-user {
 .m-center{
   margin: 0 auto;
 }
-.warehouse{
+.warehouse,
+.gallery,
+.color{
   position: fixed;
   top: 0;
   left: 0;
@@ -11056,7 +11058,21 @@ form.user .btn-user {
   .close-warehouse{
     position: absolute;
     top: 160px;
-    right: 485px;
+    right: 383px;
+    font-size: 30px;
+    color: #555;
+  }
+  .gallery-close{
+    position: absolute;
+    top: 360px;
+    right: 375px;
+    font-size: 30px;
+    color: #555;
+  }
+  .color-close{
+    position: absolute;
+    top: 360px;
+    right: 375px;
     font-size: 30px;
     color: #555;
   }

@@ -47,6 +47,7 @@
                         <th>STT</th>
                         <th>Mã đơn hàng</th>
                         <th>Tên sản phẩm</th>
+                        <th>Màu sắc</th>
                         <th>Số lượng</th>
                         <th>Đơn giá</th>
                         <th>Thành tiền</th>
@@ -70,6 +71,7 @@
                             {{$detail->code_note}}
                         </td>
                         <td>{{$detail->name_product}}</td>
+                        <td>{{$detail->name_color}}</td>
                         <td>
                             <span class="quantity-order">{{$detail->quantity_product}}</span>
                         </td>

@@ -25,6 +25,7 @@
                     <tr align="center">
                         <th>STT</th>
                         <th>Tên sản phẩm</th>
+                        <th>Màu sắc</th>
                         <th>Số lượng tồn kho</th>
                         <th>Giá sản phẩm</th>
                         <th>Ngày cập nhật</th>
@@ -46,6 +47,7 @@
                     <tr>
                         <td>{{$i}}</td>
                         <td>{{$w->name_product_warehouse}}</td>
+                        <td>{{$w->name_color}}</td>
                         <td>{{$w->quantity_product_warehouse}}</td>
                         <td>{{number_format($w->price_product_warehouse,0,',','.')}} ₫</td>
                         <td>{{$w->updated_at}}</td>
@@ -55,10 +57,12 @@
                             <button type="submit" 
                             data-name="{{$w->name_product_warehouse}}" 
                             data-quantity="{{$w->quantity_product_warehouse}}" 
-                            data-price="{{$w->price_product_warehouse}}" 
+                            data-color-id="{{$w->id_color}}" 
+                            data-color-name="{{$w->name_color}}" 
                             class="btn btn-info text-white export-warehouse">
                                 <i class="fa-solid fa-file-export"></i>
                             </button>
+
                         </td>
                         @endif
                         @endif
@@ -111,6 +115,9 @@
                 </select>
             </div>
             <div class="form-group name-product">
+    
+            </div>
+            <div class="form-group color-product">
     
             </div>
             <div class="form-group quantity-product">

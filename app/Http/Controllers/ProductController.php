@@ -6,7 +6,10 @@ use App\Model\Comment;
 use App\Model\Category;
 use App\Model\Product;
 use App\Model\Brand;
+use App\Model\Color;
 use App\Model\Comment as ModelComment;
+use App\Model\Gallery;
+use App\Model\ProductColor;
 use App\Model\Rating;
 use App\Model\Review;
 use Illuminate\Http\Request;
@@ -14,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -84,12 +88,18 @@ class ProductController extends Controller
         $selectProductId = Product::where('id',$idProduct)->first();
         $selectCategory = Category::all();
         $selectBrand = Brand::all();
+        $selectColor = Color::all();
         // dd($selectProductId);
         // compact() nhan mot tham so, moi tham so chua chuoi cua 1 bien hoac 1 mang cua bien
-        return view('product.edit_product',compact('selectProductId','selectCategory','selectBrand')); // k dùng ->with mà hãy sử dụng compact()
+        return view('product.edit_product',compact('selectProductId','selectCategory','selectBrand','selectColor')); // k dùng ->with mà hãy sử dụng compact()
     }
     public function editProduct(Request $request, $idProduct){
         $data = $request->all();
+        Validator::make($data,[
+            'name_product' => ['required','string'],
+            'quantity_product' => ['required'],
+            'price_product' => ['required']
+        ])->validate();
         $imageProduct = $request->file('image_product');
         // setting trong config/app.php
         $product = Product::find($idProduct);
@@ -105,6 +115,7 @@ class ProductController extends Controller
                     $product->id_category = $data['id_category'];
                     $product->name_product = $data['name_product'];
                     $product->image_product = $newImage;
+                    $product->id_color = $data['color_product'];
                     $product->quantity_product = $data['quantity_product'];
                     $product->price_product = $data['price_product'];
                     $product->description_product = $data['description_product'];
@@ -130,6 +141,7 @@ class ProductController extends Controller
             $product->id_brand = $data['name_brand'];
             $product->id_category = $data['id_category'];
             $product->name_product = $data['name_product'];
+            $product->id_color = $data['color_product'];
             $product->quantity_product = $data['quantity_product'];
             $product->price_product = $data['price_product'];
             $product->description_product = $data['description_product'];
@@ -147,23 +159,96 @@ class ProductController extends Controller
 
         // trường hợp k update ảnh thì sao?
     }
+    
+    public function createThumbnails($idProduct){
+        $gallery = Gallery::where('id_product',$idProduct)->get();
+        return view('product.thumbnails_image',compact(
+            'idProduct',
+            'gallery'
+        ));
+    }
+
+    public function insertThumbnails(Request $request){
+        $data = $request->all();
+        Validator::make($data,[
+            'image_gallery' => ['required']
+        ])->validate();
+        $arrayImage = $request->file('image_gallery');
+        foreach($arrayImage as $keyImage => $image){
+            $nameImage = $image->getClientOriginalName(); // lay ten goc file
+            $currentImage = current(explode('.',$nameImage));
+            $extensionImage = $image->extension(); // lay duoi ten file
+            $newImage = $currentImage.'.'.$extensionImage;
+            $idProduct = $data['id_product'];
+            if($image->move('images/gallery',$newImage)){
+                $gallery = Gallery::create([
+                        'id_product' => $idProduct,
+                        'image_gallery' => $newImage,
+                        'name_gallery' => $newImage,
+                ]);
+            }else{
+                // echo "2";
+                Session::put('message','Không thêm được ảnh vào folder!');
+                return redirect()->route('product.createThumbnails',['idProduct'=>$idProduct]);// k sử dụng redirect::to. chuyển thành redirect()->route('')
+            } // trường hợp move fail thì sao?
+            // print_r($image);
+        }
+        Session::put('message',"Thêm ảnh vào kho ảnh thành công!");
+        return redirect()->route('product.createThumbnails',['idProduct'=>$idProduct]);
+    }
+    
+    public function deleteThumbnails($idGallery){
+        $gallery = Gallery::find($idGallery);
+        unlink(public_path('/images/gallery/'.$gallery->image_gallery));
+        $gallery->delete();
+        if($gallery){
+            Session::put('message',"Xóa thành công sản phẩm!");
+            return redirect()->back();// k sử dụng redirect::to. chuyển thành redirect()->route('')
+        }else{
+            Session::put('message',"Xóa không thành công sản phẩm!");
+            return redirect()->back();// k sử dụng redirect::to. chuyển thành redirect()->route('')
+        }
+    }
+
+    public function updateThumbnails(Request $request){
+        $data = $request->all();
+        $image = $request->file('image_gallery');
+        if($image){
+            $nameImage = $image->getClientOriginalName(); // lay ten goc file
+            $currentImage = current(explode('.',$nameImage));
+            $extensionImage = $image->extension(); // lay duoi ten file
+            $newImage = $currentImage.'.'.$extensionImage;
+            $idGallery = $data['id_gallery'];
+            $gallery = Gallery::find($idGallery);
+            unlink(public_path('/images/gallery/'.$gallery->image_gallery));
+            if($image->move('images/gallery',$newImage)){
+                $gallery->image_gallery = $newImage;
+                $gallery->name_gallery = $newImage;
+                $gallery->save();
+            }
+        }
+        // print_r($data);
+    }
 
     //page
     public function detailProduct($idProduct){
         $selectBrand = Brand::all();
         $selectCategory = Category::all();
-        $selectProductId = Product::join('category as c','c.id_category','product.id_category')->where('id',$idProduct)->first();
+        $selectProductId = Product::join('category as c','c.id_category','product.id_category')->join('product_color as pc','pc.id_product','product.id')
+        ->where('id',$idProduct)->first();
+        $selectProductColorId = ProductColor::join('color as cl','cl.id_color','product_color.id_color')->where('id_product',$idProduct)->get();
         $categoryId = $selectProductId->id_category;
         $selectProductByCategory = Product::where('id_category',$categoryId)->whereNotIn('id',[$idProduct])->get();
         $selectReview = Review::where('id_product',$idProduct)->get();
         $selectComment = Comment::where('id_product',$idProduct)->get();
         $selectAvgReview = Review::where('id_product',$idProduct)->avg('rating');
-        if(isset($idProduct)){
-            $product = Product::find($idProduct);
-            $product->number_views += 1;
-            $product->save();
-        }
-        dd($selectReview);
+        $galleryProduct = Gallery::where('id_product',$idProduct)->take(4)->get();
+        // dd($selectProductId);
+        // // if(isset($idProduct)){
+        // //     $product = Product::find($idProduct);
+        // //     $product->number_views += 1;
+        // //     $product->save();
+        // // }
         return view('product.detail_product',compact(
             'selectCategory',
             'selectProductId',
@@ -171,7 +256,9 @@ class ProductController extends Controller
             'selectBrand',
             'selectReview',
             'selectComment',
-            'selectAvgReview'
+            'selectAvgReview',
+            'galleryProduct',
+            'selectProductColorId'
         ));
     }
 }

@@ -9,7 +9,12 @@ use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
 {
-    //
+    //admin
+    public function listCustomer(){
+        $customer = Customer::all();
+        return view('customer.list_customer',compact('customer'));
+    }
+    //page
     public function profile(Request $request){
         $id = $request->get('idCustomer');
         $customer = Customer::find($id);

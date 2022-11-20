@@ -17,9 +17,9 @@ session_start();
                     @foreach($selectCategory as $key => $c)
                     <div class="nav-item dropleft">
                         <a href="{{route('category.productByCategory',['nameCategory' => $c->name_category])}}" class="nav-link hover-brand text-gray">{{$c->name_category}} <i class="fa fa-angle-right float-right mt-1" style="color: #343a40;"></i></a>
-                        <div class="brand-hover dropdown-menu position-absolute bg-light border-0 rounded-5 w-100 m-0">
+                        <div class="brand-hover dropdown-menu position-absolute bg-light border-0 rounded-5 w-100 py-3 pr-3 m-0">
                             <h6 class="text-center">Hãng sản xuất</h4> 
-                            <ul class="d-flex flex-wrap list-style-none pl-0" >
+                            <ul class="row justify-content-center list-style-none pl-0" >
                                 @foreach($selectBrand as $key => $b)
                                 <li class="col-4">
                                     <a href="{{route('brand.productByBrand', ['nameBrand' => $b->name_brand])}}" class="dropdown-item text-muted text-12 text-center">{{$b->name_brand}}</a>
@@ -56,7 +56,7 @@ session_start();
                     </div>
                     <?php
                         $idCustomer = Session::get('id',null);
-                        $username = Session::get('username',null);
+                        $username = Session::get('usernameCustomer',null);
                         $imageCustomer = Session::get('imageCustomer',null);
                         $nameCustomer = Session::get('nameCustomer',null);
                         if(isset($username)){
