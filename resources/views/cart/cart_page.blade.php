@@ -116,12 +116,14 @@
                     <tr>
                         <th>Hình ảnh</th>
                         <th>Tên sản phẩm</th>
+                        <th>Màu sắc</th>
                         <th>Số lượng</th>
                         <th>Giá sản phẩm</th>
                         <th>Xóa sản phẩm</th>
                     </tr>
                 </thead>
                 <tbody class="align-middle">
+                    
                     @foreach($cart as $key => $c)
                     @php
                         $total = $c['priceProduct']*$c['quantityProduct'];
@@ -130,6 +132,7 @@
                     <tr>
                         <td class="align-middle"><img src="{{asset('images/product/'.$c['imageProduct'])}}" alt="" style="width: 50px;"></td>
                         <td class="align-middle">{{$c['nameProduct']}}</td>
+                        <td class="align-middle">{{$c['colorProduct']}}</td>
                         <td class="align-middle">
                             <div class="input-group quantity mx-auto" style="width: 100px;">
                                 <div class="input-group-btn">
@@ -137,7 +140,7 @@
                                         <i class="fa fa-minus"></i>
                                     </button>
                                 </div>
-                                <input type="text" data-id="{{$key}}" data-price="{{$c['priceProduct']}}" class="form-control form-control-sm bg-secondary text-center" value="{{$c['quantityProduct']}}">
+                                <input type="text" data-id="{{$key}}" data-product-color="{{$c['idProductColor']}}" data-price="{{$c['priceProduct']}}" class="form-control form-control-sm bg-secondary text-center" value="{{$c['quantityProduct']}}">
                                 <div class="input-group-btn">
                                     <button class="btn btn-sm btn-primary btn-plus">
                                         <i class="fa fa-plus"></i>

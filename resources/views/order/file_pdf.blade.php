@@ -68,9 +68,15 @@
         @php
             $i = 1;
             $allTotal = 0;
-            $featureCoupon = $selectCoupon->feature_coupon;
-            $discountCoupon = $selectCoupon->discount_coupon;
-            $feeDelivery = $selectOrder->fee_delivery;
+            if($selectCoupon != 0){
+                $featureCoupon = $selectCoupon->feature_coupon;
+                $discountCoupon = $selectCoupon->discount_coupon;
+                $feeDelivery = $selectOrder->fee_delivery;
+            }else{
+                $featureCoupon = 2;
+                $discountCoupon = 0;
+                $feeDelivery = 0;
+            }
         @endphp
         @foreach($selectDetailOrder as $key => $do)
             @php

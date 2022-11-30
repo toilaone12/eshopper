@@ -33,35 +33,45 @@ class WareHouseController extends Controller
         $colorProduct = $data['color_product'];
         $priceProduct = $data['price_product'];
         $quantityWareHouse = $data['quantity_product'];
-        $product = Product::where('name_product',$data['name_product'])->get();
+        $imageProductColor = $request->file('image_product_color');
         // DB::enableQueryLog();
+        $product = Product::where('name_product',$data['name_product'])->get();
         $wareHouse = WareHouse::where('name_product_warehouse',$data['name_product'])->get();
-        // $wareHouse->toQuery()->update([
-        //     'quantity_product_warehouse' => 0,
-        // ]);
+        $wareHouse->toQuery()->update([
+            'quantity_product_warehouse' => 0,
+        ]);
         // $query = DB::getQueryLog();
         // dd($query);
         if(count($product) == 1){
             $priceWareHouse = $product[0]->price_product_warehouse;
             if($priceProduct < $priceWareHouse){
-                Session::put('message',"Giá bán sản phẩm của cửa hàng phải lớn hơn giá nhập hàng!");
+                Session::put('messageWareHouse',"Giá bán sản phẩm của cửa hàng phải lớn hơn giá nhập hàng!");
                 return redirect()->route('warehouse.listWareHouse'); // k sử dụng redirect::to. 
             }else{
-                $productColor = ProductColor::where('id_color',$colorProduct)->get();
+                $productColor = ProductColor::where('id_color',$colorProduct)->where('id_product',$product[0]->id)->get();
+                // dd($productColor[0]->image_product_color !== '');
                 $quantityProduct = $productColor[0]->quantity_product_color;
                 $quantityAll = $quantityProduct + $quantityWareHouse;
-                // $product->quantity_product_warehouse = $quantityAll;
-                // dd($quantityProduct);
-                if(count($productColor) == 1){
+                if(count($productColor) == 1 || $productColor[0]->image_product_color !== ''){
                     $productColor->toQuery()->update([
                         'quantity_product_color' => $quantityAll,
                     ]);
                 }else{
-                    ProductColor::create([
-                        'id_product' => $product[0]->id,
-                        'id_color' => $colorProduct,
-                        'quantity_product_color' => $data['quantity_product']
-                    ]);
+                    if($imageProductColor){
+                        $nameImageProductColor = $imageProductColor->getClientOriginalName(); // lay ten goc file
+                        $currentImageProductColor = current(explode('.',$nameImageProductColor));
+                        $extensionImageProductColor = $imageProductColor->extension(); // lay duoi ten file
+                        $newImageProductColor = $currentImageProductColor.'.'.$extensionImageProductColor;
+                        ProductColor::create([
+                            'id_product' => $product[0]->id,
+                            'id_color' => $colorProduct,
+                            'image_product_color' => $newImageProductColor,
+                            'quantity_product_color' => $data['quantity_product']
+                        ]);
+                    }else{
+                        Session::put('messageWareHouse',"Không có hình ảnh, yêu cầu thêm vào!");
+                        return redirect()->route('warehouse.listWareHouse');
+                    }
                 }
                 Session::put('message',"Cập nhật số lượng sản phẩm ".$data['name_product']." thành công!");
                 return redirect()->route('product.listFormProduct'); // k sử dụng redirect::to. 
@@ -80,6 +90,10 @@ class WareHouseController extends Controller
                     $currentImage = current(explode('.',$nameImage));
                     $extensionImage = $imageProduct->extension(); // lay duoi ten file
                     $newImage = $currentImage.'.'.$extensionImage;
+                    $nameImageProductColor = $imageProductColor->getClientOriginalName(); // lay ten goc file
+                    $currentImageProductColor = current(explode('.',$nameImageProductColor));
+                    $extensionImageProductColor = $imageProductColor->extension(); // lay duoi ten file
+                    $newImageProductColor = $currentImageProductColor.'.'.$extensionImageProductColor;
                     $imageProduct->move('images/product',$newImage);
                     $db['id_brand'] = $data['name_brand'];
                     $db['id_category'] = $data['name_category'];
@@ -93,9 +107,11 @@ class WareHouseController extends Controller
                     $db['number_views'] = 0;
                     // created_at, updated_at có kiểu giá trị là timestamp r nên k cần set giá trị $date vào
                     $product = Product::create($db);
+                    $imageProductColor->move('images/product',$newImageProductColor);
                     $product->productColor()->create([
                         'id_product' => $product->id,
                         'id_color' => $colorProduct,
+                        'image_product_color' => $newImageProductColor,
                         'quantity_product_color' => $data['quantity_product']
                     ]);
                     if($product){
@@ -105,13 +121,9 @@ class WareHouseController extends Controller
                         Session::put('message',"Thêm sản phẩm ".$data['name_product']." thất bại!");
                         return redirect()->route('product.insertFormProduct');// k sử dụng redirect::to. chuyển thành redirect()->route('')
                     }
-                // }else{
-                //     Session::put('message','Kích thước ảnh quá lớn, yêu cầu giảm kích thước ảnh!');
-                //     Redirect::to('/insert-form-product');
-                // }
             }else{
-                Session::put('message','Không có hình ảnh, yêu cầu thêm vào!');
-                return redirect()->route('product.insertFormProduct'); // lop chua cac tieu de cua Session de chuyen den URL khac
+                Session::put('messageWareHouse','Không có hình ảnh, yêu cầu thêm vào!');
+                return redirect()->route('warehouse.listWareHouse'); // lop chua cac tieu de cua Session de chuyen den URL khac
                 // có thể sử dụng redirect()->back()
             }
         }

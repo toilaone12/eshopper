@@ -27,7 +27,9 @@ class OrderController extends Controller
     }
     public function detailOrder($codeOrder){
         $selectOrder = Order::where('code_order',$codeOrder)->first();
-        $selectDetailOrder = OrderDetail::where('code_order',$codeOrder)->get();
+        $selectDetailOrder = OrderDetail::join('color as c','c.id_color','order_detail.color_product_order')
+        ->where('code_order',$codeOrder)->get();
+        // dd($selectDetailOrder);
         $nameCoupon = $selectOrder->coupon_order;
         if($nameCoupon !== ''){
             $selectCoupon = Coupon::where('name_coupon',$nameCoupon)->first();
@@ -209,10 +211,12 @@ class OrderController extends Controller
             $cart = Session::get('cart');
             $dbOrderDetail = '';
             foreach($cart as $key => $c){
+                $productColor = ProductColor::where('id_product_color',$c['idProductColor'])->first();
                 $dbOrderDetail = array(
                     'id_product' => $key,
                     'code_order' => $codeOrder,
                     'name_product_order' => $c['nameProduct'],
+                    'color_product_order' => $productColor->id_color,
                     'quantity_product_order' => $c['quantityProduct'],
                     'price_product_order' => $c['priceProduct'],
                 );
@@ -221,7 +225,6 @@ class OrderController extends Controller
                 $quantityOrder = array($c['quantityProduct']);
                 foreach($productId as $keyProduct => $p){
                     $product = Product::find($p);
-                    $productColor = ProductColor::where('id_product',$p)->first();
                     foreach($quantityOrder as $keyQuantity => $q){
                         $product->quantity_sold_product += $q;
                         $productColor->quantity_product_color -= $q;

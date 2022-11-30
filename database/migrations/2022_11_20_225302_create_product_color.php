@@ -17,7 +17,8 @@ class CreateProductColor extends Migration
             $table->increments('id_product_color');
             $table->integer('id_product');
             $table->integer('id_color');
-            $table->integer('quantity_note_color');
+            $table->integer('image_product_color');
+            $table->integer('quantity_product_color');
             $table->timestamps();
         });
     }

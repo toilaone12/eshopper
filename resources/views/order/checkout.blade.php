@@ -106,7 +106,7 @@
 <div class="container-fluid pt-5">
     <div class="grid">
         <div class="row px-xl-5">
-            <div class="col-lg-8">
+            <div class="col-lg-7">
                 <div class="mb-4">
                     <h4 class="font-weight-semi-bold mb-4">Thông tin khách hàng</h4>
                     <div class="row">
@@ -189,7 +189,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-5">
                 <div class="card border-secondary mb-5">
                     <div class="card-header bg-secondary border-0">
                         <h4 class="font-weight-semi-bold m-0">Đơn đặt hàng</h4>
@@ -197,6 +197,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <span class="font-weight-medium f-14 mb-3">Tên sản phẩm</span>
+                            <span class="font-weight-medium f-14 mb-3">Màu sắc</span>
                             <span class="font-weight-medium f-14 mb-3">Số lượng</span>
                             <span class="font-weight-medium f-14 mb-3">Giá sản phẩm</span>
                         </div>
@@ -213,7 +214,8 @@
                         @endphp
                         <div class="d-flex justify-content-between">
                             <p class="font-weight-medium f-14 mb-3 text-product-order">{{$c['nameProduct']}}</p>
-                            <p class="font-weight-medium f-14 mb-3 mr-3">{{$c['quantityProduct']}}</p>
+                            <p class="font-weight-medium f-14 ml-3 text-product-order">{{$c['colorProduct']}}</p>
+                            <p class="font-weight-medium f-14 mb-3 mr-4">{{$c['quantityProduct']}}</p>
                             <p class="font-weight-medium f-14 mb-3 mr-1 price-product-order">{{number_format($totalProduct,0,',','.')}} ₫</p>
                         </div>
                         @endforeach

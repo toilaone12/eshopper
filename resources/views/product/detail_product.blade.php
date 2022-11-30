@@ -109,7 +109,7 @@
             <div class="demo">
                 <ul class="slider-product" id="lightSlider">
                     <li class="item-product" data-thumb="{{url('images/product/'.$selectProductId->image_product)}}">
-                        <img class="w-75 m-auto d-block" src="{{url('images/product/'.$selectProductId->image_product)}}" />
+                        <img class="w-75 m-auto d-block image-product" src="{{url('images/product/'.$selectProductId->image_product)}}" />
                     </li>
                     @foreach($galleryProduct as $key => $gallery)
                     @if($selectProductId->id == $gallery->id_product)
@@ -146,35 +146,19 @@
                 </div>
                 <small class="pt-1">({{$selectReview->count()}} reviews)</small>
             </div>
-            <h3 class="font-weight-semi-bold mb-4">{{number_format($selectProductId->price_product,0,',','.')}} đ</h3>
-            <p class="mb-4">{!!html_entity_decode($selectProductId->description_product,ENT_HTML5)!!}</p>
-            <div class="d-flex mb-4">
-                <p class="text-dark font-weight-medium mb-0 mr-3">Màu sắc:</p>
-                @foreach($selectProductColorId as $key => $cl)
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" class="custom-control-input" id="color-1" name="color">
-                    <label class="custom-control-label" for="color-1">{{$cl->name_color}}</label>
-                </div>
-                @endforeach
-                <!-- <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" class="custom-control-input" id="color-2" name="color">
-                    <label class="custom-control-label" for="color-2">Trắng</label>
-                </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" class="custom-control-input" id="color-3" name="color">
-                    <label class="custom-control-label" for="color-3">Đỏ</label>
-                </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" class="custom-control-input" id="color-4" name="color">
-                    <label class="custom-control-label" for="color-4">Xanh</label>
-                </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" class="custom-control-input" id="color-5" name="color">
-                    <label class="custom-control-label" for="color-5">Hồng</label>
-                </div> -->
-            </div>
             <form action="{{route('cart.addCart')}}" method="POST">
                 @csrf
+                <h3 class="font-weight-semi-bold mb-4">{{number_format($selectProductId->price_product,0,',','.')}} đ</h3>
+                <p class="mb-4">Kho hàng: <span class="quantity-product">{{$countProduct}}</span> sản phẩm</p>
+                <div class="d-flex mb-4">
+                    <p class="text-dark font-weight-medium mb-0 mr-3">Màu sắc:</p>
+                    @foreach($selectProductColorId as $key => $cl)
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input color-product" value="{{$cl->id_color}}" {{$key == 0 ? 'checked' : ""}} data-id="{{$selectProductId->id}}" data-color="{{$cl->id_color}}" id="color-{{$cl->id_color}}" name="color_product">
+                        <label class="custom-control-label" for="color-{{$cl->id_color}}">{{$cl->name_color}}</label>
+                    </div>
+                    @endforeach
+                </div>
                 <div class="d-flex align-items-center mb-4 pt-2">       
                     <div class="input-group quantity mr-3" style="width: 130px;">
                         <!-- <div class="input-group-btn">
@@ -183,6 +167,7 @@
                             </button>
                         </div> -->
                         <input type="hidden" name="id_product" value="{{$selectProductId->id}}">
+                        <input type="hidden" name="id_product_color" class="id-product-color" value="{{$selectProductId->id_product_color}}">
                         <input type="number" min="0" max="{{$selectProductId->quantity_product_color}}" name="quantity_product" class="form-control bg-secondary text-center" value="1">
                         <!-- <div class="input-group-btn">
                             <button class="btn btn-primary btn-plus" max>

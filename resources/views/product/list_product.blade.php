@@ -44,8 +44,20 @@
                         <td>{{$p->name_brand}}</td>
                         <td><img width="150" height="150" src="{{url('images/product/'.$p->image_product)}}" alt="" srcset=""></td>
                         <td>{{$p->name_product}}</td>
-                        <td>{{$p->name_color}}</td>
-                        <td>{{$p->quantity_product}} chiếc</td>
+                        <td>
+                            @foreach($listProductColor as $key => $pc)
+                            @if($p->id == $pc->id_product)
+                            {{$pc->name_color}}</br>
+                            @endif
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach($listProductColor as $key => $pc)
+                            @if($p->id == $pc->id_product)
+                            {{$pc->quantity_product_color}} chiếc </br>
+                            @endif
+                            @endforeach 
+                        </td>
                         <td width="150">{{number_format($p->price_product,0,',','.')}} đ</td>
                         <td ><span class="overflow-hidden text-nowrap d-inline-block" style="width: 150px; text-overflow:ellipsis;">{{$p->description_product}}</span></td>
                         <td ><span class="overflow-hidden text-nowrap d-inline-block" style="width: 150px; text-overflow:ellipsis;">{{$p->content_product}}</span></td>

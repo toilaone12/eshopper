@@ -54,6 +54,7 @@
                         @if(Auth::check())
                         @if(Auth::user()->id_role == 1)
                         <td>
+                            @if($w->quantity_product_warehouse)
                             <button type="submit" 
                             data-name="{{$w->name_product_warehouse}}" 
                             data-quantity="{{$w->quantity_product_warehouse}}" 
@@ -62,7 +63,7 @@
                             class="btn btn-info text-white export-warehouse">
                                 <i class="fa-solid fa-file-export"></i>
                             </button>
-
+                            @endif
                         </td>
                         @endif
                         @endif
@@ -77,17 +78,6 @@
     @csrf
     <div class="row justify-content-center align-items-center warehouse d-none overflow-auto">
         <div class="bg-warehouse rounded">
-            <div class="form-group">
-                <p class="text-danger">
-                    <?php
-                        $message = Session::get('message');
-                        if(isset($message)){
-                            echo $message;
-                            Session::put('message','');
-                        }
-                    ?>
-                </p>
-            </div>
             <h3 class="header-warehouse text-center py-3">
                 Xuất kho
                 <div class="close-warehouse close-warehouse" style="cursor:pointer;">
@@ -95,8 +85,23 @@
                 </div>
             </h3>
             <div class="form-group">
-                <label for="exampleFormControlFile1">Ảnh sản phẩm</label>
+                <p class="text-danger">
+                    <?php
+                        $message = Session::get('messageWareHouse');
+                        if(isset($message)){
+                            echo $message;
+                            Session::put('messageWareHouse','');
+                        }
+                    ?>
+                </p>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlFile1">Ảnh gốc</label>
                 <input type="file" class="form-control-file" name="image_product" id="exampleFormControlFile1">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlFile1">Ảnh theo màu sản phẩm</label>
+                <input type="file" class="form-control-file" name="image_product_color" id="exampleFormControlFile1">
             </div>
             <div class="form-group">
                 <label for="exampleFormControlFile1">Tên danh mục</label>

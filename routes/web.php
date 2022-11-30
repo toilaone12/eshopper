@@ -209,6 +209,7 @@ Route::prefix('page')->group(function(){
     });
     Route::prefix('product')->group(function(){
         Route::get('/detail-product/{idProduct}',[ProductController::class,'detailProduct'])->name('product.detailProduct');
+        Route::post('/change-color',[ProductController::class,'changeColor'])->name('product.changeColor');
     });
     Route::prefix('review')->group(function(){
         Route::post('/insert-review',[ReviewController::class,'review'])->name('review.insertReview');
