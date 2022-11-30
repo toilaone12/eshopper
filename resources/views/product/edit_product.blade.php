@@ -18,8 +18,11 @@
         </p>
     </div>
     <div class="form-group">
+        <input type="hidden" class="form-control-file" value="{{$selectProductId->id_product_color}}" name="product_color" id="exampleFormControlFile1">
+    </div>
+    <div class="form-group">
         <label for="exampleFormControlFile1">Ảnh sản phẩm</label>
-        <input type="file" class="form-control-file" multiple value="{{$selectProductId->image_product}}" name="image_product" id="exampleFormControlFile1">
+        <input type="file" class="form-control-file" value="{{$selectProductId->image_product}}" name="image_product" id="exampleFormControlFile1">
     </div>
     <div class="form-group">
         <label for="exampleFormControlFile1">Tên danh mục</label>
@@ -52,7 +55,7 @@
     </div>
     <div class="form-group">
         <label for="exampleFormControlSelect2">Số lượng</label>
-        <input type="number" min=0 class="form-control" value="{{$selectProductId->quantity_product}}" name="quantity_product" id="exampleFormControlInput1" placeholder="Nhập số lượng">
+        <input type="number" min=0 class="form-control" value="{{$selectProductId->quantity_product_color}}" name="quantity_product" id="exampleFormControlInput1" placeholder="Nhập số lượng">
     </div>
     <div class="form-group">
         <label for="exampleFormControlSelect2">Giá</label>

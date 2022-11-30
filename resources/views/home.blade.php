@@ -85,7 +85,7 @@
                         <span class="badge">0</span>
                     </a>
                     <div href="{{route('cart.checkCart')}}" class="btn border cart-hover">
-                        <i class="fas fa-shopping-cart text-primary"></i>
+                        <i class="fa-solid fa-cart-shopping text-primary"></i>
                         @php
                             use Illuminate\Support\Facades\Session;
                             $cart = Session::get('cart');
@@ -125,76 +125,53 @@
     @yield('content')
 
     
-    
-    <!-- Footer Start -->
-    <div class="container-fluid bg-secondary text-dark mt-5 pt-5">
-        <div class="row px-xl-5 pt-5">
-            <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-                <a href="" class="text-decoration-none">
-                    <h1 class="mb-4 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border border-white px-3 mr-1">E</span>Shopper</h1>
-                </a>
-                <p>Dolore erat dolor sit lorem vero amet. Sed sit lorem magna, ipsum no sit erat lorem et magna ipsum dolore amet erat.</p>
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, New York, USA</p>
-                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
-                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890</p>
-            </div>
-            <div class="col-lg-8 col-md-12">
-                <div class="row">
-                    <div class="col-md-4 mb-5">
-                        <h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
-                        <div class="d-flex flex-column justify-content-start">
-                            <a class="text-dark mb-2" href="index.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                            <a class="text-dark mb-2" href="shop.html"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
-                            <a class="text-dark mb-2" href="detail.html"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
-                            <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
-                            <a class="text-dark mb-2" href="checkout.html"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
-                            <a class="text-dark" href="contact.html"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-5">
-                        <h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
-                        <div class="d-flex flex-column justify-content-start">
-                            <a class="text-dark mb-2" href="index.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                            <a class="text-dark mb-2" href="shop.html"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
-                            <a class="text-dark mb-2" href="detail.html"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
-                            <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
-                            <a class="text-dark mb-2" href="checkout.html"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
-                            <a class="text-dark" href="contact.html"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-5">
-                        <h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
-                        <form action="">
-                            <div class="form-group">
-                                <input type="text" class="form-control border-0 py-4" placeholder="Your Name" required="required" />
-                            </div>
-                            <div class="form-group">
-                                <input type="email" class="form-control border-0 py-4" placeholder="Your Email"
-                                    required="required" />
-                            </div>
-                            <div>
-                                <button class="btn btn-primary btn-block border-0 py-3" type="submit">Subscribe Now</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+    <footer class="text-center text-white bg-info">
+        <!-- Grid container -->
+        <div class="container">
+        <!-- Section: Links -->
+        <!-- Section: Links -->
+
+        <hr class="my-5" />
+        <!-- Section: Text -->
+
+        <!-- Section: Social -->
+        <section class="text-center mb-5">
+            <a href="" class="text-white mr-4">
+            <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="" class="text-white mr-4">
+            <i class="fab fa-twitter"></i>
+            </a>
+            <a href="" class="text-white mr-4">
+            <i class="fab fa-google"></i>
+            </a>
+            <a href="" class="text-white mr-4">
+            <i class="fab fa-instagram"></i>
+            </a>
+            <a href="" class="text-white mr-4">
+            <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="" class="text-white mr-4">
+            <i class="fab fa-github"></i>
+            </a>
+        </section>
+        <!-- Section: Social -->
         </div>
-        <div class="row border-top border-light mx-xl-5 py-4">
-            <div class="col-md-6 px-xl-0">
-                <p class="mb-md-0 text-center text-md-left text-dark">
-                    &copy; <a class="text-dark font-weight-semi-bold" href="#">Your Site Name</a>. All Rights Reserved. Designed
-                    by
-                    <a class="text-dark font-weight-semi-bold" href="https://htmlcodex.com">HTML Codex</a><br>
-                    Distributed By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                </p>
-            </div>
-            <div class="col-md-6 px-xl-0 text-center text-md-right">
-                <img class="img-fluid" src="img/payments.png" alt="">
-            </div>
+        <!-- Grid container -->
+
+        <!-- Copyright -->
+        <div
+            class="text-center p-3"
+            style="background-color: rgba(0, 0, 0, 0.2)"
+            >
+        © 2022 Copyright:
+        <a class="text-white" href="{{route('home.page')}}"
+            >EShopper.com</a
+            >
         </div>
-    </div>
-    <!-- Footer End -->
+        <!-- Copyright -->
+    </footer>
+
 
 
     <!-- Back to Top -->
@@ -300,9 +277,37 @@
             }
         });
     });
+    $('.color-product').on('click',function(){
+        var idColor = $(this).data('color');
+        var idProduct = $(this).data('id');
+        var _token = $('input[name="_token"]').val();
+        // var now = $('.image-product').attr('src','https://cdn.hoanghamobile.com/i/preview/Uploads/2022/06/13/xi.png');
+        // console.log(idProduct);
+        $.ajax({
+            url: "{{route('product.changeColor')}}",
+            method: "POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                idColor:idColor,
+                idProduct:idProduct,
+                token:_token
+            },
+            success:function(data){
+                $('.image-product').attr('src',data.image);
+                $('.quantity-product').text(data.quantity);
+                $('.id-product-color').val(data.id);
+
+                // console.log(data);
+            }
+        });
+    });
+
     $('.quantity button').on('click', function () {
         var button = $(this);
-        var id = button.parent().parent().find('input').data('id');
+        var idProduct = button.parent().parent().find('input').data('id');
+        var idProductColor = button.parent().parent().find('input').data('product-color');
         var oldValue = button.parent().parent().find('input').val();
         var price = button.parent().parent().find('input').data('price');
         if (button.hasClass('btn-plus')) {
@@ -322,7 +327,8 @@
             url: "{{route('cart.updateCart')}}",
             method: "GET",
             data: {
-                id_product: id,
+                id_product: idProduct,
+                idProductColor: idProductColor,
                 quantity_product: newVal,
             },
             success:function(data){

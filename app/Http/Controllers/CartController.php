@@ -26,14 +26,19 @@ class CartController extends Controller
     }
     public function addCart(Request $request){
         $data = $request->all();
+        // dd($data);
         if($request->has('quantity_product')){
             $quantityProduct = $data['quantity_product'];
         }
         $cart = Session::get('cart');
         $idProduct = $data['id_product'];
+        $idProductColor = $data['id_product_color'];
         $product = Product::find($idProduct);
-        $imageProduct = $product->image_product;
+        $productColor = ProductColor::join('color as c','c.id_color','product_color.id_color')
+        ->where('id_product_color',$idProductColor)->first();
+        $imageProduct = $productColor->image_product_color;
         $nameProduct = $product->name_product;
+        $colorProduct = $productColor->name_color;
         $priceProduct = $product->price_product;
         if(isset($quantityProduct)){
             $quantity = $quantityProduct;
@@ -44,8 +49,10 @@ class CartController extends Controller
             $cart[$idProduct]['quantityProduct'] = $cart[$idProduct]['quantityProduct'] + $quantity;
         }else{
             $cart[$idProduct] = [
+                "idProductColor" => $idProductColor,
                 "imageProduct" => $imageProduct,
                 "nameProduct" => $nameProduct,
+                "colorProduct" => $colorProduct,
                 "quantityProduct" => $quantity,
                 "priceProduct" => $priceProduct,
             ];
@@ -56,7 +63,7 @@ class CartController extends Controller
         }else{
             echo "done";
         }
-        // // $check = Session::get('cart');
+        // $check = Session::get('cart');
         // return print_r($cart);
         // echo "done";
         // return view('cart.cart_page',compact(
@@ -67,7 +74,8 @@ class CartController extends Controller
     }
     public function updateCart(Request $request){
         $id = $request->get('id_product');
-        $product = ProductColor::where('id_product',$id)->first();
+        $idProductColor = $request->get('idProductColor');
+        $product = ProductColor::where('id_product_color',$idProductColor)->first();
         $quantityProduct = $request->get('quantity_product');
         $cart = Session::get('cart');
         if(isset($cart[$id])){
@@ -89,7 +97,7 @@ class CartController extends Controller
         unset($carts[$id]);
         Session::put('cart',$carts);
         if(count($carts) == 0){
-            Session::flush();
+            Session::forget('cart');
         }
         echo "done";
         // return print_r($data);

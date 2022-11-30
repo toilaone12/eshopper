@@ -42,17 +42,9 @@ session_start();
                 </button>
                 <div class="collapse navbar-collapse justify-content-between bg-white-smoke" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                        <a href="#" class="nav-item nav-link text-gray active">Trang chủ</a>
-                        <a href="shop.html" class="nav-item nav-link text-gray">Shop</a>
-                        <a href="detail.html" class="nav-item nav-link text-gray">Shop Detail</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link text-gray dropdown-toggle">Pages</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="cart.html" class="dropdown-item">Shopping Cart</a>
-                                <a href="checkout.html" class="dropdown-item">Checkout</a>
-                            </div>
-                        </div>
-                        <a href="contact.html" class="nav-item nav-link text-gray">Liên hệ</a>
+                        <a href="{{route('home.page')}}" class="f-16 nav-item nav-link text-info active">Trang chủ</a>
+                        <a href="shop.html" class="nav-item nav-link text-info f-16">Tình trạng đơn hàng</a>
+                        <a href="contact.html" class="nav-item nav-link text-info f-16">Liên hệ</a>
                     </div>
                     <?php
                         $idCustomer = Session::get('id',null);
@@ -76,8 +68,8 @@ session_start();
                         }else{
                     ?>
                     <div class="navbar-nav ml-auto py-0">
-                        <a href="{{route('home.loginForm')}}" class="nav-item nav-link text-gray">Đăng nhập</a>
-                        <a href="{{route('home.loginForm')}}" class="nav-item nav-link text-gray">Đăng ký</a>
+                        <a href="{{route('home.loginForm')}}" class="nav-item text-white btn btn-primary rounded mr-3">Đăng nhập</a>
+                        <a href="{{route('home.loginForm')}}" class="nav-item text-white btn btn-primary rounded">Đăng ký</a>
                     </div>
                     <?php
                         }
@@ -222,22 +214,17 @@ session_start();
             @foreach($selectOutstanding as $key => $outStanding)
             <div class="col-lg-2 col-md-3 col-sm-12 pb-2">
                 <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="{{url('images/product/'.$outStanding->image_product)}}" alt="">
+                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0 rounded-top border-info">
+                        <img class="img-fluid w-75 m-auto d-block" src="{{url('images/product/'.$outStanding->image_product)}}" alt="">
                     </div>
-                    <div class="card-body border-left border-right text-center outStanding-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">{{$outStanding->name_product}}</h6>
+                    <div class="card-body border-left border-right text-center outStanding-0 pt-4 pb-3 border-info">
+                        <h6 class="text-truncate mb-3 f-16">{{$outStanding->name_product}}</h6>
                         <div class="d-flex justify-content-center">
-                            <h6>{{number_format($outStanding->price_product,0,',','.')}} ₫</h6><h6 class="text-muted ml-2"><del class="f-14">{{number_format($outStanding->price_product,0,',','.')}} ₫</del></h6>
+                            <h6 class="f-16">{{number_format($outStanding->price_product,0,',','.')}} ₫</h6><h6 class="text-muted ml-2 f-16"><del class="f-16">{{number_format($outStanding->price_product,0,',','.')}} ₫</del></h6>
                         </div>
                     </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="{{route('product.detailProduct',['idProduct'=>$outStanding->id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
-                        @csrf
-                        <button type="submit" data-id-product="{{$outStanding->id}}"
-                        class="btn btn-sm text-dark p-0 add-cart">
-                            <i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng
-                        </button>
+                    <div class="d-flex justify-content-center bg-light border rounded-bottom border-info">
+                        <a href="{{route('product.detailProduct',['idProduct'=>$outStanding->id])}}" class="p-2 btn btn-info flex-fill me-1 p-0 f-16">Xem chi tiết</a>
                     </div>
                 </div>
             </div>
@@ -281,25 +268,18 @@ session_start();
             @foreach($selectProduct as $key => $p)
             @if($p->id_category == $c->id_category)
             <div class="col-lg-2 col-md-6 col-sm-12 pb-1">
-                <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="{{url('images/product/'.$p->image_product)}}" alt="">
+                <div class="card product-item border-0 mb-4 rounded-lg">
+                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border border-info p-0 rounded-top">
+                        <img class="img-fluid w-75 m-auto d-block" src="{{url('images/product/'.$p->image_product)}}" alt="">
                     </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">{{$p->name_product}}</h6>
+                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3 border-info">
+                        <h6 class="text-truncate mb-3 f-16">{{$p->name_product}}</h6>
                         <div class="d-flex justify-content-center">
-                            <h6>{{number_format($p->price_product,0,',','.')}} ₫</h6><h6 class="text-muted ml-2"><del>{{number_format($p->price_product,0,',','.')}} ₫</del></h6>
+                            <h6 class="f-16">{{number_format($p->price_product,0,',','.')}} ₫</h6><h6 class="text-muted ml-2 f-16"><del>{{number_format($p->price_product,0,',','.')}} ₫</del></h6>
                         </div>
                     </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="{{route('product.detailProduct',['idProduct'=>$p->id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
-                        <form action="{{route('cart.addCart')}}" method="post">
-                            @csrf
-                            <button type="submit" data-id-product="{{$outStanding->id}}"
-                            class="btn btn-sm text-dark p-0 add-cart">
-                                <i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng
-                            </button>
-                        </form>
+                    <div class="d-flex justify-content-center bg-light border rounded-bottom border-info">
+                        <a href="{{route('product.detailProduct',['idProduct'=>$p->id])}}" class="p-2 btn btn-info flex-fill me-1 p-0 f-16">Xem chi tiết</a>
                     </div>
                 </div>
             </div>

@@ -26,7 +26,8 @@ class ProductController extends Controller
     public function productList(){
         $getProduct = Product::join('category as c','c.id_category','product.id_category')
         ->join('brand as b','b.id_brand','product.id_brand')->get(); // sử dụng camelCase https://topdev.vn/blog/quy-chuan-dat-ten-trong-lap-trinh-camelcase-underscore-hay-pascalcase/
-        return view('product.list_product',compact('getProduct'));
+        $listProductColor = ProductColor::join('color as c','c.id_color','product_color.id_color')->get();
+        return view('product.list_product',compact('getProduct','listProductColor'));
     }
     public function formInsertProduct(){
         $selectCategory = Category::all();
@@ -85,7 +86,7 @@ class ProductController extends Controller
         }
     }
     public function editFormProduct($idProduct){
-        $selectProductId = Product::where('id',$idProduct)->first();
+        $selectProductId = Product::join('product_color as pc','pc.id_product','product.id')->where('id',$idProduct)->first();
         $selectCategory = Category::all();
         $selectBrand = Brand::all();
         $selectColor = Color::all();
@@ -103,6 +104,8 @@ class ProductController extends Controller
         $imageProduct = $request->file('image_product');
         // setting trong config/app.php
         $product = Product::find($idProduct);
+        $productColor = ProductColor::where('id_product_color',$data['product_color'])->first();
+        // dd($productColor);
         if($imageProduct){
             $sizeImage = $imageProduct->getSize();
             if($sizeImage < 100000){
@@ -115,12 +118,13 @@ class ProductController extends Controller
                     $product->id_category = $data['id_category'];
                     $product->name_product = $data['name_product'];
                     $product->image_product = $newImage;
-                    $product->id_color = $data['color_product'];
-                    $product->quantity_product = $data['quantity_product'];
                     $product->price_product = $data['price_product'];
                     $product->description_product = $data['description_product'];
                     $product->content_product = $data['content_product'];
                     $checkProduct = $product->save();
+                    $productColor->id_color = $data['color_product'];
+                    $productColor->quantity_product_color = $data['quantity_product'];
+                    $productColor->save();
                     if($checkProduct){
                         Session::put('message',"Sửa sản phẩm ".$data['name_product']." thành công!");
                         return redirect()->route('product.listFormProduct');// k sử dụng redirect::to. chuyển thành redirect()->route('')
@@ -141,12 +145,13 @@ class ProductController extends Controller
             $product->id_brand = $data['name_brand'];
             $product->id_category = $data['id_category'];
             $product->name_product = $data['name_product'];
-            $product->id_color = $data['color_product'];
-            $product->quantity_product = $data['quantity_product'];
             $product->price_product = $data['price_product'];
             $product->description_product = $data['description_product'];
             $product->content_product = $data['content_product'];
             $checkProduct = $product->save();
+            $productColor->id_color = $data['color_product'];
+            $productColor->quantity_product_color = $data['quantity_product'];
+            $productColor->save();
             if($checkProduct){
                 Session::put('message',"Sửa sản phẩm ".$data['name_product']." thành công!");
                 return redirect()->route('product.listFormProduct');// k sử dụng redirect::to. chuyển thành redirect()->route('')
@@ -249,6 +254,10 @@ class ProductController extends Controller
         // //     $product->number_views += 1;
         // //     $product->save();
         // // }
+        $countProduct = 0;
+        foreach($selectProductColorId as $key => $pc){
+            $countProduct += $pc->quantity_product_color;
+        }
         return view('product.detail_product',compact(
             'selectCategory',
             'selectProductId',
@@ -258,7 +267,19 @@ class ProductController extends Controller
             'selectComment',
             'selectAvgReview',
             'galleryProduct',
-            'selectProductColorId'
+            'selectProductColorId',
+            'countProduct'
         ));
+    }
+    public function changeColor(Request $request){
+        $data = $request->all();
+        $idColor = $data['idColor'];
+        $idProduct = $data['idProduct'];
+        $productColor = ProductColor::where('id_color',$idColor)->where('id_product',$idProduct)->first();
+        return response()->json([
+            'image' => url('images/product/'.$productColor->image_product_color),
+            'quantity' => $productColor->quantity_product_color,
+            'id' => $productColor->id_product_color
+        ]);
     }
 }

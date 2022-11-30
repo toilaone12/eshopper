@@ -56,6 +56,7 @@
                         <th>Mã sản phẩm</th>
                         <th>Mã đơn hàng</th>
                         <th>Tên sản phẩm</th>
+                        <th>Màu sắc</th>
                         <th>Số lượng đặt hàng</th>
                         <th>Đơn giá</th>
                         <th>Thành tiền</th>
@@ -65,9 +66,15 @@
                 <tbody>
                     @php
                         $allTotal = 0;
-                        $featureCoupon = $selectCoupon->feature_coupon;
-                        $discountCoupon = $selectCoupon->discount_coupon;
-                        $feeDelivery = $selectOrder->fee_delivery;
+                        if($selectCoupon != 0){
+                            $featureCoupon = $selectCoupon->feature_coupon;
+                            $discountCoupon = $selectCoupon->discount_coupon;
+                            $feeDelivery = $selectOrder->fee_delivery;
+                        }else{
+                            $featureCoupon = 2;
+                            $discountCoupon = 0;
+                            $feeDelivery = 0;
+                        }
                     @endphp
                     @foreach($selectDetailOrder as $key => $do)
                         @php
@@ -82,6 +89,7 @@
                             {{$do->code_order}}
                         </td>
                         <td>{{$do->name_product_order}}</td>
+                        <td>{{$do->name_color}}</td>
                         <td>
                             <span class="quantity-order">{{$do->quantity_product_order}}</span>
                             <input type="hidden" name="product_id" class="product-id" value="{{$do->id_product}}">
