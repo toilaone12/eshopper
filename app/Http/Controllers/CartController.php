@@ -30,6 +30,7 @@ class CartController extends Controller
         if($request->has('quantity_product')){
             $quantityProduct = $data['quantity_product'];
         }
+        // echo $quantityProduct;
         $cart = Session::get('cart');
         $idProduct = $data['id_product'];
         $idProductColor = $data['id_product_color'];
@@ -46,7 +47,14 @@ class CartController extends Controller
             $quantity = 1;
         }
         if(isset($cart[$idProduct])){
-            $cart[$idProduct]['quantityProduct'] = $cart[$idProduct]['quantityProduct'] + $quantity;
+            // echo $productColor->quantity_product_color;
+            // echo $cart[$idProduct]['quantityProduct'];
+            $nowQuantity = $cart[$idProduct]['quantityProduct'] + $quantity;
+            if($nowQuantity > $productColor->quantity_product_color){
+                return response()->json(["statusAdd" => "fail"],200);
+            }else{
+                $cart[$idProduct]['quantityProduct'] = $cart[$idProduct]['quantityProduct'] + $quantity;
+            }
         }else{
             $cart[$idProduct] = [
                 "idProductColor" => $idProductColor,
@@ -58,11 +66,13 @@ class CartController extends Controller
             ];
         }
         Session::put('cart',$cart);
-        if($request->has('quantity_product')){
-            return redirect()->route('cart.checkCart');
-        }else{
-            echo "done";
-        }
+        $count = count($cart);
+        return response()->json(["statusGo" => "done","statusAdd" =>"done","count" => $count],200);
+        // 
+        // if($request->has('quantity_product')){
+        //     return redirect()->route('cart.checkCart');
+        // }else{
+        // }
         // $check = Session::get('cart');
         // return print_r($cart);
         // echo "done";

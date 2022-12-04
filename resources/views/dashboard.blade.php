@@ -737,15 +737,19 @@
                 var orderId = $(this).children(":selected").data('id');
                 var token = $('input[name="_token"]').val();
                 var productId = [];
+                var productColorId = [];
                 var quantityOrder = [];
                 var totalOrder = $('.total-order').data('total');
                 $('input[name="product_id"]').each(function(){
                     productId.push($(this).val());
                 });
+                $('input[name="product_color_id"]').each(function(){
+                    productColorId.push($(this).val());
+                });
                 $('.quantity-order').each(function(){
                     quantityOrder.push($(this).text());
                 })
-                // alert(totalOrder);
+                // alert(productColorId);
                 $.ajax({
                     url: "{{route('order.changeStatus')}}",
                     method: "POST",
@@ -754,14 +758,15 @@
                         status:status,
                         orderId:orderId,
                         productId:productId,
+                        productColorId:productColorId,
                         quantityOrder:quantityOrder,
                         totalOrder: totalOrder,
                         token:token,
                     },
                     success:function(data){
-                        location.reload();
+                        // location.reload();
                         // // $('#'+result).html(data);
-                        // console.log(data);
+                        console.log(data);
                     }
                 });
             });

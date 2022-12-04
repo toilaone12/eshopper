@@ -17,9 +17,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
 
     <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
     <!-- SweetAlert -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.1/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="@sweetalert2/theme-bulma/bulma.css">
     <!-- Libraries Stylesheet -->
     <link href="{{asset('frontend/lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
     <!-- LightSlider -->
@@ -90,7 +92,7 @@
                             use Illuminate\Support\Facades\Session;
                             $cart = Session::get('cart');
                         @endphp
-                        <span class="badge">
+                        <span class="badge count-product">
                             @if(isset($cart))
                                 {{count($cart)}}
                             @else
@@ -176,8 +178,8 @@
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
-
-
+    <!-- Font-awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/js/all.min.js" integrity="sha512-rpLlll167T5LJHwp0waJCh3ZRf7pO6IT1+LZOhAyP6phAirwchClbTZV3iqL3BMrVxIYRbzGTpli4rfxsCK6Vw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.1/dist/sweetalert2.min.js"></script>
@@ -242,22 +244,85 @@
             },
         });
     });
-    $(document).on('click','.add-cart',function(){
-        var _token = $('input[name="_token"]').val();
-        var idProduct = $(this).data('id-product');
-        $.ajax({
-            url: "{{route('cart.addCart')}}",
-            method: "POST",
-            data:
-            {
-                _token:_token,
-                id_product: idProduct,
-            },
-            success:function(data){
-                if(data == "done"){
-                    location.reload();
-                }
-            },
+    $(document).ready(function(){
+        $(document).on('click','.go-cart',function(){
+            var _token = $('input[name="_token"]').val();
+            var idProduct = $('input[type="hidden"][name="id_product"]').val();
+            var idProductColor = $('input[type="hidden"][name="id_product_color"]').val();
+            // console.log(idProductColor);
+            $.ajax({
+                url: "{{route('cart.addCart')}}",
+                method: "POST",
+                data:
+                {
+                    _token:_token,
+                    id_product: idProduct,
+                    id_product_color: idProductColor,
+                },
+                success:function(data){
+                    if(data.statusGo == "done"){
+                        // console.log(data);
+                        location.href="{{route('cart.checkCart')}}";
+                    }
+                },
+            });
+        });
+        $(document).on('click','.add-cart',function(){
+            var _token = $('input[name="_token"]').val();
+            var idProduct = $('input[type="hidden"][name="id_product"]').val();
+            var idProductColor = $('input[type="hidden"][name="id_product_color"]').val();
+            var quantityProduct = $('input[type="number"][name="quantity_product"]').val();
+            // console.log(idProductColor);
+            $.ajax({
+                url: "{{route('cart.addCart')}}",
+                method: "POST",
+                data:
+                {
+                    _token:_token,
+                    id_product: idProduct,
+                    id_product_color: idProductColor,
+                    quantity_product: quantityProduct
+                },
+                success:function(data){
+                    if(data.statusAdd == "done"){
+                        const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                        })
+
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Thêm giỏ hàng thành công'
+                        })
+                        $(".count-product").text(data.count);
+                    }else if(data.statusAdd == "fail"){
+                        const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                        })
+
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'Số lượng thêm vào giỏ quá số lượng kho'
+                        })
+                        $(".count-product").text(data.count);
+                    }
+                },
+            });
         });
     });
     $(document).on('click','.remove-product',function(){
@@ -531,15 +596,14 @@
                             token:token,
                         },
                         success:function(data){
+                            Swal.fire(
+                            'Đặt hàng thành công!',
+                            'Vui lòng kiểm tra mã đơn hàng tại email của bạn',
+                            'success'
+                            )
                             window.location.href = "{{route('cart.checkCart')}}";
-                            // console.log(data);
                         }
                     });
-                    Swal.fire(
-                    'Đặt hàng thành công!',
-                    'Vui lòng kiểm tra mã đơn hàng tại email của bạn',
-                    'success'
-                    )
                 }
             })
         });

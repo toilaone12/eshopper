@@ -33,7 +33,7 @@
         </div>
         <div class="col-lg-9">
             <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
-                <a href="{{route('home.page')}}" class="text-decoration-none d-block d-lg-none">
+                <a href="" class="text-decoration-none d-block d-lg-none">
                     <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1>
                 </a>
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -41,21 +41,13 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between bg-white-smoke" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                        <a href="#" class="nav-item nav-link text-gray active">Trang chủ</a>
-                        <a href="shop.html" class="nav-item nav-link text-gray">Shop</a>
-                        <a href="detail.html" class="nav-item nav-link text-gray">Shop Detail</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link text-gray dropdown-toggle" data-toggle="dropdown">Pages</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="cart.html" class="dropdown-item">Shopping Cart</a>
-                                <a href="checkout.html" class="dropdown-item">Checkout</a>
-                            </div>
-                        </div>
-                        <a href="contact.html" class="nav-item nav-link text-gray">Liên hệ</a>
+                        <a href="{{route('home.page')}}" class="f-16 nav-item nav-link text-info active">Trang chủ</a>
+                        <a href="shop.html" class="nav-item nav-link text-info f-16">Tình trạng đơn hàng</a>
+                        <a href="contact.html" class="nav-item nav-link text-info f-16">Liên hệ</a>
                     </div>
                     <?php
                         $idCustomer = Session::get('id',null);
-                        $username = Session::get('username',null);
+                        $username = Session::get('usernameCustomer',null);
                         $imageCustomer = Session::get('imageCustomer',null);
                         $nameCustomer = Session::get('nameCustomer',null);
                         if(isset($username)){
@@ -64,8 +56,9 @@
                         <img class="w-37 h-25 img-profile profile-hover dropdown " src="{{url('images/customer/'.$imageCustomer)}}" alt="">
                         <div class="nav-item">
                             <div class="dropdown-menu d-none left-profile__63 top-profile__127 profile-info rounded-0 m-0">
-                                <a href="#" class="dropdown-item text-muted f-14"><i class="fas fa-signature pr-1"></i>{{$nameCustomer}}</a>
-                                <a href="cart.html" class="dropdown-item text-muted f-14"><i class="fas fa-envelope" style="padding-right: 7px !important;"></i>{{$username}}</a>
+                                <a href="{{route('customer.profile',['idCustomer' => $idCustomer])}}" class="dropdown-item text-muted f-14"><i class="fas fa-signature pr-1"></i>{{$nameCustomer}}</a>
+                                <a href="{{route('customer.profile',['idCustomer' => $idCustomer])}}" class="dropdown-item text-muted f-14"><i class="fas fa-envelope" style="padding-right: 7px !important;"></i>{{$username}}</a>
+                                <a href="{{route('home.changePass',['email' => $username])}}" class="dropdown-item text-muted f-14"><i class="fas fa-lock-open" style="padding-right: 5px !important;"></i>Đổi mật khẩu</a>
                                 <a href="{{route('home.logout')}}" class="dropdown-item text-muted f-14"><i class="fas fa-right-from-bracket " style="padding-right: 7px !important;"></i>Đăng xuất</a>
                             </div>
                         </div>
@@ -74,8 +67,8 @@
                         }else{
                     ?>
                     <div class="navbar-nav ml-auto py-0">
-                        <a href="{{route('home.loginForm')}}" class="nav-item nav-link text-gray">Đăng nhập</a>
-                        <a href="{{route('home.loginForm')}}" class="nav-item nav-link text-gray">Đăng ký</a>
+                        <a href="{{route('home.loginForm')}}" class="nav-item text-white btn btn-primary rounded mr-3">Đăng nhập</a>
+                        <a href="{{route('home.loginForm')}}" class="nav-item text-white btn btn-primary rounded">Đăng ký</a>
                     </div>
                     <?php
                         }

@@ -93,6 +93,7 @@
                         <td>
                             <span class="quantity-order">{{$do->quantity_product_order}}</span>
                             <input type="hidden" name="product_id" class="product-id" value="{{$do->id_product}}">
+                            <input type="hidden" name="product_color_id" class="product-id" value="{{$do->color_product_order}}">
                         </td>
                         <td>{{number_format($do->price_product_order,0,',','.')}} ₫</td>
                         <td>{{number_format($total,0,',','.')}} ₫</td>

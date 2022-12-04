@@ -61,11 +61,12 @@ class OrderController extends Controller
     }
     public function changeStatus(Request $request){
         $data = $request->all();
-        print_r($data);
+        // print_r($data);
         $orderId = $data['orderId'];
         $status = $data['status'];
         $quantityOrder = $data['quantityOrder'];
         $productId = $data['productId'];
+        $productColorId = $data['productColorId'];
         $totalOrder = $data['totalOrder'];
         $changeStatus = Order::find($orderId);
         $changeStatus->status_order = $status;
@@ -83,14 +84,12 @@ class OrderController extends Controller
                 $quantityStatistic = $statistic[0]->quantity_statistic;
                 $totalStatistic = $statistic[0]->price_statistic;
                 $quantityAll = $allQuantity + $quantityStatistic;
-                // print_r($allQuantity);
                 $totalAll = $totalOrder + $totalStatistic;
                 $statistic->toQuery()->update([
                     'quantity_statistic' => $quantityAll,
                     'price_statistic' => $totalAll,
                     'date_statistic' => $date_order,
                 ]);
-                // echo "1";
             }else{
                 $quantityAll = $allQuantity;
                 $totalAll = $totalOrder;
@@ -99,22 +98,24 @@ class OrderController extends Controller
                     'price_statistic' => $totalAll,
                     'date_statistic' => $date_order,
                 );
-                $createStatistic = Statistic::create($arrayStatistic);
+                Statistic::create($arrayStatistic);
                 // print_r($createStatistic);
             }
         }else if($changeStatus->status_order == 3){
-            foreach($productId as $keyProduct => $p){
-                $product = Product::find($p);
-                $quantity = $product->quantity_product;
-                $quantitySold = $product->quantity_sold_product;
-                foreach($quantityOrder as $keyQuantity => $q){
-                    if($keyProduct == $keyQuantity){
-                        if($quantitySold <= $quantity){
-                            $product->quantity_sold_product -= $q;
-                            $product->quantity_product += $q;
-                            $product->save();
-                        }else{
-                            echo "Hết";
+            foreach($productColorId as $keyProductColor => $pc){
+                foreach($productId as $keyProduct => $p){
+                    $product = Product::find($p);
+                    $productColor = ProductColor::where('id_product',$p)->where("id_color",$pc)->first();
+                    if($keyProduct == $keyProductColor){
+                        $quantity = $productColor->quantity_product_color;
+                        $quantitySold = $product->quantity_sold_product;
+                        foreach($quantityOrder as $keyQuantity => $q){
+                            if($keyProduct == $keyQuantity){
+                                $product->quantity_sold_product -= $q;
+                                $productColor->quantity_product_color += $q;
+                                $productColor->save();
+                                $product->save();
+                            }
                         }
                     }
                 }
