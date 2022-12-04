@@ -22,7 +22,7 @@
                             <ul class="d-flex flex-wrap list-style-none pl-0" >
                                 @foreach($selectBrand as $key => $b)
                                 <li class="col-4">
-                                    <a href="" class="dropdown-item text-muted text-12 text-center">{{$b->name_brand}}</a>
+                                    <a href="{{route('brand.productByBrand',$b->name_brand)}}" class="dropdown-item text-muted text-12 text-center">{{$b->name_brand}}</a>
                                 </li>
                                 @endforeach
                             </ul>
@@ -34,7 +34,7 @@
         </div>
         <div class="col-lg-9">
             <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
-                <a href="{{route('home.page')}}" class="text-decoration-none d-block d-lg-none">
+                <a href="" class="text-decoration-none d-block d-lg-none">
                     <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1>
                 </a>
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -42,21 +42,13 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between bg-white-smoke" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                        <a href="#" class="nav-item nav-link text-gray active">Trang chủ</a>
-                        <a href="shop.html" class="nav-item nav-link text-gray">Shop</a>
-                        <a href="detail.html" class="nav-item nav-link text-gray">Shop Detail</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link text-gray dropdown-toggle" data-toggle="dropdown">Pages</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="cart.html" class="dropdown-item">Shopping Cart</a>
-                                <a href="checkout.html" class="dropdown-item">Checkout</a>
-                            </div>
-                        </div>
-                        <a href="contact.html" class="nav-item nav-link text-gray">Liên hệ</a>
+                        <a href="{{route('home.page')}}" class="f-16 nav-item nav-link text-info active">Trang chủ</a>
+                        <a href="shop.html" class="nav-item nav-link text-info f-16">Tình trạng đơn hàng</a>
+                        <a href="contact.html" class="nav-item nav-link text-info f-16">Liên hệ</a>
                     </div>
                     <?php
                         $idCustomer = Session::get('id',null);
-                        $username = Session::get('username',null);
+                        $username = Session::get('usernameCustomer',null);
                         $imageCustomer = Session::get('imageCustomer',null);
                         $nameCustomer = Session::get('nameCustomer',null);
                         if(isset($username)){
@@ -65,8 +57,9 @@
                         <img class="w-37 h-25 img-profile profile-hover dropdown " src="{{url('images/customer/'.$imageCustomer)}}" alt="">
                         <div class="nav-item">
                             <div class="dropdown-menu d-none left-profile__63 top-profile__127 profile-info rounded-0 m-0">
-                                <a href="#" class="dropdown-item text-muted f-14"><i class="fas fa-signature pr-1"></i>{{$nameCustomer}}</a>
-                                <a href="cart.html" class="dropdown-item text-muted f-14"><i class="fas fa-envelope" style="padding-right: 7px !important;"></i>{{$username}}</a>
+                                <a href="{{route('customer.profile',['idCustomer' => $idCustomer])}}" class="dropdown-item text-muted f-14"><i class="fas fa-signature pr-1"></i>{{$nameCustomer}}</a>
+                                <a href="{{route('customer.profile',['idCustomer' => $idCustomer])}}" class="dropdown-item text-muted f-14"><i class="fas fa-envelope" style="padding-right: 7px !important;"></i>{{$username}}</a>
+                                <a href="{{route('home.changePass',['email' => $username])}}" class="dropdown-item text-muted f-14"><i class="fas fa-lock-open" style="padding-right: 5px !important;"></i>Đổi mật khẩu</a>
                                 <a href="{{route('home.logout')}}" class="dropdown-item text-muted f-14"><i class="fas fa-right-from-bracket " style="padding-right: 7px !important;"></i>Đăng xuất</a>
                             </div>
                         </div>
@@ -75,8 +68,8 @@
                         }else{
                     ?>
                     <div class="navbar-nav ml-auto py-0">
-                        <a href="{{route('home.loginForm')}}" class="nav-item nav-link text-gray">Đăng nhập</a>
-                        <a href="{{route('home.loginForm')}}" class="nav-item nav-link text-gray">Đăng ký</a>
+                        <a href="{{route('home.loginForm')}}" class="nav-item text-white btn btn-primary rounded mr-3">Đăng nhập</a>
+                        <a href="{{route('home.loginForm')}}" class="nav-item text-white btn btn-primary rounded">Đăng ký</a>
                     </div>
                     <?php
                         }
@@ -124,34 +117,28 @@
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                             <input type="checkbox" class="custom-control-input" @if(!$max && !$min) checked @endif onclick="location.href='{{$routeAll}}'" id="price-all">
                             <label class="custom-control-label f-14" for="price-all">Tất cả các giá</label>
-                            <span class="badge border font-weight-normal">{{$numberFindProduct}}</span>
                         </div> 
                          
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                             <input type="checkbox" class="custom-control-input" @if($max == 5000000) checked @endif @if($max == 5000000) onclick="location.href='{{$routeAll}}'" @else onclick="location.href='{{$routeUnder5}}'" @endif id="price-1">
                             <label class="custom-control-label f-14" for="price-1">Dưới 5 triệu</label>
-                            <span class="badge border font-weight-normal">{{$numberFindProduct}}</span>
                         </div>
                         
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                             <input type="checkbox" class="custom-control-input" @if($max == 10000000) checked @endif @if($max == 10000000) onclick="location.href='{{$routeAll}}'" @else onclick="location.href='{{$route5To10}}'" @endif id="price-2">
                             <label class="custom-control-label f-14" for="price-2">5 triệu - 10 triệu</label>
-                            <span class="badge border font-weight-normal">{{$numberFindProduct}}</span>
                         </div>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                             <input type="checkbox" class="custom-control-input" @if($max == 20000000) checked @endif @if($max == 20000000) onclick="location.href='{{$routeAll}}'" @else onclick="location.href='{{$route10To20}}'" @endif id="price-3">
                             <label class="custom-control-label f-14" for="price-3">10 triệu - 20 triệu</label>
-                            <span class="badge border font-weight-normal">{{$numberFindProduct}}</span>
                         </div>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                             <input type="checkbox" class="custom-control-input" @if($max == 30000000) checked @endif @if($max == 30000000) onclick="location.href='{{$routeAll}}'" @else onclick="location.href='{{$route20To30}}'" @endif id="price-4">
                             <label class="custom-control-label f-14" for="price-4">20 triệu - 30 triệu</label>
-                            <span class="badge border font-weight-normal">{{$numberFindProduct}}</span>
                         </div>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                             <input type="checkbox" class="custom-control-input" @if($min == 30000000) checked @endif @if($min == 30000000) onclick="location.href='{{$routeAll}}'" @else onclick="location.href='{{$routeUp30}}'" @endif id="price-5">
                             <label class="custom-control-label f-14" for="price-5">Trên 30 triệu</label>
-                            <span class="badge border font-weight-normal">{{$numberFindProduct}}</span>
                         </div>
                     </form>
                 </div>
@@ -275,21 +262,17 @@
                     @foreach($selectProductByCategory as $key => $spbc)
                     <div class="col-lg-3 col-md-3 col-sm-12 pb-1">
                         <div class="card product-item border-0 mb-4">
-                            <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                <img class="img-fluid w-100" src="{{url('images/product/'.$spbc->image_product)}}" alt="">
+                            <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0 rounded-top border-info">
+                                <img class="img-fluid w-75 m-auto d-block" src="{{url('images/product/'.$spbc->image_product)}}" alt="">
                             </div>
-                            <div class="card-body border-left border-right text-center spbc-0 pt-4 pb-3">
-                                <h6 class="text-truncate mb-3">{{$spbc->name_product}}</h6>
+                            <div class="card-body border-left border-right text-center pt-4 pb-3 border-info">
+                                <h6 class="text-truncate mb-3 f-16">{{$spbc->name_product}}</h6>
                                 <div class="d-flex justify-content-center">
-                                    <h6>{{number_format($spbc->price_product,0,',','.')}} ₫</h6><h6 class="text-muted ml-2"><del class="f-14">{{number_format($spbc->price_product,0,',','.')}} ₫</del></h6>
+                                    <h6 class="f-16">{{number_format($spbc->price_product,0,',','.')}} ₫</h6><h6 class="text-muted ml-2 f-16"><del class="f-16">{{number_format($spbc->price_product,0,',','.')}} ₫</del></h6>
                                 </div>
                             </div>
-                            <div class="card-footer d-flex justify-content-between bg-light border">
-                                <a href="{{route('product.detailProduct',['idProduct'=>$spbc->id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
-                                <form action="{{route('cart.addCart')}}" method="post">
-                                    @csrf
-                                    <button type="submit" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</button>
-                                </form>
+                            <div class="d-flex justify-content-center bg-light border rounded-bottom border-info">
+                                <a href="{{route('product.detailProduct',['idProduct'=>$spbc->id])}}" class="p-2 btn btn-info flex-fill me-1 p-0 f-16">Xem chi tiết</a>
                             </div>
                         </div>
                     </div>

@@ -41,20 +41,13 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between bg-white-smoke" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                        <a href="#" class="nav-item nav-link text-gray active">Trang chủ</a>
-                        <a href="shop.html" class="nav-item nav-link text-gray">Shop</a>
-                        <a href="detail.html" class="nav-item nav-link text-gray">Shop Detail</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link text-gray dropdown-toggle" data-toggle="dropdown">Pages</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="cart.html" class="dropdown-item">Shopping Cart</a>
-                                <a href="checkout.html" class="dropdown-item">Checkout</a>
-                            </div>
-                        </div>
-                        <a href="contact.html" class="nav-item nav-link text-gray">Liên hệ</a>
+                        <a href="{{route('home.page')}}" class="f-16 nav-item nav-link text-info active">Trang chủ</a>
+                        <a href="shop.html" class="nav-item nav-link text-info f-16">Tình trạng đơn hàng</a>
+                        <a href="contact.html" class="nav-item nav-link text-info f-16">Liên hệ</a>
                     </div>
                     <?php
-                        $username = Session::get('username',null);
+                        $idCustomer = Session::get('id',null);
+                        $username = Session::get('usernameCustomer',null);
                         $imageCustomer = Session::get('imageCustomer',null);
                         $nameCustomer = Session::get('nameCustomer',null);
                         if(isset($username)){
@@ -63,8 +56,9 @@
                         <img class="w-37 h-25 img-profile profile-hover dropdown " src="{{url('images/customer/'.$imageCustomer)}}" alt="">
                         <div class="nav-item">
                             <div class="dropdown-menu d-none left-profile__63 top-profile__127 profile-info rounded-0 m-0">
-                                <a href="#" class="dropdown-item text-muted f-14"><i class="fas fa-signature pr-1"></i>{{$nameCustomer}}</a>
-                                <a href="cart.html" class="dropdown-item text-muted f-14"><i class="fas fa-envelope" style="padding-right: 7px !important;"></i>{{$username}}</a>
+                                <a href="{{route('customer.profile',['idCustomer' => $idCustomer])}}" class="dropdown-item text-muted f-14"><i class="fas fa-signature pr-1"></i>{{$nameCustomer}}</a>
+                                <a href="{{route('customer.profile',['idCustomer' => $idCustomer])}}" class="dropdown-item text-muted f-14"><i class="fas fa-envelope" style="padding-right: 7px !important;"></i>{{$username}}</a>
+                                <a href="{{route('home.changePass',['email' => $username])}}" class="dropdown-item text-muted f-14"><i class="fas fa-lock-open" style="padding-right: 5px !important;"></i>Đổi mật khẩu</a>
                                 <a href="{{route('home.logout')}}" class="dropdown-item text-muted f-14"><i class="fas fa-right-from-bracket " style="padding-right: 7px !important;"></i>Đăng xuất</a>
                             </div>
                         </div>
@@ -73,8 +67,8 @@
                         }else{
                     ?>
                     <div class="navbar-nav ml-auto py-0">
-                        <a href="{{route('home.loginForm')}}" class="nav-item nav-link text-gray">Đăng nhập</a>
-                        <a href="{{route('home.loginForm')}}" class="nav-item nav-link text-gray">Đăng ký</a>
+                        <a href="{{route('home.loginForm')}}" class="nav-item text-white btn btn-primary rounded mr-3">Đăng nhập</a>
+                        <a href="{{route('home.loginForm')}}" class="nav-item text-white btn btn-primary rounded">Đăng ký</a>
                     </div>
                     <?php
                         }
@@ -146,38 +140,29 @@
                 </div>
                 <small class="pt-1">({{$selectReview->count()}} reviews)</small>
             </div>
-            <form action="{{route('cart.addCart')}}" method="POST">
-                @csrf
-                <h3 class="font-weight-semi-bold mb-4">{{number_format($selectProductId->price_product,0,',','.')}} đ</h3>
-                <p class="mb-4">Kho hàng: <span class="quantity-product">{{$countProduct}}</span> sản phẩm</p>
-                <div class="d-flex mb-4">
-                    <p class="text-dark font-weight-medium mb-0 mr-3">Màu sắc:</p>
-                    @foreach($selectProductColorId as $key => $cl)
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" class="custom-control-input color-product" value="{{$cl->id_color}}" {{$key == 0 ? 'checked' : ""}} data-id="{{$selectProductId->id}}" data-color="{{$cl->id_color}}" id="color-{{$cl->id_color}}" name="color_product">
-                        <label class="custom-control-label" for="color-{{$cl->id_color}}">{{$cl->name_color}}</label>
-                    </div>
-                    @endforeach
+            @csrf
+            <h3 class="font-weight-semi-bold mb-4">{{number_format($selectProductId->price_product,0,',','.')}} đ</h3>
+            <p class="mb-4">Kho hàng: <span class="quantity-product">{{$countProduct}}</span> sản phẩm</p>
+            <div class="d-flex mb-4">
+                <p class="text-dark font-weight-medium mb-0 mr-3">Màu sắc:</p>
+                @foreach($selectProductColorId as $key => $cl)
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" class="custom-control-input color-product" {{($cl->quantity_product_color == 0) ? "disabled" : ""}} value="{{$cl->id_color}}" {{$key == 0 ? 'checked' : ""}} data-id="{{$selectProductId->id}}" data-color="{{$cl->id_color}}" id="color-{{$cl->id_color}}" name="color_product">
+                    <label class="custom-control-label" for="color-{{$cl->id_color}}">{{$cl->name_color}}</label>
                 </div>
-                <div class="d-flex align-items-center mb-4 pt-2">       
-                    <div class="input-group quantity mr-3" style="width: 130px;">
-                        <!-- <div class="input-group-btn">
-                            <button class="btn btn-primary btn-minus" >
-                            <i class="fa fa-minus"></i>
-                            </button>
-                        </div> -->
-                        <input type="hidden" name="id_product" value="{{$selectProductId->id}}">
-                        <input type="hidden" name="id_product_color" class="id-product-color" value="{{$selectProductId->id_product_color}}">
-                        <input type="number" min="0" max="{{$selectProductId->quantity_product_color}}" name="quantity_product" class="form-control bg-secondary text-center" value="1">
-                        <!-- <div class="input-group-btn">
-                            <button class="btn btn-primary btn-plus" max>
-                                <i class="fa fa-plus"></i>
-                            </button>
-                        </div> -->
-                    </div>
-                    <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ hàng</button>
+                @endforeach
+            </div>
+            <div class="d-flex align-items-center mb-4 pt-2">       
+                <div class="input-group quantity mr-3" style="width: 130px;">
+                    <input type="hidden" name="id_product" value="{{$selectProductId->id}}">
+                    <input type="hidden" name="id_product_color" class="id-product-color" value="{{$selectProductId->id_product_color}}">
+                    <input type="number" min="0" max="{{$selectProductId->quantity_product_color}}" name="quantity_product" class="form-control bg-secondary text-center" value="1">
                 </div>
-            </form>
+            </div>
+            <div class="d-flex">
+                <button class="btn btn-outline-info px-3 rounded mb-2 mr-3 w-25 go-cart"><i class="fa-solid fa-cart-plus" style="font-size:21px;"></i><br><span class="f-14">Mua ngay</span></button>
+                <button class="btn btn-outline-info px-3 rounded mb-2 add-cart"><i class="fas fa-basket-shopping" style="font-size:21px;"></i><br><span class="f-14">Thêm vào giỏ</span></button>
+            </div>
             <div class="d-flex pt-2">
                 <p class="text-dark font-weight-medium mb-0 mr-2">Chia sẻ:</p>
                 <div class="d-inline-flex">
