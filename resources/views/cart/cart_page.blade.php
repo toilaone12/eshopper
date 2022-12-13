@@ -165,7 +165,7 @@
                 <div class="input-group">
                     <input type="text" class="form-control p-4" name="name_coupon" placeholder="Nhập mã giảm giá">
                     <div class="input-group-append">
-                        <button type="submit" class="btn btn-primary">Mã giảm giã</button>
+                        <button type="submit" class="btn btn-primary">Nhập mã</button>
                     </div>
                 </div>
             </form>

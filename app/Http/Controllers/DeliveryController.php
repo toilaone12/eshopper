@@ -94,21 +94,21 @@ class DeliveryController extends Controller
             return redirect()->route('delivery.listDelivery');
         }
     }
-    public function calculatorDelivery(Request $request){
-        $data = $request->all();
-        $province = $data['province'];
-        Session::get('fee');
-        if($province == 1){
-            $delivery = Delivery::where('province_feeship',$province)->get();
-        }else{
-            $delivery = Delivery::where('province_feeship',$province)->get();
-        }
-        foreach($delivery as $key => $d){
-            $priceDelivery = $d->price_feeship;
-        }
-        Session::put('fee',$priceDelivery);
-        Session::save();
-        echo "return";
-    }
+    // public function calculatorDelivery(Request $request){
+    //     $data = $request->all();
+    //     $province = $data['province'];
+    //     Session::get('fee');
+    //     if($province == 1){
+    //         $delivery = Delivery::where('province_feeship',$province)->get();
+    //     }else{
+    //         $delivery = Delivery::where('province_feeship',$province)->get();
+    //     }
+    //     foreach($delivery as $key => $d){
+    //         $priceDelivery = $d->price_feeship;
+    //     }
+    //     Session::put('fee',$priceDelivery);
+    //     Session::save();
+    //     echo "return";
+    // }
 
 }

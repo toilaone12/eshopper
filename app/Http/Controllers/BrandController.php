@@ -108,13 +108,14 @@ class BrandController extends Controller
     }
     public function productByBrand($nameBrand,Request $request){
         $filterPrice = $request->get('filterPrice');
-        $min = $request ->get('min');
-        $max = $request ->get('max');
+        $min = $request->get('min');
+        $max = $request->get('max');
         $searchProduct = $request->get('search');
         $selectCategory = Category::all();
         $selectBrand = Brand::all();
         $selectByBrand = Brand::where('name_brand',$nameBrand)->first();
         // DB::enableQueryLog();
+        $errorFilter = "";
         $selectProductByBrand = Product::join('brand as b','b.id_brand','product.id_brand')
         ->where('b.name_brand',$nameBrand);
         if($filterPrice == 'asc' || $filterPrice == 'desc'){
@@ -140,9 +141,15 @@ class BrandController extends Controller
             ->where('product.price_product','<=',$max);
         }
         if(isset($max) && isset($min)){
-            $selectProductByBrand = $selectProductByBrand
-            ->where('product.price_product','<=',$max)
-            ->where('product.price_product','>=',$min);
+            if($max < $min){
+                $errorFilter = "Lỗi lọc giá yêu cầu lọc lại!";
+            }else if($max == "" || $min == ""){
+                $selectProductByBrand = $selectProductByBrand;
+            }else{
+                $selectProductByBrand = $selectProductByBrand
+                ->where('product.price_product','<=',$max)
+                ->where('product.price_product','>=',$min);
+            }
         }
         if(isset($min)){
             $selectProductByBrand = $selectProductByBrand
@@ -160,6 +167,7 @@ class BrandController extends Controller
             'selectProductByBrand',
             'searchProduct',
             'numberFindProduct',
+            'errorFilter',
             'max',
             'min'
         )); //compact: truyen du lieu cho view

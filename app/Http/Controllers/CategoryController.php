@@ -80,6 +80,7 @@ class CategoryController extends Controller
         $selectBrand = Brand::all();
         $selectByCategory = Category::where('name_category',$nameCategory)->first();
         // DB::enableQueryLog();
+        $errorFilter = "";
         $selectProductByCategory = Product::join('category as ca','ca.id_category','product.id_category')
         ->where('ca.name_category',$nameCategory);
         if($filterPrice == 'asc' || $filterPrice == 'desc'){
@@ -105,8 +106,14 @@ class CategoryController extends Controller
             ->where('product.price_product','<=',$max);
         }
         if(isset($max) && isset($min)){
-            $selectProductByCategory = $selectProductByCategory
-            ->whereBetween('product.price_product',$min,$max);
+            if($max < $min){
+                $errorFilter = "Lỗi lọc giá yêu cầu lọc lại!";
+            }else if($max == "" || $min == ""){
+                $selectProductByCategory = $selectProductByCategory;
+            }else{
+                $selectProductByCategory = $selectProductByCategory
+                ->whereBetween('product.price_product',[$min,$max]);
+            }
         }
         if(isset($min)){
             $selectProductByCategory = $selectProductByCategory
@@ -124,6 +131,7 @@ class CategoryController extends Controller
             'selectProductByCategory',
             'searchProduct',
             'numberFindProduct',
+            'errorFilter',
             'max',
             'min'
         )); //compact: truyen du lieu cho view

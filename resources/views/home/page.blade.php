@@ -213,7 +213,7 @@ session_start();
         <div class="row px-xl-5 pb-3">
             @foreach($selectOutstanding as $key => $outStanding)
             <div class="col-lg-2 col-md-3 col-sm-12 pb-2">
-                <div class="card product-item border-0 mb-4">
+                <div class="card product-item border-0 mb-4 choose-item">
                     <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0 rounded-top border-info">
                         <img class="img-fluid w-75 m-auto d-block" src="{{url('images/product/'.$outStanding->image_product)}}" alt="">
                     </div>
@@ -223,8 +223,8 @@ session_start();
                             <h6 class="f-16">{{number_format($outStanding->price_product,0,',','.')}} ₫</h6><h6 class="text-muted ml-2 f-16"><del class="f-16">{{number_format($outStanding->price_product,0,',','.')}} ₫</del></h6>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-center bg-light border rounded-bottom border-info">
-                        <a href="{{route('product.detailProduct',['idProduct'=>$outStanding->id])}}" class="p-2 btn btn-info flex-fill me-1 p-0 f-16">Xem chi tiết</a>
+                    <div class="detail-product d-flex justify-content-center bg-light border rounded-bottom border-info">
+                        <a href="{{route('product.detailProduct',['idProduct'=>$outStanding->id])}}" class="link-detail p-2 btn btn-light flex-fill me-1 p-0 f-16 rounded-bottom"><span>Xem chi tiết</span></a>
                     </div>
                 </div>
             </div>
@@ -278,8 +278,8 @@ session_start();
                             <h6 class="f-16">{{number_format($p->price_product,0,',','.')}} ₫</h6><h6 class="text-muted ml-2 f-16"><del>{{number_format($p->price_product,0,',','.')}} ₫</del></h6>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-center bg-light border rounded-bottom border-info">
-                        <a href="{{route('product.detailProduct',['idProduct'=>$p->id])}}" class="p-2 btn btn-info flex-fill me-1 p-0 f-16">Xem chi tiết</a>
+                    <div class="detail-product d-flex justify-content-center bg-light border rounded-bottom border-info">
+                        <a href="{{route('product.detailProduct',['idProduct'=>$p->id])}}" class="link-detail p-2 btn btn-light flex-fill me-1 p-0 f-16 rounded-bottom"><span>Xem chi tiết</span></a>
                     </div>
                 </div>
             </div>

@@ -108,6 +108,7 @@
                         $coupon = Session::get('coupon');
                         $fee = Session::get('fee');
                         $typeShipping = $checkInfo['typeShipping'];
+                        $totalOrder = preg_replace('/[^0-9\-]/','',$checkInfo['totalOrder']);
                     @endphp
                     <div class="row px-3">
                         <div class="col-md-12 form-group f-16 pt-3">
@@ -137,8 +138,20 @@
                             Mã khuyến mãi áp dụng:<span class="f-16 text-dark"> Không có</span>
                         </div>
                         @endif
+                        @if($typeShipping == 0)
+                        <div class="col-md-12 form-group f-16">
+                            Phí vận chuyển: <span class="f-16 text-dark">0 ₫</span>
+                        </div>
+                        @else
+                        <div class="col-md-12 form-group f-16">
+                            Phí vận chuyển: <span class="f-16 text-dark">{{number_format($fee,0,',','.')}} ₫</span>
+                        </div>
+                        @endif
                         <div class="col-md-12 form-group f-16 ">
-                            Tổng tiền:<span class="f-16 text-dark total-order"> {{$checkInfo['totalOrder']}}</span>
+                            Tổng tiền:
+                            <span class="f-16 text-dark total-order"> 
+                                {{(isset($fee)) ? number_format($totalOrder + $fee,0,',','.')." ₫" : number_format($totalOrder,0,',','.')." ₫"}}
+                            </span>
                         </div>
                     </div>
                     
