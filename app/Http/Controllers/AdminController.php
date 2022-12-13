@@ -52,7 +52,7 @@ class AdminController extends Controller
         }
         // $checkLogin = Admin::where('name_admin',$userName)->where('password_admin',$passMd5)->first();
         // if($checkLogin){
-        //     Session::put('username',$userName); 
+       // //     Session::put('username',$userName); 
         //     return redirect()->route('admin.dashboard');
         // }else{
         //     return redirect()->route('admin.login');
