@@ -127,7 +127,7 @@
                 </a> -->
             </div>
         </div>
-        <div class="col-lg-7 pb-5">
+        <div class="col-lg-7 pb-5 pl-5">
             <h3 class="font-weight-semi-bold">{{$selectProductId->name_product}}</h3>
             <div class="d-flex mb-3">
                 <div class="text-primary mr-2">
@@ -345,7 +345,7 @@
 <!-- Products Start -->
 <div class="container-fluid py-5">
     <div class="text-center mb-4">
-        <h2 class="section-title px-5"><span class="px-2">Các sản phẩm cùng danh mục</span></h2>
+        <h3 class="section-title px-5"><span class="px-2">Các sản phẩm cùng danh mục</span></h3>
     </div>
     <div class="row px-xl-5">
         <div class="col">

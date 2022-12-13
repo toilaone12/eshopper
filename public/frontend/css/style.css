@@ -2332,7 +2332,7 @@ textarea.form-control {
 .btn {
   display: inline-block;
   font-weight: 400;
-  color: #6F6F6F;
+  color: #000;
   text-align: center;
   vertical-align: middle;
   user-select: none;
@@ -9800,6 +9800,48 @@ p {
 }
 .demo{
   width:450px;
+}
+.detail-product{
+  position: relative;
+  top: 22px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.link-detail{
+  transition: all .35s;
+  
+}
+
+.link-detail span{
+  position: relative;
+  z-index: 2;
+}
+
+.link-detail:after{
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: #17a2b8;
+  transition: all 1.35s;
+  border-bottom-left-radius: 0.25rem !important;
+  border-bottom-right-radius: 0.25rem !important;
+}
+
+.link-detail:hover{
+  color: #fff;
+  text-decoration: none;
+}
+
+.link-detail:hover:after{
+  width: 100%;
+}
+
+.background-category{
+  background-color: #f4f4f4;
 }
 @keyframes showCart{
   from {

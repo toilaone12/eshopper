@@ -161,6 +161,7 @@
                                 </option>
                                 @endforeach
                             </select>
+                            <span class="text-danger f-14 error-text error-address_order"></span>
                         </div>
                         <div class="col-md-12 form-group">
                             <label for="exampleFormControlInput2">Tên quận, huyện</label>
@@ -177,8 +178,9 @@
                         <div class="col-md-12 form-group">
                             <label for="address">Địa chỉ cụ thể</label>
                             <input class="form-control" name="address_order" id="address" type="text" placeholder="Địa chỉ cụ thể">
+                            <span class="text-danger f-14 error-text error-address_order"></span>
                         </div>
-                        <button class="btn btn-primary rounded add-delivery">Tính phí vận chuyển</button>
+                        <!-- <button class="btn btn-primary rounded add-delivery">Tính phí vận chuyển</button> -->
                     </div>
                 </div>
             </div>
@@ -233,16 +235,6 @@
                                 @endif
                             </h6> 
                         </div>
-                        <div class="d-flex justify-content-between">
-                            <h6 class="font-weight-medium f-14">Phí vận chuyển</h6>
-                            <h6 class="font-weight-medium f-14">
-                                @if(isset($fee))
-                                    {{number_format($fee,0,',','.')}} ₫
-                                @else
-                                    {{0}} ₫
-                                @endif
-                            </h6> 
-                        </div>
                     </div>
                     <div class="card-footer border-secondary bg-transparent">
                         <div class="d-flex justify-content-between mt-2">
@@ -264,8 +256,6 @@
                                         {{number_format($allTotal - $cou['discount_coupon'],0,',','.')}} ₫
                                         @endif
                                     @endforeach
-                                @elseif(isset($fee))
-                                    {{number_format($allTotal + $fee,0,',','.')}} ₫
                                 @else
                                     {{number_format($allTotal,0,',','.')}} ₫
                                 @endif

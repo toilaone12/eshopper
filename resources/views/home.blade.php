@@ -192,6 +192,8 @@
     <script src="mail/jqBootstrapValidation.min.js"></script>
     <script src="mail/contact.js"></script>
     <script>
+    //Loc gia
+    //Danh gia sao
     $(document).on('mouseenter','.rating',function(){
         var index = $(this).data('index');
         var product_id = $(this).data('product_id');
@@ -227,6 +229,7 @@
             })
         });
     });
+    //Gui binh luan
     $(document).on('click','.send-comment',function(){
         var idProduct = $('.product-id').val();
         var nameComment = $('.comment-name').val();
@@ -459,33 +462,33 @@
             });
         });
     });
-    $(document).ready(function(){
-        $('.add-delivery').on('click',function(){
-            var province = $('.province').val();
-            var token = $('input[name="_token"]').val();
-            if(province === ''){
-                alert("Bạn chưa chọn thông tin!");
-            }else{
-                $.ajax({
-                    url: "{{route('delivery.addDelivery')}}",
-                    method: 'POST',
-                    headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: {
-                        province:province,
-                        token:token,
-                    },
-                    success:function(data){
-                        // console.log(data);
-                        if(data == "return"){
-                            location.reload();
-                        }
-                    }
-                })
-            }
-        });
-    });
+    // $(document).ready(function(){
+    //     $('.add-delivery').on('click',function(){
+    //         var province = $('.province').val();
+    //         var token = $('input[name="_token"]').val();
+    //         if(province === ''){
+    //             alert("Bạn chưa chọn thông tin!");
+    //         }else{
+    //             $.ajax({
+    //                 url: "{{route('delivery.addDelivery')}}",
+    //                 method: 'POST',
+    //                 headers: {
+    //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //                 },
+    //                 data: {
+    //                     province:province,
+    //                     token:token,
+    //                 },
+    //                 success:function(data){
+    //                     // console.log(data);
+    //                     if(data == "return"){
+    //                         location.reload();
+    //                     }
+    //                 }
+    //             })
+    //         }
+    //     });
+    // });
     $(document).ready(function(){
         $('.pay-cart').on('click',function(e){
             e.preventDefault();
@@ -495,6 +498,7 @@
             var emailOrder = $("input[type='email'][name='email_order']").val();
             var totalOrder = $(".total-order").text();
             var addressOrder = '';
+            var countryDelivery = $('.province').val();
             if(typeShipping == 0){
                 var addressOrder = $(".name-address").text();
             }else if(typeShipping == undefined){
@@ -516,6 +520,7 @@
                     phone_order:phoneOrder,
                     email_order:emailOrder,
                     total_order:totalOrder,
+                    fee_delivery:countryDelivery,
                 },
                 beforeSend:function(){
                     $(document).find('span.error-text').text('');
@@ -530,6 +535,7 @@
                     }
                 },
             });
+            // alert(countryDelivery);
             // alert(typeShipping+"-"+nameOrder+"-"+emailOrder+"-"+phoneOrder+"-"+addressOrder+"-"+totalOrder);
         })
         $('.add-order').on('click',function(e){
@@ -590,18 +596,20 @@
                             addressOrder:addressOrder,
                             totalOrder:totalOrder,
                             statusOrder:statusOrder,
+                            typeCard:typeCard,
                             namePayment:namePayment,
                             discountOrder:discountOrder,
                             feeDelivery:feeDelivery,
                             token:token,
                         },
                         success:function(data){
-                            Swal.fire(
-                            'Đặt hàng thành công!',
-                            'Vui lòng kiểm tra mã đơn hàng tại email của bạn',
-                            'success'
-                            )
-                            window.location.href = "{{route('cart.checkCart')}}";
+                            // console.log(data);
+                            // Swal.fire(
+                            // 'Đặt hàng thành công!',
+                            // 'Vui lòng kiểm tra mã đơn hàng tại email của bạn',
+                            // 'success'
+                            // )
+                            window.location.href = data;
                         }
                     });
                 }
