@@ -295,6 +295,19 @@
                     </div>
                 </div>
             </li>
+            <li class="nav-item">   
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo20"
+                    aria-expanded="true" aria-controls="collapseTwo20">
+                    <i class="fa-solid fa-chart-simple"></i>
+                    <span>Liên hệ</span>
+                </a>
+                <div id="collapseTwo20" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Chọn:</h6>
+                        <a class="collapse-item" style="white-space:normal !important;" href="{{route('contact.listContact')}}">Thông tin liên hệ</a>{{--sử dụng route() --}}
+                    </div>
+                </div>
+            </li>
             <!-- Nav Item - Utilities Collapse Menu -->
             <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
@@ -1234,32 +1247,6 @@
                 $('.gallery').addClass('d-none');
                 $('.gallery').removeClass('d-flex');
             })
-            // $('.add-gallery').on('change',function(){
-            //     var token = $('input[name="_token"]').val();
-            //     var image = $('#file')[0].files;
-            //     if(image.length > 3){
-            //         Swal.fire({
-            //             icon: 'error',
-            //             title: 'Vấn đề về ảnh của bạn',
-            //             text: 'Số ảnh trong sản phẩm không quá 3 sản phẩm'
-            //         }) 
-            //     }else if(image.length == ''){
-            //         Swal.fire({
-            //             icon: 'error',
-            //             title: 'Vấn đề về ảnh của bạn',
-            //             text: 'Bạn không thể để ảnh trống được'
-            //         }) 
-            //     }else if(image.size > 20000000){
-            //         Swal.fire({
-            //             icon: 'error',
-            //             title: 'Vấn đề về ảnh của bạn',
-            //             text: 'Ảnh của bạn không thế quá 2MB'
-            //         }) 
-            //     }
-            //     // image.each(function(){
-            //     //     arrayImage.push($(this).val());
-            //     // });
-            // });
             $('.update-gallery').change(function(){
                 var token = $('input[name="_token"]').val();
                 var idGallery = $(this).data('gallery');
@@ -1324,6 +1311,10 @@
                         } 
                     })
                 }
+            });
+            $('.open-contact').click(function(){
+                $('.warehouse').addClass('d-flex');
+                $('.warehouse').removeClass('d-none');
             });
         });
     </script>

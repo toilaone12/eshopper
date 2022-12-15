@@ -33,18 +33,18 @@ session_start();
             </nav>
         </div>
         <div class="col-lg-9">
-            <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+            <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0 mb-3">
                 <a href="" class="text-decoration-none d-block d-lg-none">
                     <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1>
                 </a>
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse justify-content-between bg-white-smoke" id="navbarCollapse">
+                <div class="collapse navbar-collapse justify-content-between rounded shadow" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                        <a href="{{route('home.page')}}" class="f-16 nav-item nav-link text-info active">Trang chủ</a>
-                        <a href="shop.html" class="nav-item nav-link text-info f-16">Tình trạng đơn hàng</a>
-                        <a href="contact.html" class="nav-item nav-link text-info f-16">Liên hệ</a>
+                        <a href="{{route('home.page')}}" class="f-16 nav-item nav-link text-info active"><i class="fa-solid fa-house f-16"></i> Trang chủ</a>
+                        <a href="{{route('order.checkDelivery')}}" class="nav-item nav-link text-info f-16"><i class="fa-solid fa-truck-fast f-16"></i> Tình trạng đơn hàng</a>
+                        <a href="{{route('contact.contactShop')}}" class="nav-item nav-link text-info f-16"><i class="fa-solid fa-address-book f-16"></i> Liên hệ</a>
                     </div>
                     <?php
                         $idCustomer = Session::get('id',null);
@@ -68,8 +68,7 @@ session_start();
                         }else{
                     ?>
                     <div class="navbar-nav ml-auto py-0">
-                        <a href="{{route('home.loginForm')}}" class="nav-item text-white btn btn-primary rounded mr-3">Đăng nhập</a>
-                        <a href="{{route('home.loginForm')}}" class="nav-item text-white btn btn-primary rounded">Đăng ký</a>
+                        <a href="{{route('home.loginForm')}}" class="d-flex align-items-center nav-item text-white btn btn-primary rounded mr-3"><i class="fa-regular fa-circle-user mr-1" style="font-size: 18px;"></i><span class="f-14">Đăng nhập</span></a>
                     </div>
                     <?php
                         }
@@ -79,7 +78,7 @@ session_start();
             <div id="header-carousel" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                     @foreach($selectFirstSlide as $key => $sf)
-                    <div class="carousel-item active" style="height: 410px;">
+                    <div class="carousel-item active" style="height: 395px;">
                         <img class="img-fluid" src="{{url('images/slide/'.$sf->image_slide)}}" alt="Image">
                         <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                             <div class="p-3" style="max-width: 700px;">
@@ -91,7 +90,7 @@ session_start();
                     </div>
                     @endforeach
                     @foreach($selectSlide as $key => $s)
-                    <div class="carousel-item" style="height: 410px;">
+                    <div class="carousel-item" style="height: 395px;">
                         <img class="img-fluid" src="{{url('images/slide/'.$s->image_slide)}}" alt="Image">
                         <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                             <div class="p-3" style="max-width: 700px;">

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Brand;
+use App\Model\Category;
 use App\Model\Commune;
 use App\Model\Delivery;
 use App\Model\District;
+use App\Model\Order;
 use App\Model\Province;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -94,21 +97,35 @@ class DeliveryController extends Controller
             return redirect()->route('delivery.listDelivery');
         }
     }
-    // public function calculatorDelivery(Request $request){
-    //     $data = $request->all();
-    //     $province = $data['province'];
-    //     Session::get('fee');
-    //     if($province == 1){
-    //         $delivery = Delivery::where('province_feeship',$province)->get();
-    //     }else{
-    //         $delivery = Delivery::where('province_feeship',$province)->get();
-    //     }
-    //     foreach($delivery as $key => $d){
-    //         $priceDelivery = $d->price_feeship;
-    //     }
-    //     Session::put('fee',$priceDelivery);
-    //     Session::save();
-    //     echo "return";
-    // }
-
+    public function checkDelivery(){
+        $selectCategory = Category::all();
+        $selectBrand = Brand::take(6)->get();
+        return view('delivery.check_delivery',compact(
+            'selectCategory',
+            'selectBrand'
+        ));
+    }
+    public function filterDelivery(Request $request){
+        $data = $request->all();
+        $phoneOrder = $data['phone_order'];
+        $codeOrder = $data['code_order'];
+        Validator::make($data,[
+            'phone_order' => ['required'],
+            'code_order' => ['required']
+        ],
+        [
+            'required' => "Thông tin bị thiếu yêu cầu điền vào"
+        ])->validate();
+        $filterDelivery = Order::join('order_detail as od','od.code_order','order.code_order')
+        ->join('color as c','c.id_color','order.color_product_order')
+        ->where('phone_order',$phoneOrder)->where('code_order',$codeOrder)->first();
+        $selectCategory = Category::all();
+        $selectBrand = Brand::take(6)->get();
+        return view('delivery.history_order',compact(
+            'filterDelivery',
+            'selectCategory',
+            'selectBrand'
+        ));
+    }
+    
 }

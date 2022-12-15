@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Brand;
 use App\Model\Category;
+use App\Model\Color;
 use App\Model\Coupon;
 use App\Model\Delivery;
 use App\Model\Order;
@@ -14,6 +15,7 @@ use App\Model\Province;
 use App\Model\Statistic;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -141,6 +143,7 @@ class OrderController extends Controller
     }
     public function saveInfo(Request $request){
         $data = $request->all();
+        $priceDelivery = "";
         // print_r($data);
         $validation = Validator::make($data,[
             'name_order' => ['required','string','max: 30'],
@@ -163,6 +166,8 @@ class OrderController extends Controller
             Session::get('fee');
             if($province == 1){
                 $delivery = Delivery::where('province_feeship',1)->get();
+            }else if($province == 0){
+                $priceDelivery = 0;
             }else{
                 $delivery = Delivery::where('province_feeship',$province)->get();
             }
@@ -358,24 +363,25 @@ class OrderController extends Controller
         );
         $order = Order::create($dbOrder);
         if($order){
-            
-            $cart = Session::get('cart');
+            $cartOrder = Session::get('cart');
             $dbOrderDetail = '';
-            foreach($cart as $key => $c){
-                $productColor = ProductColor::where('id_product_color',$c['idProductColor'])->first();
+            // dd($cart);
+            foreach($cartOrder as $key => $c){
+                $productIdColor = array($key);
+                $quantityOrder = array($c['quantityProduct']);
+                $productColor = ProductColor::find($key);
                 $dbOrderDetail = array(
-                    'id_product' => $key,
+                    'id_product_color' => $key,
+                    'id_product' => $c['idProduct'],
                     'code_order' => $codeOrder,
                     'name_product_order' => $c['nameProduct'],
-                    'color_product_order' => $productColor->id_color,
+                    'color_product_order' => $productColor->id_product_color,
                     'quantity_product_order' => $c['quantityProduct'],
                     'price_product_order' => $c['priceProduct'],
                 );
-                $orderDetail = OrderDetail::create($dbOrderDetail);
-                $productId = array($key);
-                $quantityOrder = array($c['quantityProduct']);
-                foreach($productId as $keyProduct => $p){
-                    $product = Product::find($p);
+                $orderDetail = OrderDetail::create($dbOrderDetail);    
+                foreach($productIdColor as $keyProductColor => $p){
+                    $product = Product::find($productColor->id_product);
                     foreach($quantityOrder as $keyQuantity => $q){
                         $product->quantity_sold_product += $q;
                         $productColor->quantity_product_color -= $q;
@@ -410,5 +416,64 @@ class OrderController extends Controller
             }
         }
     }
-    
+
+    public function checkDelivery(){
+        $selectCategory = Category::all();
+        $selectBrand = Brand::take(6)->get();
+        return view('order.check_delivery',compact(
+            'selectCategory',
+            'selectBrand'
+        ));
+    }
+    public function filterDelivery(Request $request){
+        $data = $request->all();
+        $phoneOrder = $data['phone_order'];
+        $codeOrder = $data['code_order'];
+        Validator::make($data,[
+            'phone_order' => ['required'],
+            'code_order' => ['required']
+        ],
+        [
+            'required' => "Thông tin bị thiếu yêu cầu điền vào"
+        ])->validate();
+        $filterDelivery = Order::where('order.phone_order',$phoneOrder)->where('order.code_order',$codeOrder)
+        ->first();
+        // echo $filterDelivery->status_order;
+        if(isset($filterDelivery) && $filterDelivery->status_order !== 3){
+            DB::enableQueryLog();
+            $detailOrder = OrderDetail::join('product_color as pc','pc.id_product_color','order_detail.color_product_order')
+            ->join('color as c','c.id_color','pc.id_color')
+            ->where('order_detail.code_order',$codeOrder)
+            ->get();
+            // dd(DB::getQueryLog());
+            $selectCategory = Category::all();
+            $selectBrand = Brand::take(6)->get();
+            return view('order.history_order',compact(
+                'detailOrder',
+                'selectCategory',
+                'selectBrand',
+                'filterDelivery'
+            ));
+        }else if($filterDelivery->status_order == 3){
+            Session::put('error','Đơn hàng này đã được hủy bỏ!');
+            return redirect()->route('order.checkDelivery');
+        }else{  
+            Session::put('error','Không tìm thấy mã đơn hàng bạn vừa nhập!');
+            return redirect()->route('order.checkDelivery');
+        }
+    }
+
+    public function cancelOrder(Request $request){
+        $data = $request->all();
+        $statusOrder = $data['statusOrder'];
+        $idOrder = $data['idOrder'];
+        $changeStatus = Order::find($idOrder);
+        $changeStatus->status_order = $statusOrder;
+        $changeStatus->save();
+        if(isset($changeStatus)){
+            return response()->json(['message'=>'done'],200);
+        }else{
+            return response()->json(['message'=>'error'],200);
+        }
+    }
 }

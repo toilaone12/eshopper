@@ -7,6 +7,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DeliveryController;
@@ -187,6 +188,13 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
         Route::post('/insert-color',[ColorController::class, 'insertColor'])->name('color.insertColor');
         Route::post('/update-color',[ColorController::class, 'updateColor'])->name('color.updateColor');
     });
+    Route::prefix('contact')->group(function(){
+        Route::get('/info-contact', [ContactController::class, 'listContact'])->name('contact.listContact');
+        Route::get('/edit-contact-form', [ContactController::class, 'editContactForm'])->name('contact.editContactForm');
+        Route::get('/delete-contact', [ContactController::class, 'deleteContact'])->name('contact.deleteContact');
+        Route::post('/edit-contact', [ContactController::class, 'editContact'])->name('contact.editContact');
+        Route::post('/insert-contact', [ContactController::class, 'insertContact'])->name('contact.insertContact');
+    });
 });
 //page
 Route::prefix('page')->group(function(){
@@ -236,12 +244,18 @@ Route::prefix('page')->group(function(){
     Route::prefix('order')->group(function(){
         Route::get('/check-out',[OrderController::class,'checkOut'])->name('order.checkOut');
         Route::get('/check-info',[OrderController::class,'checkInfo'])->name('order.checkInfo');
+        Route::get('/check-delivery', [OrderController::class, 'checkDelivery'])->name('order.checkDelivery');
+        Route::post('/cancel-order', [OrderController::class, 'cancelOrder'])->name('order.cancelOrder');
+        Route::post('/filter-delivery', [OrderController::class, 'filterDelivery'])->name('order.filterDelivery');
         Route::post('/save-info',[OrderController::class,'saveInfo'])->name('order.saveInfo');
         Route::post('/add-order',[OrderController::class,'order'])->name('order.addOrder');
     });
     Route::prefix('delivery')->group(function(){
         Route::post('/select-delivery', [DeliveryController::class, 'selectDelivery'])->name('delivery.selectDelivery');
         Route::post('/add-delivery', [DeliveryController::class, 'calculatorDelivery'])->name('delivery.addDelivery');
+    });
+    Route::prefix('contact')->group(function(){
+        Route::get('/contact-shop', [ContactController::class, 'contact'])->name('contact.contactShop');
     });
 });
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Brand;
+use App\Model\Category;
 use App\Model\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -16,16 +18,28 @@ class CustomerController extends Controller
     }
     //page
     public function profile(Request $request){
+        $selectBrand = Brand::all();
+        $selectCategory = Category::all();
         $id = $request->get('idCustomer');
         $customer = Customer::find($id);
         // dd($customer);
-        return view('customer.profile',compact('customer'));
+        return view('customer.profile',compact(
+            'customer',
+            'selectBrand',
+            'selectCategory'
+        ));
     }
     public function formEditProfile(Request $request){
         $id = $request->get('idCustomer');
+        $selectBrand = Brand::all();
+        $selectCategory = Category::all();
         $customer = Customer::find($id);
         // dd($customer);
-        return view('customer.edit_profile',compact('customer'));
+        return view('customer.edit_profile',compact(
+            'customer',
+            'selectBrand',
+            'selectCategory'
+        ));
     }
     public function editProfile(Request $request){
         $data = $request->all();

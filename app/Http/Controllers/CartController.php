@@ -46,17 +46,18 @@ class CartController extends Controller
         }else{
             $quantity = 1;
         }
-        if(isset($cart[$idProduct])){
+        if(isset($cart[$idProductColor])){
             // echo $productColor->quantity_product_color;
-            // echo $cart[$idProduct]['quantityProduct'];
-            $nowQuantity = $cart[$idProduct]['quantityProduct'] + $quantity;
+            // echo $cart[$idProductColor]['quantityProduct'];
+            $nowQuantity = $cart[$idProductColor]['quantityProduct'] + $quantity;
             if($nowQuantity > $productColor->quantity_product_color){
                 return response()->json(["statusAdd" => "fail"],200);
             }else{
-                $cart[$idProduct]['quantityProduct'] = $cart[$idProduct]['quantityProduct'] + $quantity;
+                $cart[$idProductColor]['quantityProduct'] = $cart[$idProductColor]['quantityProduct'] + $quantity;
             }
         }else{
-            $cart[$idProduct] = [
+            $cart[$idProductColor] = [
+                "idProduct" => $idProduct,
                 "idProductColor" => $idProductColor,
                 "imageProduct" => $imageProduct,
                 "nameProduct" => $nameProduct,
@@ -68,19 +69,6 @@ class CartController extends Controller
         Session::put('cart',$cart);
         $count = count($cart);
         return response()->json(["statusGo" => "done","statusAdd" =>"done","count" => $count],200);
-        // 
-        // if($request->has('quantity_product')){
-        //     return redirect()->route('cart.checkCart');
-        // }else{
-        // }
-        // $check = Session::get('cart');
-        // return print_r($cart);
-        // echo "done";
-        // return view('cart.cart_page',compact(
-        //     'selectCategory',
-        //     'selectBrand',
-        //     'cart'
-        // ));
     }
     public function updateCart(Request $request){
         $id = $request->get('id_product');
@@ -88,21 +76,21 @@ class CartController extends Controller
         $product = ProductColor::where('id_product_color',$idProductColor)->first();
         $quantityProduct = $request->get('quantity_product');
         $cart = Session::get('cart');
-        if(isset($cart[$id])){
+        if(isset($cart[$idProductColor])){
             if($quantityProduct <= $product->quantity_product_color){
-                $cart[$id]['quantityProduct'] = $quantityProduct;
+                $cart[$idProductColor]['quantityProduct'] = $quantityProduct;
             }else{
-                $cart[$id]['quantityProduct'] = $cart[$id]['quantityProduct'];
+                $cart[$idProductColor]['quantityProduct'] = $cart[$idProductColor]['quantityProduct'];
             }
         }else{
-            $cart[$id]['quantityProduct'] = $cart[$id]['quantityProduct'];
+            $cart[$idProductColor]['quantityProduct'] = $cart[$idProductColor]['quantityProduct'];
         }
         Session::put('cart',$cart);
         // return print_r($cart);
         echo "done";
     }
     public function removeCart(Request $request){
-        $id = $request->get('id_product');
+        $id = $request->get('id_product_color');
         $carts = Session::get('cart');
         unset($carts[$id]);
         Session::put('cart',$carts);

@@ -252,6 +252,7 @@
             var _token = $('input[name="_token"]').val();
             var idProduct = $('input[type="hidden"][name="id_product"]').val();
             var idProductColor = $('input[type="hidden"][name="id_product_color"]').val();
+            var quantityProduct = $('input[type="number"][name="quantity_product"]').val();
             // console.log(idProductColor);
             $.ajax({
                 url: "{{route('cart.addCart')}}",
@@ -261,10 +262,12 @@
                     _token:_token,
                     id_product: idProduct,
                     id_product_color: idProductColor,
+                    quantity_product: quantityProduct
                 },
                 success:function(data){
                     if(data.statusGo == "done"){
                         // console.log(data);
+                        $(".count-product").text(data.count);
                         location.href="{{route('cart.checkCart')}}";
                     }
                 },
@@ -336,7 +339,7 @@
             method: "GET",
             data: 
             {
-                id_product: id,
+                id_product_color: id,
             },
             success:function(data){
                 if(data == "done"){
@@ -419,6 +422,13 @@
         $('.collapse-store').removeClass('d-block');
     });
     $(document).ready(function(){
+        $('.click-cash').on('click',function(){
+            $('.vnpay-card').removeClass('border-danger');
+            $('.momo-card').removeClass('border-danger');
+            $('.vnpay-card').removeClass('type-card');
+            $('.momo-card').removeClass('type-card');
+            $('#show-card').removeClass('show');
+        });
         $('.momo-card').on('click',function(e){
             $(this).addClass('border-danger');
             $(this).addClass('type-card');
@@ -507,6 +517,9 @@
             }else{
                 var addressOrder = $("input[type='text'][name='address_order']").val();
             }
+            if(countryDelivery == ""){
+                countryDelivery == 0;
+            }
             $.ajax({
                 url: "{{route('order.saveInfo')}}",
                 method: "POST",
@@ -569,10 +582,11 @@
                         statusOrder = "Cửa hàng vận chuyển cho khách hàng";
                     }
                     if(typePayment){
-                        if(typePayment == 0){
+                        var typeCard = $('.type-card').data('card');
+                        if(typePayment == 0 || typeCard == ""){
                             namePayment = "Thanh toán khi nhận hàng";
+                            typeCard = '';
                         }else if(typePayment == 1){
-                            var typeCard = $('.type-card').data('card');
                             if(typeCard == 0){
                                 namePayment = $('.type-card').text();
                             }else if(typeCard == 1){
@@ -582,7 +596,7 @@
                     }else{
                         namePayment = '';
                     }
-                    // alert(feeDelivery);
+                    // alert(typeCard);
                     $.ajax({
                         url: "{{route('order.addOrder')}}",
                         method: "POST",
@@ -610,6 +624,49 @@
                             // 'success'
                             // )
                             window.location.href = data;
+                        }
+                    });
+                }
+            })
+        });
+        $('.cancel-order').click(function(){
+            Swal.fire({
+            title: 'Hủy đơn hàng',
+            text: "Bạn có muốn hủy đơn hàng này không?",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Có, tôi đồng ý!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var idOrder = $(this).data('order');
+                    // alert(idOrder);
+                    $.ajax({
+                        url: "{{route('order.cancelOrder')}}",
+                        method: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            idOrder: idOrder,
+                            statusOrder: 3
+                        },
+                        success:function(data){
+                            if(data.message == "done"){
+                                Swal.fire(
+                                    'Huỷ đơn hàng!',
+                                    'Bạn đã hủy đơn hàng thành công!',
+                                    'success'
+                                )
+                            }else if(data.message == "error"){
+                                Swal.fire(
+                                    'Huỷ đơn hàng!',
+                                    'Bạn đã hủy đơn hàng không thành công!',
+                                    'error'
+                                )
+                            }
+                            window.location.href = "{{route('order.checkDelivery')}}";
                         }
                     });
                 }

@@ -2,8 +2,8 @@
 @section('content')
 <?php
 use Illuminate\Support\Facades\Session;
+session_start();
 ?>
-<body>
 <div class="container-fluid mb-5">
     <div class="row border-top px-xl-5 pt-4 pb-4 bg-white-smoke">
         <div class="col-lg-3 d-none d-lg-block">
@@ -77,104 +77,74 @@ use Illuminate\Support\Facades\Session;
         </div>
     </div>
 </div>
-<div class="container">
-    <div class="main-body">
-          <!-- Breadcrumb -->
-          <nav aria-label="breadcrumb" class="main-breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="{{route('home.page')}}">Trang chủ</a></li>
-              <li class="breadcrumb-item"><a href="">Cá nhân</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Thông tin cá nhân</li>
-            </ol>
-          </nav>
-          <!-- /Breadcrumb -->
-          <div class="row gutters-sm">
-            <div class="col-md-4 mb-3">
-              <div class="card">
-                <div class="card-body">
-                    <div class="d-flex flex-column align-items-center text-center">
-                        <img src="{{url('images/customer/'.$customer->image_customer)}}" alt="Admin" class="rounded-circle" width="150">
-                        <div class="mt-3">
-                            <h6>{{$customer->name_customer}}</h6>
-                            <p class="text-muted font-size-sm">{{$customer->address_cutomer}}</p>
-                        </div>
-                    </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-8">
-              <div class="card mb-3">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <span class="mb-0">
-                                <?php
-                                    $message = Session::get('message_profile');
-                                    if(isset($message)){
-                                        echo $message;
-                                        Session::put('message_profile',null);
-                                    }
-                                ?>
-                            </span>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Họ & tên</h6>
-                        </div>
-                        <div class="col-sm-9 text-dark">
-                        {{$customer->name_customer}}
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Email</h6>
-                        </div>
-                        <div class="col-sm-9 text-dark">
-                        {{$customer->email_customer}}
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                        <h6 class="mb-0">Số điện thoại</h6>
-                        </div>
-                        <div class="col-sm-9 text-dark">
-                        {{$customer->phone_customer}}
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Giới tính</h6>
-                        </div>
-                        <div class="col-sm-9 text-dark">
-                        {{$customer->sex_customer}}
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Địa chỉ</h6>
-                        </div>
-                        <div class="col-sm-9 text-dark">
-                        {{$customer->address_customer}}
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <a class="btn btn-info rounded" target="__blank" href="{{route('customer.formEditProfile',['idCustomer' => $customer->id_customer])}}">Sửa thông tin</a>
-                        </div>
-                    </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
+<div class="container-fluid bg-secondary mb-5">
+    <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+        <h1 class="font-weight-semi-bold text-uppercase mb-3">Lịch sử đơn hàng</h1>
+        <div class="d-inline-flex">
+            <p class="m-0"><a href="{{route('home.page')}}">Trang chủ</a></p>
+            <p class="m-0 px-2">-</p>
+            <p class="m-0">Lịch sử đơn hàng</p>
         </div>
     </div>
-</body>
+</div>
+<!-- Page Header End -->
+
+
+<!-- Contact Start -->
+<div class="container-fluid pt-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-10 mb-5 m-auto">
+            <div class="contact-form bg-gray shadow rounded py-4 px-5">
+                <div id="success"></div>
+                <span class="f-18 text-gray d-flex justify-content-center font-weight-bold mb-3">
+                    Thông tin lịch sử đơn hàng
+                </span>
+                <div class="container mt-5 p-3 rounded cart">
+                    <div class="row no-gutters">
+                        <div class="col-md-8">
+                            @foreach($detailOrder as $key => $od)
+                            @php
+                                $total = $od->price_product_order * $od->quantity_product_order;
+                            @endphp
+                            <div class="product-details mr-2">
+                                <div class="shadow d-flex border-info justify-content-between align-items-center mt-3 p-2 items rounded">
+                                    <div class="d-flex flex-row"><img class="rounded" src="{{asset('images/product/'.$od->image_product_color)}}" width="50">
+                                        <div class="ml-2"><span class="f-16 d-block">{{$od->name_product_order}}</span><span class="spec">Màu: {{$od->name_color}}</span></div>
+                                    </div>
+                                    <div class="d-flex flex-row align-items-center">
+                                        <span class="d-block f-14">x{{$od->quantity_product_order}}</span>
+                                        <span class="d-block ml-5 f-14">{{number_format($total,0,',','.')}} ₫</span>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                        <div class="col-md-4">
+                            <div class="rounded text-white p-3 bg-info">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-center f-18 font-weight-bold">Chi tiết người mua</span>
+                                </div>
+                                @csrf
+                                <span class="f-12 d-block mt-3 mb-1">Mã đơn hàng: {{$filterDelivery->code_order}}</span>
+                                <span class="f-12 d-block mt-3 mb-1">Tên người mua: {{$filterDelivery->name_customer}}</span>
+                                <span class="f-12 d-block mt-3 mb-1">Số điện thoại: {{$filterDelivery->phone_order}}</span>
+                                <span class="f-12 d-block mt-3 mb-1">Địa chỉ nhận hàng: {{$filterDelivery->address_order}}</span>
+                                <hr class="line">
+                                <div class="d-flex justify-content-between information mb-3">
+                                    <span class="f-14">Tổng tiền phải trả</span>
+                                    <span class="f-14">{{$filterDelivery->total_order}}</span>
+                                </div>
+                                <div class="detail-product d-flex w-50 justify-content-center bg-light border-img mb-2">
+                                    <button data-order="{{$filterDelivery->id_order}}" class="cancel-order py-1 btn btn-light flex-fill me-1 p-0 f-16">
+                                        <span class="f-12">Huỷ đơn hàng</span>
+                                    </button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Contact End -->
 @endsection

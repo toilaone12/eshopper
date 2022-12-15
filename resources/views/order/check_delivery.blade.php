@@ -2,8 +2,8 @@
 @section('content')
 <?php
 use Illuminate\Support\Facades\Session;
+session_start();
 ?>
-<body>
 <div class="container-fluid mb-5">
     <div class="row border-top px-xl-5 pt-4 pb-4 bg-white-smoke">
         <div class="col-lg-3 d-none d-lg-block">
@@ -15,13 +15,13 @@ use Illuminate\Support\Facades\Session;
                 <div class="navbar-nav w-100 bg-white" style="height: 410px">
                     @foreach($selectCategory as $key => $c)
                     <div class="nav-item dropleft">
-                        <a href="{{route('category.productByCategory',$c->name_category)}}" class="nav-link">{{$c->name_category}} <i class="fa fa-angle-right float-right mt-1"></i></a>
+                        <a href="#" class="nav-link">{{$c->name_category}} <i class="fa fa-angle-right float-right mt-1"></i></a>
                         <div class="brand-hover dropdown-menu position-absolute bg-light border-0 rounded-5 w-100 m-0">
                             <h6 class="text-center">Hãng sản xuất</h4> 
                             <ul class="d-flex flex-wrap list-style-none pl-0" >
                                 @foreach($selectBrand as $key => $b)
                                 <li class="col-4">
-                                    <a href="{{route('brand.productByBrand',$b->name_brand)}}" class="dropdown-item text-muted text-12 text-center">{{$b->name_brand}}</a>
+                                    <a href="" class="dropdown-item text-muted text-12 text-center">{{$b->name_brand}}</a>
                                 </li>
                                 @endforeach
                             </ul>
@@ -77,104 +77,64 @@ use Illuminate\Support\Facades\Session;
         </div>
     </div>
 </div>
-<div class="container">
-    <div class="main-body">
-          <!-- Breadcrumb -->
-          <nav aria-label="breadcrumb" class="main-breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="{{route('home.page')}}">Trang chủ</a></li>
-              <li class="breadcrumb-item"><a href="">Cá nhân</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Thông tin cá nhân</li>
-            </ol>
-          </nav>
-          <!-- /Breadcrumb -->
-          <div class="row gutters-sm">
-            <div class="col-md-4 mb-3">
-              <div class="card">
-                <div class="card-body">
-                    <div class="d-flex flex-column align-items-center text-center">
-                        <img src="{{url('images/customer/'.$customer->image_customer)}}" alt="Admin" class="rounded-circle" width="150">
-                        <div class="mt-3">
-                            <h6>{{$customer->name_customer}}</h6>
-                            <p class="text-muted font-size-sm">{{$customer->address_cutomer}}</p>
-                        </div>
-                    </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-8">
-              <div class="card mb-3">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <span class="mb-0">
-                                <?php
-                                    $message = Session::get('message_profile');
-                                    if(isset($message)){
-                                        echo $message;
-                                        Session::put('message_profile',null);
-                                    }
-                                ?>
-                            </span>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Họ & tên</h6>
-                        </div>
-                        <div class="col-sm-9 text-dark">
-                        {{$customer->name_customer}}
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Email</h6>
-                        </div>
-                        <div class="col-sm-9 text-dark">
-                        {{$customer->email_customer}}
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                        <h6 class="mb-0">Số điện thoại</h6>
-                        </div>
-                        <div class="col-sm-9 text-dark">
-                        {{$customer->phone_customer}}
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Giới tính</h6>
-                        </div>
-                        <div class="col-sm-9 text-dark">
-                        {{$customer->sex_customer}}
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0">Địa chỉ</h6>
-                        </div>
-                        <div class="col-sm-9 text-dark">
-                        {{$customer->address_customer}}
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <a class="btn btn-info rounded" target="__blank" href="{{route('customer.formEditProfile',['idCustomer' => $customer->id_customer])}}">Sửa thông tin</a>
-                        </div>
-                    </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
+<div class="container-fluid bg-secondary mb-5">
+    <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+        <h1 class="font-weight-semi-bold text-uppercase mb-3">Tình trạng đơn hàng</h1>
+        <div class="d-inline-flex">
+            <p class="m-0"><a href="{{route('home.page')}}">Trang chủ</a></p>
+            <p class="m-0 px-2">-</p>
+            <p class="m-0">Tình trạng đơn hàng</p>
         </div>
     </div>
-</body>
+</div>
+<!-- Page Header End -->
+
+
+<!-- Contact Start -->
+<div class="container-fluid pt-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-5 mb-5 m-auto">
+            <div class="contact-form bg-gray shadow rounded py-4 px-5">
+                <div id="success"></div>
+                <span class="f-18 text-dark d-flex justify-content-center mb-3">
+                    Kiểm tra thông tin đơn hàng
+                </span>
+                <form action="{{route('order.filterDelivery')}}" method="post">
+                    @csrf
+                    <div class="control-group mb-3">
+                        <input type="number" class="form-input rounded f-12 border-info" name="phone_order" id="phone"
+                           min=0 required="required" placeholder=" " data-validation-required-message="Please enter your name" />
+                        <label for="phone" class="form-label__number f-12">Số điện thoại</label>
+                        @error('phone_order')
+                        <span class="text-danger">{{$message}}</span>
+                        @enderror
+                    </div>
+                    <div class="control-group mb-2">
+                        <input type="text" class="form-input rounded f-12 border-info" name="code_order" id="code"
+                            required="required" placeholder=" " data-validation-required-message="Please enter your email" />
+                        <label for="code" class="form-label f-12">Mã đơn hàng</label>
+                        @error('code_order')
+                        <span class="text-danger">{{$message}}</span>
+                        @enderror
+                    </div>
+                    <span class="text-danger f-12 mb-2">
+                        @php
+                            $error = Session::get('error');
+                            if(isset($error)){
+                                echo $error;
+                                Session::put('error','');
+                            }
+                        @endphp
+                    </span>
+                    <div class="w-50 detail-product d-flex justify-content-center bg-light border rounded border-info">
+                        <button class="check-delivery link-detail py-1 d-flex align-items-center justify-content-center btn btn-light flex-fill me-1 p-0 f-16 rounded-bottom">
+                            <span class="f-12">Kiểm tra đơn hàng</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Contact End -->
 @endsection
