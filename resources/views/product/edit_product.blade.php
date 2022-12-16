@@ -46,18 +46,6 @@
         <input type="text" class="form-control" value="{{$selectProductId->name_product}}" name="name_product" id="exampleFormControlInput1" placeholder="Nhập tên">
     </div>
     <div class="form-group">
-        <label for="exampleFormControlFile1">Màu sắc</label>
-        <select name="color_product" class="form-control" id="exampleFormControlFile1">
-            @foreach($selectColor as $key => $c)
-            <option @if($selectProductId->id_color == $c->id_color) selected @endif value="{{$c->id_color}}">{{$c->name_color}}</option>
-            @endforeach
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="exampleFormControlSelect2">Số lượng</label>
-        <input type="number" min=0 class="form-control" value="{{$selectProductId->quantity_product_color}}" name="quantity_product" id="exampleFormControlInput1" placeholder="Nhập số lượng">
-    </div>
-    <div class="form-group">
         <label for="exampleFormControlSelect2">Giá</label>
         <input type="number" min=0 class="form-control" value="{{$selectProductId->price_product}}" name="price_product" id="exampleFormControlInput1" placeholder="Nhập giá">
     </div>

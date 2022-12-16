@@ -166,13 +166,16 @@ class OrderController extends Controller
             Session::get('fee');
             if($province == 1){
                 $delivery = Delivery::where('province_feeship',1)->get();
+                foreach($delivery as $key => $d){
+                    $priceDelivery = $d->price_feeship;
+                }
             }else if($province == 0){
                 $priceDelivery = 0;
             }else{
                 $delivery = Delivery::where('province_feeship',$province)->get();
-            }
-            foreach($delivery as $key => $d){
-                $priceDelivery = $d->price_feeship;
+                foreach($delivery as $key => $d){
+                    $priceDelivery = $d->price_feeship;
+                }
             }
             $info = array(
                 'nameOrder' => $data['name_order'],

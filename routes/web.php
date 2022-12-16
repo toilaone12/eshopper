@@ -72,10 +72,13 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
             Route::get('/edit-form-product/{idProduct}', [ProductController::class, 'editFormProduct'])->name('product.editFormProduct');
             Route::get('/create-thumbnails/{idProduct}', [ProductController::class, 'createThumbnails'])->name('product.createThumbnails');
             Route::get('/delete-thumbnails/{idGallery}', [ProductController::class, 'deleteThumbnails'])->name('product.deleteThumbnails');
+            Route::get('/list-product-color', [ProductController::class, 'listProductColor'])->name('product.listProductColor');
+            Route::get('/form-product-color', [ProductController::class, 'formEditProductColor'])->name('product.formEditProductColor');
             Route::post('/insert-product', [ProductController::class, 'insertProduct'])->name('product.insertProduct');
             Route::post('/edit-product/{idProduct}', [ProductController::class, 'editProduct'])->name('product.editProduct');
             Route::post('/insert-thumbnails', [ProductController::class, 'insertThumbnails'])->name('product.insertThumbnails');
             Route::post('/update-thumbnails', [ProductController::class, 'updateThumbnails'])->name('product.updateThumbnails');
+            Route::post('/edit-product-color', [ProductController::class, 'editProductColor'])->name('product.editProductColor');
         });
         Route::get('/list-product', [ProductController::class, 'productList'])->name('product.listFormProduct');
     });

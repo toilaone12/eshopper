@@ -28,8 +28,6 @@
                         <th>Thương hiệu</th>
                         <th>Hình ảnh</th>
                         <th>Tên sản phẩm</th>
-                        <th>Màu sắc</th>
-                        <th>Số lượng</th>
                         <th>Giá sản phẩm</th>
                         <th>Mô tả sản phẩm</th>
                         <th>Thông tin sản phẩm</th>
@@ -37,27 +35,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($getProduct as $key => $p)
+                    @php
+                    $allQuantityProduct = 0;
+                    @endphp
+                    @foreach($getProduct as $key => $p)               
                     <tr>
                         <td width="50">{{$p->id}}</td>
                         <td>{{$p->name_category}}</td>
                         <td>{{$p->name_brand}}</td>
                         <td><img width="150" height="150" src="{{url('images/product/'.$p->image_product)}}" alt="" srcset=""></td>
                         <td>{{$p->name_product}}</td>
-                        <td>
-                            @foreach($listProductColor as $key => $pc)
-                            @if($p->id == $pc->id_product)
-                            {{$pc->name_color}}</br>
-                            @endif
-                            @endforeach
-                        </td>
-                        <td>
-                            @foreach($listProductColor as $key => $pc)
-                            @if($p->id == $pc->id_product)
-                            {{$pc->quantity_product_color}} chiếc </br>
-                            @endif
-                            @endforeach 
-                        </td>
                         <td width="150">{{number_format($p->price_product,0,',','.')}} đ</td>
                         <td ><span class="overflow-hidden text-nowrap d-inline-block" style="width: 150px; text-overflow:ellipsis;">{{$p->description_product}}</span></td>
                         <td ><span class="overflow-hidden text-nowrap d-inline-block" style="width: 150px; text-overflow:ellipsis;">{{$p->content_product}}</span></td>
@@ -70,8 +57,11 @@
                             <a href="{{route('product.deleteProduct',['idProduct'=>$p->id])}}" class="btn btn-danger">
                                 <i class="fa-solid fa-rectangle-xmark"></i>
                             </a>
-                            <a href="{{route('product.createThumbnails',['idProduct'=>$p->id])}}" class="btn btn-danger mt-2">
-                                <i class="fa-solid fa-images"></i>
+                            <a href="{{route('product.listProductColor',['idProduct'=>$p->id])}}" class="btn btn-warning mt-2">
+                                <i class="fa-solid fa-fill text-white"></i>
+                            </a>
+                            <a href="{{route('product.createThumbnails',['idProduct'=>$p->id])}}" class="btn btn-info mt-2">
+                                <i class="fa-solid fa-images text-white"></i>
                             </a>
                         </td>
                         @else

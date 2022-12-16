@@ -62,16 +62,6 @@
 													Lưu mật khẩu
 												</label>
 											</div>
-											<div class="row mt-4">
-												<div class="form-group col-6">
-													<a href="{{route('network.loginFacebook')}}" class="btn btn-block btn-outline-danger"><i class="fa-brands fa-google pr-2"></i>Google</a>
-													<!-- <a href="" class="btn btn-block btn-outline-primary"> <i class="fab fa-facebook-f"></i>   Login via facebook</a> -->
-												</div>
-												<div class="form-group col-6">
-													<!-- <a href="" class="btn btn-block btn-outline-info"> <i class="fab fa-twitter"></i>   Login via Twitter</a> -->
-													<a href="{{route('network.loginFacebook')}}" class="btn btn-block btn-outline-primary"><i class="fa-brands fa-facebook pr-2"></i>Facebook</a>
-												</div>
-											</div>
 											<!-- <div class="g-recaptcha mt-4" data-sitekey="{{env('CAPTCHA_KEY')}}"></div>
 											<br/>
 											@if($errors->has('g-recaptcha-response'))

@@ -518,7 +518,7 @@
                 var addressOrder = $("input[type='text'][name='address_order']").val();
             }
             if(countryDelivery == ""){
-                countryDelivery == 0;
+                countryDelivery = 0;
             }
             $.ajax({
                 url: "{{route('order.saveInfo')}}",

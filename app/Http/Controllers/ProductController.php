@@ -98,13 +98,11 @@ class ProductController extends Controller
         $data = $request->all();
         Validator::make($data,[
             'name_product' => ['required','string'],
-            'quantity_product' => ['required'],
             'price_product' => ['required']
         ])->validate();
         $imageProduct = $request->file('image_product');
         // setting trong config/app.php
         $product = Product::find($idProduct);
-        $productColor = ProductColor::where('id_product_color',$data['product_color'])->first();
         // dd($productColor);
         if($imageProduct){
             $sizeImage = $imageProduct->getSize();
@@ -122,9 +120,6 @@ class ProductController extends Controller
                     $product->description_product = $data['description_product'];
                     $product->content_product = $data['content_product'];
                     $checkProduct = $product->save();
-                    $productColor->id_color = $data['color_product'];
-                    $productColor->quantity_product_color = $data['quantity_product'];
-                    $productColor->save();
                     if($checkProduct){
                         Session::put('message',"Sửa sản phẩm ".$data['name_product']." thành công!");
                         return redirect()->route('product.listFormProduct');// k sử dụng redirect::to. chuyển thành redirect()->route('')
@@ -149,9 +144,6 @@ class ProductController extends Controller
             $product->description_product = $data['description_product'];
             $product->content_product = $data['content_product'];
             $checkProduct = $product->save();
-            $productColor->id_color = $data['color_product'];
-            $productColor->quantity_product_color = $data['quantity_product'];
-            $productColor->save();
             if($checkProduct){
                 Session::put('message',"Sửa sản phẩm ".$data['name_product']." thành công!");
                 return redirect()->route('product.listFormProduct');// k sử dụng redirect::to. chuyển thành redirect()->route('')
@@ -233,6 +225,67 @@ class ProductController extends Controller
             }
         }
         // print_r($data);
+    }
+
+    public function listProductColor(Request $request){
+        $idProduct = $request->get('idProduct');
+        $productColor = ProductColor::join('product as p','p.id','product_color.id_product')
+        ->join('color as c','c.id_color','product_color.id_color')
+        ->where('id_product',$idProduct)->get();
+        // dd($productColor);
+        return view('product.list_product_color',compact('productColor'));
+    }
+
+    public function formEditProductColor(Request $request){
+        $productColor = ProductColor::find($request->get('id'));
+        $color = Color::all();
+        return view('product.edit_product_color',compact(
+            'productColor',
+            'color'
+        ));
+    }
+
+    public function editProductColor(Request $request){
+        $data = $request->all();
+        $idProductColor = $request->get('id');
+        $productColor = ProductColor::find($idProductColor);
+        Validator::make($data,[
+            'quantity_product_color' => ['required']
+        ],
+        [
+            'required' => 'Dữ liệu này không được để trống!'
+        ])->validate();
+        $image = $request->file('image_product_color');
+        if($image){
+            $nameImage = $image->getClientOriginalName(); // lay ten goc file
+            $currentImage = current(explode('.',$nameImage));
+            $extensionImage = $image->extension(); // lay duoi ten file
+            $newImage = $currentImage.'.'.$extensionImage;
+            unlink(public_path('/images/product/'.$productColor->image_product_color));
+            if($image->move('images/product',$newImage)){
+                $productColor->quantity_product_color = $data['quantity_product_color'];
+                $productColor->id_color = $data['product_color'];
+                $productColor->save();
+                if(isset($productColor)){
+                    Session::put('message',"Sửa thông tin thành công!");
+                    return redirect()->route('product.listProductColor',['idProduct'=>$productColor->id_product]);
+                }else{
+                    Session::put('message',"Sửa thông tin không thành công!");
+                    return redirect()->route('product.listProductColor',['idProduct'=>$productColor->id_product]);
+                }
+            }
+        }else{
+            $productColor->quantity_product_color = $data['quantity_product_color'];
+            $productColor->id_color = $data['product_color'];
+            $productColor->save();
+            if(isset($productColor)){
+                Session::put('message',"Sửa thông tin thành công!");
+                return redirect()->route('product.listProductColor',['idProduct'=>$productColor->id_product]);
+            }else{
+                Session::put('message',"Sửa thông tin không thành công!");
+                return redirect()->route('product.listProductColor',['idProduct'=>$productColor->id_product]);
+            }
+        }
     }
 
     //page
