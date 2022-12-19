@@ -1917,7 +1917,7 @@ pre code {
 
 .form-control:focus {
   color: #495057;
-  background-color: #6a5a;
+  background-color: #fff;
   border-color: #f8f0ef;
   outline: 0;
   box-shadow: none;
@@ -2426,6 +2426,12 @@ fieldset:disabled a.btn {
 .btn-primary {
   color: #fff;
   background-color: #4285f4;
+  border-color: #4285f4;
+}
+
+.btn-blue{
+  color: #fff;
+  background-color: #3b71ca;
   border-color: #4285f4;
 }
 
@@ -3007,6 +3013,13 @@ fieldset:disabled a.btn {
   font-size: 0.875rem;
   line-height: 1.5;
   border-radius: 0;
+}
+
+.btn-sm-remove{
+  padding-top: 0.375rem;
+  padding-bottom: 0.3125rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
 }
 
 .btn-block {
@@ -6291,6 +6304,10 @@ button.bg-dark:focus {
 
 .border-secondary {
   border-color: #EDF1FF !important;
+}
+
+.border-gray {
+  border-color: #ccc !important;
 }
 
 .border-success {

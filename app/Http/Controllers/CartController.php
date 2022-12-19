@@ -68,7 +68,23 @@ class CartController extends Controller
         }
         Session::put('cart',$cart);
         $count = count($cart);
-        return response()->json(["statusGo" => "done","statusAdd" =>"done","count" => $count],200);
+        // $a = asset('images/product/'.$c['imageProduct']);
+        $infoCart = '<div class="f-12 pl-2 pb-3">Sản phẩm trong giỏ hàng</div>';
+        foreach($cart as $key => $c){
+            $infoCart = $infoCart.'
+            <div class="d-flex justify-content-between align-items-start" style="max-width: 100%;">
+                <img src="'.asset('images/product/'.$c['imageProduct']).'" alt="" class="image-cart mt-2 ml-2 py-1 border border-secondary">
+                <span class="text-cart text-dark f-14 pl-3 pt-1">'.$c['nameProduct'].'</span>
+                <span class="price-cart text-info f-14 pr-2 pl-5 pt-1">'.number_format($c['priceProduct'],0,',','.').' ₫</span>
+            </div>';
+        }
+        $infoCart = $infoCart.'
+        <div class="d-flex justify-content-between" style="max-width: 100%;">
+            <div class="f-12 py-2 pl-2">Có <span class="count-cart">'.count($cart).'</span> sản phẩm trong giỏ hàng</div>
+            <a href="'.route('cart.checkCart').'" class="f-12 btn-cart rounded mr-2">Xem giỏ hàng</a>
+        </div>';
+        return response()->json(
+            ["statusGo" => "done","statusAdd" =>"done","count" => $count,"info"=> $infoCart],200);
     }
     public function updateCart(Request $request){
         $id = $request->get('id_product');

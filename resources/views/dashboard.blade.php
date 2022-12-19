@@ -720,9 +720,9 @@
                         token:token,
                     },
                     success:function(data){
-                        // location.reload();
-                        // // $('#'+result).html(data);
-                        console.log(data);
+                        location.reload();
+                        // $('#'+result).html(data);
+                        // console.log(data);
                     }
                 });
             });
@@ -804,8 +804,8 @@
                             token:token
                         },
                         success:function(data){
-                            console.log(data);
-                            // window.location.href="{{route('note.listNote')}}";
+                            // console.log(data);
+                            window.location.href="{{route('note.listNote')}}";
                         } 
                     });
                 // }

@@ -82,11 +82,11 @@
                     </form>
                 </div>
                 <div class="col-lg-3 col-6 text-right">
-                    <a href="" class="btn border">
+                    <!-- <a href="" class="btn border">
                         <i class="fas fa-heart text-primary"></i>
                         <span class="badge">0</span>
-                    </a>
-                    <div href="{{route('cart.checkCart')}}" class="btn border cart-hover">
+                    </a> -->
+                    <div class="btn border cart-hover">
                         <i class="fa-solid fa-cart-shopping text-primary"></i>
                         @php
                             use Illuminate\Support\Facades\Session;
@@ -110,7 +110,7 @@
                             </div>
                             @endforeach
                             <div class="d-flex justify-content-between" style="max-width: 100%;">
-                                <div class="f-12 py-2 pl-2">Có {{count($cart)}} sản phẩm trong giỏ hàng</div>
+                                <div class="f-12 py-2 pl-2">Có <span class="count-cart">{{count($cart)}}</span> sản phẩm trong giỏ hàng</div>
                                 <a href="{{route('cart.checkCart')}}" class="f-12 btn-cart rounded mr-2">Xem giỏ hàng</a>
                             </div>
                             @else
@@ -308,6 +308,8 @@
                             title: 'Thêm giỏ hàng thành công'
                         })
                         $(".count-product").text(data.count);
+                        $(".count-cart").text(data.count);
+                        $(".cart-menu").html(data.info);
                     }else if(data.statusAdd == "fail"){
                         const Toast = Swal.mixin({
                         toast: true,

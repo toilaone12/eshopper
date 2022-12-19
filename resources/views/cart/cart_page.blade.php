@@ -102,122 +102,138 @@
 @if(isset($cart))
 <div class="container-fluid pt-5">
     <div class="row px-xl-5">
-        <div class="col-lg-8 table-responsive mb-5">
-            <table class="table table-bordered text-center mb-0">
-                <thead class="bg-secondary text-dark">
-                    <tr>
-                        <th>Hình ảnh</th>
-                        <th>Tên sản phẩm</th>
-                        <th>Màu sắc</th>
-                        <th>Số lượng</th>
-                        <th>Giá sản phẩm</th>
-                        <th>Xóa sản phẩm</th>
-                    </tr>
-                </thead>
-                <tbody class="align-middle">
-                    
+        <div class="col-lg-8 table-responsive bg-gray pb-5 pt-3 rounded">
+            <div class="card-body">
+                <!-- Single item -->
+                <div class="row">
                     @foreach($cart as $key => $c)
                     @php
                         $total = $c['priceProduct']*$c['quantityProduct'];
                         $allTotal += $total;
                     @endphp
-                    <tr>
-                        <td class="align-middle"><img src="{{asset('images/product/'.$c['imageProduct'])}}" alt="" style="width: 50px;"></td>
-                        <td class="align-middle">{{$c['nameProduct']}}</td>
-                        <td class="align-middle">{{$c['colorProduct']}}</td>
-                        <td class="align-middle">
-                            <div class="input-group quantity mx-auto" style="width: 100px;">
+                    <div class="col-lg-3 col-md-12 mb-4 mb-lg-3">
+                        <!-- Image -->
+                        <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
+                        <img src="{{asset('images/product/'.$c['imageProduct'])}}"
+                            class="w-75 m-auto rounded shadow" />
+                        <a href="#!">
+                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+                        </a>
+                        </div>
+                        <!-- Image -->
+                    </div>
+
+                    <div class="col-lg-5 col-md-6 mb-4 mb-lg-3">
+                        <!-- Data -->
+                        <p><strong class="f-16">{{$c['nameProduct']}}</strong></p>
+                        <p>Màu sắc: {{$c['colorProduct']}}</p>
+                        <button type="button" class="btn btn-blue btn-sm-remove rounded me-1 mb-2 remove-product" data-mdb-toggle="tooltip"
+                        title="Remove item" 
+                        data-url="{{route('cart.removeCart')}}" 
+                        data-id="{{$key}}">
+                        <i class="fas fa-trash"></i>
+                        </button>
+                        <!-- Data -->
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 mb-4 mb-lg-3">
+                        <!-- Quantity -->
+                        <div class="d-flex mb-4" style="max-width: 300px">
+                            <div class="input-group quantity mx-auto" style="width: 110px;">
                                 <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-minus" >
+                                    <button class="btn btn-sm rounded btn-blue btn-minus" >
                                         <i class="fa fa-minus"></i>
                                     </button>
                                 </div>
-                                <input type="text" data-id="{{$c['idProduct']}}" min=1 data-product-color="{{$key}}" data-price="{{$c['priceProduct']}}" class="form-control form-control-sm bg-secondary text-center" value="{{$c['quantityProduct']}}">
+                                <input type="text" data-id="{{$c['idProduct']}}" min=1 data-product-color="{{$key}}" data-price="{{$c['priceProduct']}}" 
+                                class="form-control form-control-sm bg-secondary text-center border-gray rounded mx-1"  value="{{$c['quantityProduct']}}">
                                 <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-plus">
+                                    <button class="btn btn-sm rounded btn-blue btn-plus">
                                         <i class="fa fa-plus"></i>
                                     </button>
                                 </div>
                             </div>
-                        </td>
-                        <td class="align-middle total">{{number_format($total,0,'.',',')}} ₫</td>
-                        <td class="align-middle">
-                            <button class="btn btn-sm btn-primary remove-product" 
-                            data-url="{{route('cart.removeCart')}}" 
-                            data-id="{{$key}}">
-                                <i class="fa fa-times"></i>
-                            </button>
-                        </td>
-                    </tr>
+                        </div>
+                        <!-- Quantity -->
+
+                        <!-- Price -->
+                        <p class="text-start text-md-center">
+                        <span class="f-16">Giá tiền: <span class="f-16">{{number_format($total,0,',','.')}} ₫</span></span>
+                        </p>
+                        <!-- Price -->
+                    </div>
                     @endforeach
-                </tbody>
-            </table>
+                </div>
+                <!-- Single item -->
+            </div>
         </div>
-        <div class="col-lg-4">
-            @php
-                $message = Session::get('message');
-                $coupon = Session::get('coupon');
-            @endphp
-            @if(isset($message))
-            <div class="text-danger f-14">{{$message}}</div>
-            @else
-            @endif
-            @error('name_coupon')
-            <div class="text-danger f-14">{{$message}}</div>
-            @enderror
-            <form class="mb-5" method="POST" action="{{route('cart.checkCoupon')}}">
-                @csrf
-                <div class="input-group">
-                    <input type="text" class="form-control p-4" name="name_coupon" placeholder="Nhập mã giảm giá">
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-primary">Nhập mã</button>
+        <div class="col-lg-4 w-75 float-right">
+            <div class="bg-info rounded shadow p-3">
+                @php
+                    $message = Session::get('message');
+                    $coupon = Session::get('coupon');
+                @endphp
+                @if(isset($message))
+                <div class="text-danger f-14">{{$message}}</div>
+                @else
+                @endif
+                @error('name_coupon')
+                <div class="text-danger f-14">{{$message}}</div>
+                @enderror
+                <form class="mb-3" method="POST" action="{{route('cart.checkCoupon')}}">
+                    @csrf
+                    <div class="input-group">
+                        <input type="text" class="form-control rounded p-4 mr-2" name="name_coupon" placeholder="Nhập mã giảm giá">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary rounded">Nhập mã</button>
+                        </div>
                     </div>
-                </div>
-            </form>
-            <div class="card border-secondary mb-5">
-                <div class="card-header bg-secondary border-0">
-                    <h4 class="font-weight-semi-bold m-0">Tổng tiền giỏ hàng</h4>
-                </div>
-                <div class="card-body">
-                    <div class="d-flex justify-content-between mb-3 pt-1">
-                        <h6 class="font-weight-medium">Tổng tiền</h6>
-                        <h6 class="font-weight-medium">{{number_format($allTotal,0,'.',',')}} ₫</h6>
+                </form>
+                <div class="card border-secondary mb-2 rounded">
+                    <div class="card-header bg-secondary border-0">
+                        <h4 class="font-weight-semi-bold m-0">Tổng tiền giỏ hàng</h4>
                     </div>
-                    <div class="d-flex justify-content-between mb-3 pt-1">
-                        <h6 class="font-weight-medium">Áp dụng mã giảm giá</h6>
-                        <h6 class="font-weight-medium">
-                            @if(isset($coupon))
-                            @foreach($coupon as $key => $cou)
-                                @if($cou['feature_coupon'] == 0)
-                                {{$cou['discount_coupon']}} %
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <h6 class="font-weight-medium">Tổng tiền</h6>
+                            <h6 class="font-weight-medium">{{number_format($allTotal,0,'.',',')}} ₫</h6>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <h6 class="font-weight-medium">Áp dụng mã giảm giá</h6>
+                            <h6 class="font-weight-medium">
+                                @if(isset($coupon))
+                                @foreach($coupon as $key => $cou)
+                                    @if($cou['feature_coupon'] == 0)
+                                    {{$cou['discount_coupon']}} %
+                                    @else
+                                    {{number_format($cou['discount_coupon'],0,'.',',')}} ₫
+                                    @endif
+                                @endforeach
                                 @else
-                                {{number_format($cou['discount_coupon'],0,'.',',')}} ₫
+                                    {{'0 ₫'}}
                                 @endif
-                            @endforeach
-                            @else
-                                {{'0 ₫'}}
-                            @endif
-                        </h6>
+                            </h6>
+                        </div>
                     </div>
-                </div>
-                <div class="card-footer border-secondary bg-transparent">
-                    <div class="d-flex justify-content-between mt-2">
-                        <h5 class="font-weight-bold">Tổng cộng</h5>
-                        <h5 class="font-weight-bold">
-                            @if(isset($coupon))
-                            @foreach($coupon as $key => $cou)
-                                @if($cou['feature_coupon'] == 0)
-                                {{number_format($allTotal - (($cou['discount_coupon'] / 100) * $allTotal),0,'.',',')}} ₫
+                    <div class="card-footer border-secondary bg-transparent">
+                        <div class="d-flex justify-content-between mt-2">
+                            <h5 class="font-weight-bold">Tổng cộng</h5>
+                            <h5 class="font-weight-bold">
+                                @if(isset($coupon))
+                                @foreach($coupon as $key => $cou)
+                                    @if($cou['feature_coupon'] == 0)
+                                    {{number_format($allTotal - (($cou['discount_coupon'] / 100) * $allTotal),0,'.',',')}} ₫
+                                    @else
+                                    {{number_format($allTotal - $cou['discount_coupon'],0,'.',',')}} ₫
+                                    @endif
+                                @endforeach
                                 @else
-                                {{number_format($allTotal - $cou['discount_coupon'],0,'.',',')}} ₫
+                                    {{number_format($allTotal,0,'.',',')}} ₫
                                 @endif
-                            @endforeach
-                            @else
-                                {{number_format($allTotal,0,'.',',')}} ₫
-                            @endif
-                        </h5>
+                            </h5>
+                        </div>
+                        <button class="btn btn-block btn-primary my-3 py-3 check-out">Mua hàng</button>
                     </div>
-                    <button class="btn btn-block btn-primary my-3 py-3 check-out">Mua hàng</button>
                 </div>
             </div>
         </div>
@@ -226,6 +242,7 @@
 @else
 <div class="container-fluid pt-5 pb-5">
     <div class="px-xl-5">
+    <img src="{{asset('frontend/img/smile.png')}}" class="m-auto d-block pb-3 text-danger" alt="">
         <div class="text-center text-danger pb-3">Hiện tại đang không có sản phẩm trong giỏ hàng, vui lòng quay lại</div>
         <a href="{{route('home.page')}}" class="btn btn-danger rounded" style="display: block; width:15%; margin: 0 auto">Quay lại trang chủ</a>
     </div>
