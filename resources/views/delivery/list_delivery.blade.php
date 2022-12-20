@@ -40,6 +40,9 @@
                         <td width="280">{{$d->name_commune}}</td>
                         <td contenteditable="true" class="edit-delivery" data-id="{{$d->id_feeship}}" width="200">{{number_format($d->price_feeship,0,',','.')}}</td>
                         <td>
+                            <a href="{{route('delivery.editFormDelivery',['idDelivery'=>$d->id_feeship])}}" class="btn btn-success mb-2">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
                             <a href="{{route('delivery.deleteDelivery',['idDelivery'=>$d->id_feeship])}}" class="btn btn-danger">
                                 <i class="fa-solid fa-rectangle-xmark"></i>
                             </a>

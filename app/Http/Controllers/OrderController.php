@@ -30,7 +30,8 @@ class OrderController extends Controller
     }
     public function detailOrder($codeOrder){
         $selectOrder = Order::where('code_order',$codeOrder)->first();
-        $selectDetailOrder = OrderDetail::join('color as c','c.id_color','order_detail.color_product_order')
+        $selectDetailOrder = OrderDetail::join('product_color as pc','pc.id_product_color','order_detail.color_product_order')
+        ->join('color as c','c.id_color','pc.id_color')
         ->where('code_order',$codeOrder)->get();
         // dd($selectDetailOrder);
         $nameCoupon = $selectOrder->coupon_order;
@@ -39,6 +40,7 @@ class OrderController extends Controller
         }else{
             $selectCoupon = 0;
         }
+        // dd($selectDetailOrder);
         return view('order.detail_order',compact(
             'selectDetailOrder',
             'selectOrder',
@@ -59,7 +61,7 @@ class OrderController extends Controller
             'selectOrder',
             'selectDetailOrder',
             'selectCoupon'
-        ));
+        ))->setOptions(['defaultFont' => 'sans-serif']);
         return $pdf->download('Hóa đơn của '.$nameOrder.'.pdf');
     }
     public function changeStatus(Request $request){

@@ -134,6 +134,7 @@ Route::prefix('admin')->group(function(){ //tiền tố cho các uri bên trong 
         Route::get('/list-delivery', [DeliveryController::class, 'listDelivery'])->name('delivery.listDelivery');
         Route::get('/delete-delivery/{idDelivery}', [DeliveryController::class, 'deleteDelivery'])->name('delivery.deleteDelivery');
         Route::get('/insert-form-delivery', [DeliveryController::class, 'insertFromDelivery'])->name('delivery.insertFromCoupon');
+        Route::get('/edit-form-delivery', [DeliveryController::class, 'editFormDelivery'])->name('delivery.editFormDelivery');
         Route::post('/insert-delivery', [DeliveryController::class, 'insertDelivery'])->name('delivery.insertDelivery');
         Route::post('/edit-delivery', [DeliveryController::class, 'editDelivery'])->name('delivery.editDelivery');
         Route::post('/select-delivery', [DeliveryController::class, 'selectDelivery'])->name('delivery.selectDelivery');

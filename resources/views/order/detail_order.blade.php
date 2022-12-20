@@ -57,7 +57,7 @@
                         <th>Mã đơn hàng</th>
                         <th>Tên sản phẩm</th>
                         <th>Màu sắc</th>
-                        <th>Số lượng đặt hàng</th>
+                        <th>Số lượng</th>
                         <th>Đơn giá</th>
                         <th>Thành tiền</th>
                         <th>Khởi tạo lúc</th>
@@ -80,7 +80,16 @@
                         @php
                         $total = $do->price_product_order * $do->quantity_product_order;
                         $allTotal += $total;
-                        $allTotalChange = (($featureCoupon == 1) ?  ($allTotal + $feeDelivery - $discountCoupon) : $allTotal + $feeDelivery - ($allTotal * ($discountCoupon / 100)));
+                        $allTotalChange = 0;
+                        if($featureCoupon == 1){
+                            $allTotalChange = ($allTotal + $feeDelivery - $discountCoupon);
+                        }
+                        elseif($featureCoupon == 0){
+                            $allTotalChange = $allTotal + $feeDelivery - ($allTotal * ($discountCoupon / 100));
+                        }
+                        else{
+                            $allTotalChange = $allTotal;
+                        }
                         @endphp
                     <tr>
                         <td>{{$do->id_order_detail}}</td>
@@ -90,13 +99,13 @@
                         </td>
                         <td>{{$do->name_product_order}}</td>
                         <td>{{$do->name_color}}</td>
-                        <td>
+                        <td style="width: 50px; text-align:center;">
                             <span class="quantity-order">{{$do->quantity_product_order}}</span>
                             <input type="hidden" name="product_id" class="product-id" value="{{$do->id_product}}">
                             <input type="hidden" name="product_color_id" class="product-id" value="{{$do->color_product_order}}">
                         </td>
-                        <td>{{number_format($do->price_product_order,0,',','.')}} ₫</td>
-                        <td>{{number_format($total,0,',','.')}} ₫</td>
+                        <td style="width: 130px;">{{number_format($do->price_product_order,0,',','.')}} ₫</td>
+                        <td style="width: 130px;">{{number_format($total,0,',','.')}} ₫</td>
                         <td>{{$do->created_at}}</td>
                     </tr>
                     @endforeach
@@ -126,7 +135,7 @@
         <div class="bg-white border border-info rounded w-100 p-3">
             <p class="f-16">In hóa đơn sản phẩm</p>
             <div class="form-group d-flex justify-content-center">
-                <a href="{{route('order.printOrder',['codeOrder' => $do->code_order])}}" class="f-14 w-100 btn btn-success">In đơn hàng</a>
+                <a href="{{route('order.printOrder',['codeOrder' => $selectOrder->code_order])}}" class="f-14 w-100 btn btn-success">In đơn hàng</a>
             </div>
         </div>
         <div class="bg-white border border-info rounded w-100 mt-4">
@@ -143,9 +152,6 @@
                         </option>
                         <option value="2" data-id="{{$selectOrder->id_order}}" {{($selectOrder->status_order == 2) ? 'selected' : ''}}>
                             Giao hàng thành công
-                        </option>
-                        <option value="3" data-id="{{$selectOrder->id_order}}" {{($selectOrder->status_order == 3) ? 'selected' : ''}}>
-                            Hoàn trả / Hủyhàng
                         </option>
                     </select>
                 </div>

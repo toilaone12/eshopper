@@ -24,12 +24,27 @@ class DeliveryController extends Controller
                     ->get();
         return view('delivery.list_delivery',compact('delivery'));
     }
+
     public function insertFromDelivery(){
         $province = Province::all();
         return view('delivery.insert_delivery',compact(
             'province'
         ));
     }
+
+    public function editFormDelivery(Request $request){
+        $id = $request->get('idDelivery');
+        $province = Province::all();
+        $delivery = Delivery::join('commune as c','c.id_commune','feeship.commune_feeship')
+                    ->join('district as d','d.id_district','c.id_district')
+                    ->join('province as p','p.id_province','d.id_province')
+                    ->find($id);
+        return view('delivery.edit_delivery',compact(
+            'province',
+            'delivery'
+        ));
+    }
+
     public function selectDelivery(Request $request){
         $data = $request->all();
         $name = $data['name'];
@@ -80,10 +95,28 @@ class DeliveryController extends Controller
     }
     public function editDelivery(Request $request){
         $data = $request->all();
+        $id = $request->get('idDelivery');
+        Validator::make($data,[
+            'province_feeship' => ['required','string'],
+            'district_feeship' => ['required','string'],
+            'commune_feeship' => ['required','string'],
+            'fee_ship' => ['required','integer'],
+        ])->validate();
+        // dd($id);
         // DB::enableQueryLog();
-        $delivery = Delivery::find($data['idDelivery']);
-        $delivery->price_feeship = $data['feeDelivery'];
+        $delivery = Delivery::find($id);
+        $delivery->province_feeship = $data['province_feeship'];
+        $delivery->district_feeship = $data['district_feeship'];
+        $delivery->commune_feeship = $data['commune_feeship'];
+        $delivery->price_feeship = $data['fee_ship'];
         $delivery->save();
+        if($delivery){
+            Session::put('message','Sửa phí vận chuyển thành công');
+            return redirect()->route('delivery.listDelivery');
+        }else{
+            Session::put('message','Sửa phí vận chuyển thất bại');
+            return redirect()->route('delivery.listDelivery');
+        }
         // $q = DB::getQueryLog();
         // print_r($data['idDelivery']);
     }

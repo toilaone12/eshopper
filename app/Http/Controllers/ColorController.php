@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Model\Color;
+use App\Model\DetailImport;
+use App\Model\ProductColor;
+use App\Model\WareHouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -34,6 +37,9 @@ class ColorController extends Controller
     public function deleteColor(Request $request){
         $idColor = $request->get('idColor');
         $color = Color::find($idColor)->delete();
+        DetailImport::where('id_color',$idColor)->delete();
+        WareHouse::where('id_color',$idColor)->delete();
+        ProductColor::where('id_color',$idColor)->delete();
         if($color){
             Session::put('message','Xóa màu sắc thành công!');
             return redirect()->route('color.listColor');

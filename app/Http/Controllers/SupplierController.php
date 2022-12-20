@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Model\DetailImport;
+use App\Model\Note;
 use App\Model\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Sabberworm\CSS\Property\Import;
 
 class SupplierController extends Controller
 {
@@ -63,6 +66,13 @@ class SupplierController extends Controller
         $supplier = '';
         foreach($choose as $key => $c){
             $supplier = Supplier::where('id_supplier',$c)->delete();
+            $note = Note::where('id_supplier',$c)->first();
+            // foreach($note as $key => $n){
+            $deleteNote = Note::where('id_supplier',$c)->delete();
+            $codeNote = $note->code_note;
+            // delete();
+            DetailImport::where('code_note',$codeNote)->delete();
+            // }
         }
     }
 }
