@@ -36,7 +36,7 @@ class WareHouseController extends Controller
         $imageProductColor = $request->file('image_product_color');
         // DB::enableQueryLog();
         $product = Product::where('name_product',$data['name_product'])->get();
-        $wareHouse = WareHouse::where('name_product_warehouse',$data['name_product'])->get();
+        $wareHouse = WareHouse::where('name_product_warehouse',$data['name_product'])->where('id_color',$colorProduct)->get();
         $wareHouse->toQuery()->update([
             'quantity_product_warehouse' => 0,
         ]);
@@ -48,11 +48,14 @@ class WareHouseController extends Controller
                 Session::put('messageWareHouse',"Giá bán sản phẩm của cửa hàng phải lớn hơn giá nhập hàng!");
                 return redirect()->route('warehouse.listWareHouse'); // k sử dụng redirect::to. 
             }else{
+                // DB::enableQueryLog();
                 $productColor = ProductColor::where('id_color',$colorProduct)->where('id_product',$product[0]->id)->get();
-                // dd($productColor[0]->image_product_color !== '');
-                $quantityProduct = $productColor[0]->quantity_product_color;
-                $quantityAll = $quantityProduct + $quantityWareHouse;
-                if(count($productColor) == 1 || $productColor[0]->image_product_color !== ''){
+                // dd(count($productColor));
+                // dd(DB::getQueryLog());
+
+                if(count($productColor) == 1){
+                    $quantityProduct = $productColor[0]->quantity_product_color;
+                    $quantityAll = $quantityProduct + $quantityWareHouse;
                     $productColor->toQuery()->update([
                         'quantity_product_color' => $quantityAll,
                     ]);
@@ -62,12 +65,14 @@ class WareHouseController extends Controller
                         $currentImageProductColor = current(explode('.',$nameImageProductColor));
                         $extensionImageProductColor = $imageProductColor->extension(); // lay duoi ten file
                         $newImageProductColor = $currentImageProductColor.'.'.$extensionImageProductColor;
-                        ProductColor::create([
-                            'id_product' => $product[0]->id,
-                            'id_color' => $colorProduct,
-                            'image_product_color' => $newImageProductColor,
-                            'quantity_product_color' => $data['quantity_product']
-                        ]);
+                        if($imageProductColor->move('images/product',$newImageProductColor)){
+                            ProductColor::create([
+                                'id_product' => $product[0]->id,
+                                'id_color' => $colorProduct,
+                                'image_product_color' => $newImageProductColor,
+                                'quantity_product_color' => $data['quantity_product']
+                            ]);
+                        }
                     }else{
                         Session::put('messageWareHouse',"Không có hình ảnh, yêu cầu thêm vào!");
                         return redirect()->route('warehouse.listWareHouse');

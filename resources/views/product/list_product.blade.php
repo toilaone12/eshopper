@@ -51,16 +51,16 @@
                         @if(Auth::check())
                         @if(Auth::user()->id_role == 1)
                         <td>
-                            <a href="{{route('product.editFormProduct',['idProduct'=>$p->id])}}" class="btn btn-success mb-2" >
+                            <a href="{{route('product.editFormProduct',['idProduct'=>$p->id])}}" class="btn btn-success mb-1" >
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </a>
-                            <a href="{{route('product.deleteProduct',['idProduct'=>$p->id])}}" class="btn btn-danger">
+                            <a href="{{route('product.deleteProduct',['idProduct'=>$p->id])}}" class="btn btn-danger mb-1">
                                 <i class="fa-solid fa-rectangle-xmark"></i>
                             </a>
-                            <a href="{{route('product.listProductColor',['idProduct'=>$p->id])}}" class="btn btn-warning mt-2">
+                            <a href="{{route('product.listProductColor',['idProduct'=>$p->id])}}" class="btn btn-warning mb-1">
                                 <i class="fa-solid fa-fill text-white"></i>
                             </a>
-                            <a href="{{route('product.createThumbnails',['idProduct'=>$p->id])}}" class="btn btn-info mt-2">
+                            <a href="{{route('product.createThumbnails',['idProduct'=>$p->id])}}" class="btn btn-info">
                                 <i class="fa-solid fa-images text-white"></i>
                             </a>
                         </td>

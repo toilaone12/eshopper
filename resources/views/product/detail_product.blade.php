@@ -360,9 +360,8 @@
                             <h6>{{number_format($productByCategory->price_product,0,',','.')}} đ</h6><h6 class="text-muted ml-2"><del>{{number_format($productByCategory->price_product,0,',','.')}} đ</del></h6>
                         </div>
                     </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="{{route('product.detailProduct',['idProduct' => $productByCategory->id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</a>
+                    <div class="detail-product d-flex justify-content-center bg-light border rounded-bottom border-info">
+                        <a href="{{route('product.detailProduct',['idProduct'=>$productByCategory->id])}}" class="link-detail p-2 btn btn-light flex-fill me-1 p-0 f-16 rounded-bottom"><span>Xem chi tiết</span></a>
                     </div>
                 </div>
                 @endforeach

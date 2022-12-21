@@ -98,6 +98,7 @@ class BrandController extends Controller
 
     public function deleteBrand($idBrand){
         $deleteBrand = Brand::where('id_brand',$idBrand)->delete();
+        $deleteProduct = Product::where('id_brand',$idBrand)->delete();
         if($deleteBrand){
             Session::put('message','Xóa thương hiệu thành công!');
             return redirect()->route('brand.listBrand');

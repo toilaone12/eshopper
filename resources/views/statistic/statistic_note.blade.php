@@ -11,7 +11,7 @@
                     <!-- Area Chart -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Thống kê đơn hàng</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Thống kê nhập hàng</h6>
                         </div>
                         <div class="card-body">
                             <div class="chart-area">
@@ -65,7 +65,7 @@
                     <!-- Area Chart -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Thống kê đơn hàng</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Thống kê phiếu xuất hàng</h6>
                         </div>
                         <div class="card-body">
                             <div class="chart-area">

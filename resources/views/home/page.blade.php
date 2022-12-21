@@ -214,12 +214,12 @@ session_start();
             <div class="col-lg-2 col-md-3 col-sm-12 pb-2">
                 <div class="card product-item border-0 mb-4 choose-item">
                     <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0 rounded-top border-info">
-                        <img class="img-fluid w-75 m-auto d-block" src="{{url('images/product/'.$outStanding->image_product)}}" alt="">
+                        <img class="img-fluid p-2 w-75 m-auto d-block" src="{{url('images/product/'.$outStanding->image_product)}}" alt="">
                     </div>
                     <div class="card-body border-left border-right text-center outStanding-0 pt-4 pb-3 border-info">
                         <h6 class="text-truncate mb-3 f-16">{{$outStanding->name_product}}</h6>
                         <div class="d-flex justify-content-center">
-                            <h6 class="f-16">{{number_format($outStanding->price_product,0,',','.')}} ₫</h6><h6 class="text-muted ml-2 f-16"><del class="f-16">{{number_format($outStanding->price_product,0,',','.')}} ₫</del></h6>
+                            <h6 class="f-16">{{number_format($outStanding->price_product,0,',','.')}} ₫</h6>
                         </div>
                     </div>
                     <div class="detail-product d-flex justify-content-center bg-light border rounded-bottom border-info">
@@ -269,12 +269,12 @@ session_start();
             <div class="col-lg-2 col-md-6 col-sm-12 pb-1">
                 <div class="card product-item border-0 mb-4 rounded-lg">
                     <div class="card-header product-img position-relative overflow-hidden bg-transparent border border-info p-0 rounded-top">
-                        <img class="img-fluid w-75 m-auto d-block" src="{{url('images/product/'.$p->image_product)}}" alt="">
+                        <img class="img-fluid p-2 w-75 m-auto d-block" src="{{url('images/product/'.$p->image_product)}}" alt="">
                     </div>
                     <div class="card-body border-left border-right text-center p-0 pt-4 pb-3 border-info">
                         <h6 class="text-truncate mb-3 f-16">{{$p->name_product}}</h6>
                         <div class="d-flex justify-content-center">
-                            <h6 class="f-16">{{number_format($p->price_product,0,',','.')}} ₫</h6><h6 class="text-muted ml-2 f-16"><del>{{number_format($p->price_product,0,',','.')}} ₫</del></h6>
+                            <h6 class="f-16">{{number_format($p->price_product,0,',','.')}} ₫</h6>
                         </div>
                     </div>
                     <div class="detail-product d-flex justify-content-center bg-light border rounded-bottom border-info">

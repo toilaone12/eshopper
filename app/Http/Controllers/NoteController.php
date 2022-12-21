@@ -137,7 +137,7 @@ class NoteController extends Controller
         $pdf = Pdf::loadView('note.export_pdf',compact(
             'selectNote',
             'selectDetailNote'
-        ));
+        ))->setOptions(['defaultFont' => 'sans-serif']);
         return $pdf->download('Hóa đơn của nhà cung cấp '.$nameNote.'.pdf');
     }
     public function exportToWarehouse(Request $request){
@@ -169,7 +169,6 @@ class NoteController extends Controller
                         'price_statistic_note' => $totalAll,
                         'date_statistic_note' => $date_order,
                     ]);
-                    // echo "vao day</br>";
                 }else{
                     $quantityAll = $quantityProduct;
                     $totalAll = $priceProduct * $quantityAll;
@@ -180,7 +179,6 @@ class NoteController extends Controller
                         'date_statistic_note' => $date_order,
                     );
                     StatisticNote::create($arrayStatistic);
-                    // echo "vao day ne</br>";
                 }
                 if(count($wareHouse) == 1){
                     $quantityWareHouse = $wareHouse[0]->quantity_product_warehouse;
@@ -194,7 +192,9 @@ class NoteController extends Controller
                         'quantity_product_warehouse' => $quantityAll,
                         'price_product_warehouse' => $priceProduct,
                     ]);
+                    // echo 1;
                 }else{
+                    // echo 2;
                     $quantityAll = $quantityProduct;
                     $createWareHouse = WareHouse::create([
                         'id_color' => $idColor,

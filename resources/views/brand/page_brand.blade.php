@@ -247,12 +247,12 @@
                     <div class="col-lg-3 col-md-3 col-sm-12 pb-1">
                         <div class="card product-item border-0 mb-4">
                             <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0 rounded-top border-info">
-                                <img class="img-fluid w-75 m-auto d-block" src="{{url('images/product/'.$spbb->image_product)}}" alt="">
+                                <img class="img-fluid p-2 w-75 m-auto d-block" src="{{url('images/product/'.$spbb->image_product)}}" alt="">
                             </div>
                             <div class="card-body border-left border-right text-center pt-4 pb-3 border-info">
                                 <h6 class="text-truncate mb-3 f-16">{{$spbb->name_product}}</h6>
                                 <div class="d-flex justify-content-center">
-                                    <h6 class="f-16">{{number_format($spbb->price_product,0,',','.')}} ₫</h6><h6 class="text-muted ml-2 f-16"><del class="f-16">{{number_format($spbb->price_product,0,',','.')}} ₫</del></h6>
+                                    <h6 class="f-16">{{number_format($spbb->price_product,0,',','.')}} ₫</h6>
                                 </div>
                             </div>
                             <div class="detail-product d-flex justify-content-center bg-light border rounded-bottom border-info">

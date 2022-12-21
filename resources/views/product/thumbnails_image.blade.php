@@ -50,9 +50,6 @@
                                 </td>
                                 <td>{{$g->name_gallery}}</td>
                                 <td>
-                                    <span class="btn btn-success mr-3 update-gallery" >
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </span>
                                     <a href="{{route('product.deleteThumbnails',['idGallery'=>$g->id_gallery])}}" class="btn btn-danger">
                                         <i class="fa-solid fa-rectangle-xmark"></i>
                                     </a>
@@ -80,7 +77,7 @@
         <div class="bg-warehouse rounded">
             <h3 class="header-warehouse text-center py-3">
                 Thêm kho ảnh
-                <div class="close-warehouse gallery-close" style="cursor:pointer;">
+                <div class="gallery-close" style="cursor:pointer;">
                     <i class="fa-solid fa-xmark"></i>
                 </div>
             </h3>

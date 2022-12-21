@@ -9,6 +9,8 @@ use App\Model\Brand;
 use App\Model\Color;
 use App\Model\Comment as ModelComment;
 use App\Model\Gallery;
+use App\Model\Order;
+use App\Model\OrderDetail;
 use App\Model\ProductColor;
 use App\Model\Rating;
 use App\Model\Review;
@@ -34,56 +36,25 @@ class ProductController extends Controller
         $selectBrand = Brand::all();
         return view('product.insert_product',compact('selectCategory','selectBrand'));//nhan 1 tham so, tham so do co the la bien co the la mang
     }
-    // public function insertProduct(Request $request){
-    //     $data = $request->all();
-    //     $db = array();
-    //     $imageProduct = $request->file('image_product');// sử dụng camelCase
-    //     // setting trong config/app.php
-    //     if($imageProduct){
-    //         // if($size_image < 20){
-    //             $nameImage = $imageProduct->getClientOriginalName(); // lay ten goc file
-    //             $currentImage = current(explode('.',$nameImage));
-    //             $extensionImage = $imageProduct->extension(); // lay duoi ten file
-    //             $newImage = $currentImage.'.'.$extensionImage;
-    //             $imageProduct->move('images/product',$newImage);
-    //             $db['id_brand'] = $data['name_brand'];
-    //             $db['id_category'] = $data['name_category'];
-    //             $db['name_product'] = $data['name_product'];
-    //             $db['image_product'] = $newImage;
-    //             $db['quantity_product'] = $data['quantity_product'];
-    //             $db['price_product'] = $data['price_product'];
-    //             $db['description_product'] = $data['description_product'];
-    //             $db['content_product'] = $data['content_product'];
-    //             $db['number_reviews'] = 0;
-    //             $db['number_views'] = 0;
-    //             // created_at, updated_at có kiểu giá trị là timestamp r nên k cần set giá trị $date vào
-    //             $check_product = Product::create($db);
-    //             if($check_product){
-    //                 Session::put('message',"Thêm sản phẩm ".$data['name_product']." thành công!");
-    //                 return redirect()->route('product.listFormProduct'); // k sử dụng redirect::to. chuyển thành redirect()->route('')
-    //             }else{
-    //                 Session::put('message',"Thêm sản phẩm ".$data['name_product']." thất bại!");
-    //                 return redirect()->route('product.insertFormProduct');// k sử dụng redirect::to. chuyển thành redirect()->route('')
-    //             }
-    //         // }else{
-    //         //     Session::put('message','Kích thước ảnh quá lớn, yêu cầu giảm kích thước ảnh!');
-    //         //     Redirect::to('/insert-form-product');
-    //         // }
-    //     }else{
-    //         Session::put('message','Không có hình ảnh, yêu cầu thêm vào!');
-    //         return redirect()->route('product.insertFormProduct'); // lop chua cac tieu de cua Session de chuyen den URL khac
-    //         // có thể sử dụng redirect()->back()
-    //     }
-    // }
+
     public function deleteProduct($idProduct){
-        $deleteProduct = Product::where('id',$idProduct)->delete();
-        if($deleteProduct){
-            Session::put('message',"Xóa thành công sản phẩm!");
-            return redirect()->route('product.listFormProduct');// k sử dụng redirect::to. chuyển thành redirect()->route('')
-        }else{
-            Session::put('message',"Xóa không thành công sản phẩm!");
-            return redirect()->route('product.listFormProduct');// k sử dụng redirect::to. chuyển thành redirect()->route('')
+        $comment = Comment::where('id_product',$idProduct)->delete();
+        $review = Review::where('id_product',$idProduct)->delete();
+        $orderDetail = OrderDetail::where('id_product',$idProduct)->first();
+        $thumbnails = Gallery::where('id_product',$idProduct)->delete();
+        $productColor = ProductColor::where('id_product',$idProduct)->delete(); 
+        if($orderDetail){
+            $deleteCodeOrder = Order::where('code_order',$orderDetail->code_order)->delete();
+            $deleteProduct = Product::where('id',$idProduct)->delete();
+            if($deleteProduct){
+                Session::put('message',"Xóa thành công sản phẩm!");
+                return redirect()->route('product.listFormProduct');// k sử dụng redirect::to. chuyển thành redirect()->route('')
+            }else{
+                Session::put('message',"Xóa không thành công sản phẩm!");
+                return redirect()->route('product.listFormProduct');// k sử dụng redirect::to. chuyển thành redirect()->route('')
+            }
         }
+
     }
     public function editFormProduct($idProduct){
         $selectProductId = Product::join('product_color as pc','pc.id_product','product.id')->where('id',$idProduct)->first();
@@ -217,7 +188,7 @@ class ProductController extends Controller
             $newImage = $currentImage.'.'.$extensionImage;
             $idGallery = $data['id_gallery'];
             $gallery = Gallery::find($idGallery);
-            unlink(public_path('/images/gallery/'.$gallery->image_gallery));
+            // unlink(public_path('/images/gallery/'.$gallery->image_gallery));
             if($image->move('images/gallery',$newImage)){
                 $gallery->image_gallery = $newImage;
                 $gallery->name_gallery = $newImage;

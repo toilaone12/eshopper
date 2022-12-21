@@ -60,6 +60,7 @@ class CategoryController extends Controller
     }
     public function deleteCategory($idCategory){
         $deleteCategory = Category::where('id_category',$idCategory)->delete();
+        $deleteProduct = Product::where('id_category',$idCategory)->delete();
         if($deleteCategory){
             Session::put('message','Xóa thành công danh mục!');
             return redirect()->route('category.listCategory');

@@ -290,7 +290,7 @@
                 <div id="collapseTwo12" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Chọn:</h6>
-                        <a class="collapse-item" style="white-space:normal !important;" href="{{route('statistic.listStatistic')}}">Thống kê hóa đơn</a>{{--sử dụng route() --}}
+                        <a class="collapse-item" style="white-space:normal !important;" href="{{route('statistic.listStatistic')}}">Thống kê doanh thu</a>{{--sử dụng route() --}}
                         <a class="collapse-item" style="white-space:normal !important;" href="{{route('statistic.listStatisticNote')}}">Thống kê phiếu xuất hàng</a>{{--sử dụng route() --}}
                     </div>
                 </div>
@@ -977,8 +977,8 @@
             }
             //tuy chon thoi gian
             $('.filter-date-import').on('click',function(e){
-                var fromDate = $('#datepicker1').val();
-                var toDate = $('#datepicker2').val();
+                var fromDate = $('#datepicker3').val();
+                var toDate = $('#datepicker4').val();
                 var token = $('input[name="_token"]').val();
                 // alert(toDate+'-'+fromDate);
                 if(fromDate == "" || toDate == ""){

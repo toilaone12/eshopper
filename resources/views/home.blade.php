@@ -106,7 +106,7 @@
                             <div class="d-flex justify-content-between align-items-start" style="max-width: 100%;">
                                 <img src="{{asset('images/product/'.$c['imageProduct'])}}" alt="" class="image-cart mt-2 ml-2 py-1 border border-secondary">
                                 <span class="text-cart text-dark f-14 pl-3 pt-1">{{$c['nameProduct']}}</span>
-                                <span class="price-cart text-info f-14 pr-2 pl-5 pt-1">{{number_format($c['priceProduct'],0,',','.')}} ₫</span>
+                                <span class="price-cart text-info f-14 pr-2 pl-3 pt-1">{{number_format($c['priceProduct'],0,',','.')}} ₫</span>
                             </div>
                             @endforeach
                             <div class="d-flex justify-content-between" style="max-width: 100%;">
